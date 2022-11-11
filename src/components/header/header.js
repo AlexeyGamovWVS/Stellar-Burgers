@@ -22,12 +22,14 @@ class AppHeader extends React.Component {
             </li>
             <li className={`${headerStyles.link} mr-2`}>
 						<NavLink className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}>
-                <ProfileIcon type="secondary" />
+                <ListIcon type="secondary" />
 								<span className="ml-2">Лента Заказов</span>
               </NavLink>
             </li>
           </ul>
-          <Logo></Logo>
+					<a href="/">
+						<Logo />
+					</a>
           <NavLink className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}>
             <ProfileIcon type="secondary" />
 						<span className="ml-2">Личный кабинет</span>
