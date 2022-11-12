@@ -1,21 +1,8 @@
 .main {
-	display: flex;
-	flex-direction: row;
-	max-width: 1240px;
-	margin: 0 auto;
-	column-gap: 40px;
-	position: relative;
-}
-
-.ingredients {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-}
-.constructor {
-	composes: ingredients;
-}
-.tabs {
-	width: 100%;
-	display: flex;
+  display: flex;
+  flex-direction: row;
+  max-width: 1240px;
+  margin: 0 auto;
+  column-gap: 40px;
+  position: relative;
 }

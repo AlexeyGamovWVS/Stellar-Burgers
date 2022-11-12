@@ -6,7 +6,6 @@ import {
   ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import headerStyles from "./header.module.css";
-import NavLink from "./nav-link/nav-link";
 
 class AppHeader extends React.Component {
   render() {
@@ -44,6 +43,17 @@ class AppHeader extends React.Component {
       </header>
     );
   }
+}
+
+function NavLink(props) {
+  return (
+    <button className={props.className} type="button">
+      {props.icon}
+      <span style={{ display: "inline-block" }} className="ml-2">
+        {props.children}
+      </span>
+    </button>
+  );
 }
 
 export default AppHeader;
