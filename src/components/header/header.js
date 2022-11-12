@@ -15,24 +15,30 @@ class AppHeader extends React.Component {
         <nav className={headerStyles.nav}>
           <ul className={headerStyles.list}>
             <li className={`${headerStyles.link} mr-2`}>
-              <NavLink className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}>
-                <BurgerIcon type="secondary"/>
-                <span className="ml-2">Конструктор</span>
+              <NavLink
+                icon={<BurgerIcon type="secondary" />}
+                className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}
+              >
+                Конструктор
               </NavLink>
             </li>
             <li className={`${headerStyles.link} mr-2`}>
-						<NavLink className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}>
-                <ListIcon type="secondary" />
-								<span className="ml-2">Лента Заказов</span>
+              <NavLink
+                icon={<ListIcon type="secondary" />}
+                className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}
+              >
+                Лента Заказов
               </NavLink>
             </li>
           </ul>
-					<a href="/">
-						<Logo />
-					</a>
-          <NavLink className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}>
-            <ProfileIcon type="secondary" />
-						<span className="ml-2">Личный кабинет</span>
+          <a href="/" className={headerStyles.logo}>
+            <Logo />
+          </a>
+          <NavLink
+            icon={<ProfileIcon type="secondary" />}
+            className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}
+          >
+            Личный кабинет
           </NavLink>
         </nav>
       </header>
