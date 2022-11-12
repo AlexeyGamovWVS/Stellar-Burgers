@@ -5,9 +5,11 @@ import mainStyles from "./main.module.css";
 export default class Main extends React.Component {
 	render() {
 		return(
-			<main className={mainStyles.main}>
-				<BurgerIngredients />
-				<BurgerConstructor />
+			<main>
+				<section className={mainStyles.main}>
+					<BurgerIngredients />
+					<BurgerConstructor />
+				</section>
 			</main>
 		)
 	}
