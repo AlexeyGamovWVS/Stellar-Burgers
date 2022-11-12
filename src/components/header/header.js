@@ -17,7 +17,7 @@ class AppHeader extends React.Component {
             <li className={`${headerStyles.link} mr-2`}>
               <NavLink
                 icon={<BurgerIcon type="secondary" />}
-                className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}
+                className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default text_color_inactive`}
               >
                 Конструктор
               </NavLink>
@@ -25,7 +25,7 @@ class AppHeader extends React.Component {
             <li className={`${headerStyles.link} mr-2`}>
               <NavLink
                 icon={<ListIcon type="secondary" />}
-                className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}
+                className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default text_color_inactive`}
               >
                 Лента Заказов
               </NavLink>
@@ -36,7 +36,7 @@ class AppHeader extends React.Component {
           </a>
           <NavLink
             icon={<ProfileIcon type="secondary" />}
-            className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`}
+            className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default text_color_inactive`}
           >
             Личный кабинет
           </NavLink>

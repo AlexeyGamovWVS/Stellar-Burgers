@@ -3,10 +3,19 @@
 	flex-direction: row;
 	max-width: 1240px;
 	margin: 0 auto;
-	max-height: 100vw;
+	column-gap: 40px;
+	position: relative;
 }
 
 .ingredients {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
+}
+.constructor {
+	composes: ingredients;
+}
+.tabs {
+	width: 100%;
+	display: flex;
 }
