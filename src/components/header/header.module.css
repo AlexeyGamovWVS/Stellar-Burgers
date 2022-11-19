@@ -4,6 +4,7 @@
     0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
     0px 0px 1px rgba(0, 0, 0, 0.04);
 }
+
 .nav {
   display: flex;
   flex-direction: row;
@@ -11,8 +12,9 @@
   align-items: center;
   max-width: 1280px;
   margin: 0 auto;
-	position: relative;
+  position: relative;
 }
+
 .list {
   list-style: none;
   margin: 0;
@@ -25,20 +27,10 @@
   margin-right: 0;
 }
 
-.link__item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  border-radius: 40px;
-}
-
 .logo {
-	position: absolute;
-	align-self: center;
-	display: flex;
-	left: 50%;
-	transform: translateX(-50%);
+  position: absolute;
+  align-self: center;
+  display: flex;
+  left: 50%;
+  transform: translateX(-50%);
 }

@@ -1,0 +1,15 @@
+.rowsContainer {
+  max-height: calc(100vh - 88px - 156px - 40px - 24px);
+  /* 88 — header, 156 — margins + title, 40px - first top margin
+	24 — bottom from frame */
+  overflow-y: scroll;
+}
+
+.rowsContainer::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+}
+
+.rowsContainer::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}

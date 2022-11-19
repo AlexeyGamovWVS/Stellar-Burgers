@@ -3,14 +3,14 @@ import BurgerIngredients from "./burger-ingredients/burger-ingredients";
 import BurgerConstructor from "./burger-constructor/burger-constructor";
 import mainStyles from "./main.module.css";
 export default class Main extends React.Component {
-	render() {
-		return(
-			<main>
-				<section className={mainStyles.main}>
-					<BurgerIngredients />
-					<BurgerConstructor />
-				</section>
-			</main>
-		)
-	}
+  render() {
+    return (
+      <main>
+        <section className={mainStyles.main}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </section>
+      </main>
+    );
+  }
 }

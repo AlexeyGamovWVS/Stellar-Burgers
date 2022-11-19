@@ -5,7 +5,7 @@ import {
   ProfileIcon,
   ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import NavLink from "./nav-link";
+import NavLink from "./nav-link/nav-link";
 import headerStyles from "./header.module.css";
 
 class AppHeader extends React.Component {
@@ -15,18 +15,12 @@ class AppHeader extends React.Component {
         <nav className={headerStyles.nav}>
           <ul className={headerStyles.list}>
             <li className={`${headerStyles.link} mr-2`}>
-              <NavLink
-                icon={<BurgerIcon type="secondary" />}
-                className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default text_color_inactive`}
-              >
+              <NavLink icon={<BurgerIcon type="secondary" />}>
                 Конструктор
               </NavLink>
             </li>
             <li className={`${headerStyles.link} mr-2`}>
-              <NavLink
-                icon={<ListIcon type="secondary" />}
-                className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default text_color_inactive`}
-              >
+              <NavLink icon={<ListIcon type="secondary" />}>
                 Лента Заказов
               </NavLink>
             </li>
@@ -34,10 +28,7 @@ class AppHeader extends React.Component {
           <a href="/" className={headerStyles.logo}>
             <Logo />
           </a>
-          <NavLink
-            icon={<ProfileIcon type="secondary" />}
-            className={`${headerStyles.link__item} pt-4 pb-4 pr-5 pl-5 text text_type_main-default text_color_inactive`}
-          >
+          <NavLink icon={<ProfileIcon type="secondary" />}>
             Личный кабинет
           </NavLink>
         </nav>
