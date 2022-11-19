@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import {
   Logo,
   BurgerIcon,
@@ -45,15 +46,20 @@ class AppHeader extends React.Component {
   }
 }
 
-function NavLink(props) {
+function NavLink({className, icon, ...props}) {
   return (
-    <button className={props.className} type="button">
-      {props.icon}
+    <button className={className} type="button">
+      {icon}
       <span style={{ display: "inline-block" }} className="ml-2">
         {props.children}
       </span>
     </button>
   );
 }
+
+NavLink.propTypes = {
+	className: PropTypes.string,
+	icon: PropTypes.element,
+};
 
 export default AppHeader;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'
 import constructurStyles from "./burger-constructor.module.css";
 import data from "../../utils/data";
 import {
@@ -33,8 +34,8 @@ export default class BurgerConstructor extends React.Component {
   }
 }
 
-function PriceBox(props) {
-  const sum = props.data
+function PriceBox({data}) {
+  const sum = data
     .map((item) => item.price)
     .reduce((prev, next) => prev + next, 0);
   return (
@@ -43,18 +44,35 @@ function PriceBox(props) {
         <p className="text text_type_digits-medium mr-2">{sum}</p>
         <CurrencyIcon type="primary" />
       </div>
-      <Button type="primary" size="large">
+      <Button type="primary" size="large" htmlType="button">
         Оформить заказ
       </Button>
     </div>
   );
 }
 
-function BurgerComponents(props) {
+PriceBox.propTypes = {
+	data: PropTypes.arrayOf(PropTypes.shape({
+		_id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    calories: PropTypes.number,
+    price: PropTypes.number,
+    image: PropTypes.string,
+    image_mobile: PropTypes.string,
+    image_large: PropTypes.string,
+    __v: PropTypes.number,
+  })).isRequired
+}
+
+function BurgerComponents({data}) {
   let first;
   let last;
   const components = [];
-  props.data.forEach((element, index, arr) => {
+  data.forEach((element, index, arr) => {
     switch (index) {
       case 0:
         first = (
@@ -99,6 +117,23 @@ function BurgerComponents(props) {
   );
 }
 
+BurgerComponents.propTypes = {
+	data: PropTypes.arrayOf(PropTypes.shape({
+		_id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    calories: PropTypes.number,
+    price: PropTypes.number,
+    image: PropTypes.string,
+    image_mobile: PropTypes.string,
+    image_large: PropTypes.string,
+    __v: PropTypes.number,
+  })).isRequired
+}
+
 function BurgerListItem({ item, position, iconVis }) {
   return (
     <li className={constructurStyles.item}>
@@ -118,4 +153,23 @@ function BurgerListItem({ item, position, iconVis }) {
       />
     </li>
   );
+}
+
+BurgerListItem.propTypes = {
+	item: PropTypes.shape({
+		_id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    calories: PropTypes.number,
+    price: PropTypes.number,
+    image: PropTypes.string,
+    image_mobile: PropTypes.string,
+    image_large: PropTypes.string,
+    __v: PropTypes.number,
+	}),
+	position: PropTypes.string,
+	iconVis: PropTypes.string,
 }

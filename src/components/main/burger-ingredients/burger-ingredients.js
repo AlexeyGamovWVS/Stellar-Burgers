@@ -1,7 +1,12 @@
 import React from "react";
 import data from "../../utils/data";
-import { Tab, Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Tab,
+  Counter,
+  CurrencyIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngrStyles from "./burger-ingredients.module.css";
+import PropTypes from "prop-types";
 export default class BurgerIngredients extends React.Component {
   render() {
     return (
@@ -44,10 +49,27 @@ function Ingredients({ data }) {
   );
 }
 
-function IngredientRow(props) {
+Ingredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+		_id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    calories: PropTypes.number,
+    price: PropTypes.number,
+    image: PropTypes.string,
+    image_mobile: PropTypes.string,
+    image_large: PropTypes.string,
+    __v: PropTypes.number,
+	})).isRequired,
+};
+
+function IngredientRow({title, ...props}) {
   return (
     <div className={`${burgerIngrStyles.row} row mt-10`}>
-      <h3 className={`text text_type_main-medium`}>{props.title}</h3>
+      <h3 className={`text text_type_main-medium`}>{title}</h3>
       <ul className={`${burgerIngrStyles.list} mt-6 pl-4 pr-4`}>
         {props.children}
       </ul>
@@ -55,32 +77,57 @@ function IngredientRow(props) {
   );
 }
 
-function Ingredient(props) {
+IngredientRow.propTypes = {
+	title: PropTypes.string,
+	children: PropTypes.arrayOf(PropTypes.element),
+}
+
+function Ingredient({_id, name, price, image}) {
   return (
-    <li className={burgerIngrStyles.item} key={props._id}>
+    <li className={burgerIngrStyles.item} key={_id}>
       <Counter count={1} size="default" />
-      <Image img={props.image} alt={props.name} />
-      <Price price={props.price} />
-      <Name name={props.name} />
+      <Image img={image} alt={name} />
+      <Price price={price} />
+      <Name name={name} />
     </li>
   );
 }
 
-function Image(props) {
-  return <img className={`ml-4 mr-4`} src={props.img} alt={props.name}></img>;
+Ingredient.propTypes = {
+	_id: PropTypes.string,
+	name: PropTypes.string,
+	price: PropTypes.number,
+	image: PropTypes.string
 }
 
-function Price(props) {
+function Image({img, name}) {
+  return <img className={`ml-4 mr-4`} src={img} alt={name}></img>;
+}
+
+Image.propTypes = {
+	img: PropTypes.string,
+	name: PropTypes.string
+}
+
+function Price({price}) {
   return (
     <div className={burgerIngrStyles.price}>
-      <p className="text text_type_digits-default mr-2">{props.price}</p>
+      <p className="text text_type_digits-default mr-2">{price}</p>
       <CurrencyIcon />
     </div>
   );
 }
 
-function Name(props) {
-  return <p className="text text_type_main-default">{props.name}</p>;
+Price.propTypes = {
+	price: PropTypes.number
+}
+
+function Name({name}) {
+  return <p className="text text_type_main-default">{name}</p>;
+}
+
+Name.propTypes = {
+	name: PropTypes.string
 }
 
 function getIngredientsMap(data) {
