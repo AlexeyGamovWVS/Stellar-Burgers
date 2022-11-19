@@ -1,13 +1,9 @@
 import React from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import constructurStyles from "./burger-constructor.module.css";
 import data from "../../utils/data";
-import {
-  ConstructorElement,
-  CurrencyIcon,
-  DragIcon,
-	Button
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import PriceBox from "./price-box/price-box";
+import BurgerListItem from "./burger-list-item/burger-list-item";
 
 const bun = data.find((item) => item.name === "Краторная булка N-200i");
 const sauce = data.find(
@@ -34,41 +30,7 @@ export default class BurgerConstructor extends React.Component {
   }
 }
 
-function PriceBox({data}) {
-  const sum = data
-    .map((item) => item.price)
-    .reduce((prev, next) => prev + next, 0);
-  return (
-    <div className={`${constructurStyles.handlers} mt-10`}>
-      <div className={`${constructurStyles.price} mr-10`}>
-        <p className="text text_type_digits-medium mr-2">{sum}</p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <Button type="primary" size="large" htmlType="button">
-        Оформить заказ
-      </Button>
-    </div>
-  );
-}
-
-PriceBox.propTypes = {
-	data: PropTypes.arrayOf(PropTypes.shape({
-		_id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number,
-  })).isRequired
-}
-
-function BurgerComponents({data}) {
+function BurgerComponents({ data }) {
   let first;
   let last;
   const components = [];
@@ -108,68 +70,27 @@ function BurgerComponents({data}) {
   return (
     <ul className={constructurStyles.primaryList}>
       {first}
-      <ul className={constructurStyles.secondaryList}>
-        {components}
-        {components}
-      </ul>
+      <ul className={constructurStyles.secondaryList}>{components}</ul>
       {last}
     </ul>
   );
 }
 
 BurgerComponents.propTypes = {
-	data: PropTypes.arrayOf(PropTypes.shape({
-		_id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number,
-  })).isRequired
-}
-
-function BurgerListItem({ item, position, iconVis }) {
-  return (
-    <li className={constructurStyles.item}>
-      <div className="mr-2" style={{ visibility: iconVis }}>
-        <DragIcon type="primary" />
-      </div>
-      <ConstructorElement
-        type={position}
-        isLocked={position !== "default" ? true : false}
-        text={
-          item.name +
-          (position === "top" ? " (верх)" : "") +
-          (position === "bottom" ? " (низ)" : "")
-        }
-        price={item.price}
-        thumbnail={item.image}
-      />
-    </li>
-  );
-}
-
-BurgerListItem.propTypes = {
-	item: PropTypes.shape({
-		_id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number,
-	}),
-	position: PropTypes.string,
-	iconVis: PropTypes.string,
-}
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+      type: PropTypes.string,
+      proteins: PropTypes.number,
+      fat: PropTypes.number,
+      carbohydrates: PropTypes.number,
+      calories: PropTypes.number,
+      price: PropTypes.number,
+      image: PropTypes.string,
+      image_mobile: PropTypes.string,
+      image_large: PropTypes.string,
+      __v: PropTypes.number,
+    })
+  ).isRequired,
+};
