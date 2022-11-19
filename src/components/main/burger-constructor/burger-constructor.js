@@ -1,4 +1,3 @@
-import React from "react";
 import constructurStyles from "./burger-constructor.module.css";
 import data from "../../utils/data";
 import BurgerComponents from "./burger-components/burger-components";
@@ -18,13 +17,11 @@ const yourChoice = [bun, sauce, meat, tree, tors, tors, bun];
 let sum;
 yourChoice.forEach((item) => (sum += item.price));
 
-export default class BurgerConstructor extends React.Component {
-  render() {
-    return (
-      <div className={`pt-25 ${constructurStyles.constructor}`}>
-        <BurgerComponents data={yourChoice} />
-        <PriceBox data={yourChoice} />
-      </div>
-    );
-  }
+export default function BurgerConstructor() {
+  return (
+    <div className={`pt-25 ${constructurStyles.constructor}`}>
+      <BurgerComponents data={yourChoice} />
+      <PriceBox data={yourChoice} />
+    </div>
+  );
 }
