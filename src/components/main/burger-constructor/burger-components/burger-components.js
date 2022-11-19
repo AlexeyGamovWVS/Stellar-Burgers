@@ -13,7 +13,7 @@ export default function BurgerComponents({ data }) {
           <BurgerListItem
             item={element}
             position="top"
-            iconVis="hidden"
+            iconVis={false}
             key={element._id + index}
           />
         );
@@ -23,7 +23,7 @@ export default function BurgerComponents({ data }) {
           <BurgerListItem
             item={element}
             position="bottom"
-            iconVis="hidden"
+            iconVis={false}
             key={element._id + index}
           />
         );
@@ -33,7 +33,7 @@ export default function BurgerComponents({ data }) {
           <BurgerListItem
             item={element}
             position="default"
-            iconVis="visible"
+            iconVis={true}
             key={element._id + index}
           />
         );

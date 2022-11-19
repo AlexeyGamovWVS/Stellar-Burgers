@@ -4,15 +4,18 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import itemStyles from "./burger-list-item.module.css";
-export default function BurgerListItem({ item, position, iconVis, style }) {
+export default function BurgerListItem({ item, position, iconVis }) {
+  const visibility = iconVis
+    ? itemStyles.dragIcon_visible
+    : itemStyles.dragIcon_hidden;
   return (
     <li className={itemStyles.item}>
-      <div className="mr-2" style={{ visibility: iconVis }}>
+      <div className={`${visibility} mr-2`}>
         <DragIcon type="primary" />
       </div>
       <ConstructorElement
         type={position}
-        isLocked={position !== "default" ? true : false}
+        isLocked={position !== "default"}
         text={
           item.name +
           (position === "top" ? " (верх)" : "") +

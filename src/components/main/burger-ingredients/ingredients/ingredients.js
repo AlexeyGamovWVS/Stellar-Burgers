@@ -4,12 +4,12 @@ import IngredientRow from "./ingredients-row/ingredients-row";
 import Ingredient from "./ingredient/ingredient";
 
 export default function Ingredients({ data }) {
-  const goodsMaps = getIngredientsMap(data);
+  const separatedData = getIngredientCards(data);
   return (
     <div className={`${ingredStyles.rowsContainer} mt-10`}>
-      <IngredientRow title="Булки">{goodsMaps.buns}</IngredientRow>
-      <IngredientRow title="Соусы">{goodsMaps.sauces}</IngredientRow>
-      <IngredientRow title="Начинки">{goodsMaps.mains}</IngredientRow>
+      <IngredientRow title="Булки">{separatedData.buns}</IngredientRow>
+      <IngredientRow title="Соусы">{separatedData.sauces}</IngredientRow>
+      <IngredientRow title="Начинки">{separatedData.mains}</IngredientRow>
     </div>
   );
 }
@@ -33,14 +33,13 @@ Ingredients.propTypes = {
   ).isRequired,
 };
 
-function getIngredientsMap(data) {
+function getIngredientCards(data) {
   const buns = [],
     mains = [],
-    sauces = [],
-    undefinedType = [];
+    sauces = [];
 
   data.forEach((element) => {
-    const productMap = (
+    const ingredientCard = (
       <Ingredient
         key={element._id}
         name={element.name}
@@ -50,19 +49,19 @@ function getIngredientsMap(data) {
     );
     switch (element.type) {
       case "main": {
-        mains.push(productMap);
+        mains.push(ingredientCard);
         break;
       }
       case "bun": {
-        buns.push(productMap);
+        buns.push(ingredientCard);
         break;
       }
       case "sauce": {
-        sauces.push(productMap);
+        sauces.push(ingredientCard);
         break;
       }
       default: {
-        undefinedType.push(element);
+        break;
       }
     }
   });
@@ -70,7 +69,6 @@ function getIngredientsMap(data) {
     mains: mains,
     buns: buns,
     sauces: sauces,
-    undefinedType: undefinedType,
   };
   return separatedData;
 }

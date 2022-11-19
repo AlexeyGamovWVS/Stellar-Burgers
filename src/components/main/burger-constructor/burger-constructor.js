@@ -14,8 +14,6 @@ const tree = data.find((item) => item.name === "Плоды Фалленианс�
 const tors = data.find((item) => item.name === "Хрустящие минеральные кольца");
 
 const yourChoice = [bun, sauce, meat, tree, tors, tors, bun];
-let sum;
-yourChoice.forEach((item) => (sum += item.price));
 
 export default function BurgerConstructor() {
   return (
