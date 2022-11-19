@@ -15,12 +15,15 @@ class AppHeader extends React.Component {
         <nav className={headerStyles.nav}>
           <ul className={headerStyles.list}>
             <li className={`${headerStyles.link} mr-2`}>
-              <NavLink icon={<BurgerIcon type="secondary" />}>
+              <NavLink icon={<BurgerIcon type="primary" color="text-color-active" />}>
                 Конструктор
               </NavLink>
             </li>
             <li className={`${headerStyles.link} mr-2`}>
-              <NavLink icon={<ListIcon type="secondary" />}>
+              <NavLink
+                icon={<ListIcon type="secondary" />}
+                color="text_color_inactive"
+              >
                 Лента Заказов
               </NavLink>
             </li>
@@ -28,7 +31,10 @@ class AppHeader extends React.Component {
           <a href="/" className={headerStyles.logo}>
             <Logo />
           </a>
-          <NavLink icon={<ProfileIcon type="secondary" />}>
+          <NavLink
+            icon={<ProfileIcon type="secondary" />}
+            color="text_color_inactive"
+          >
             Личный кабинет
           </NavLink>
         </nav>

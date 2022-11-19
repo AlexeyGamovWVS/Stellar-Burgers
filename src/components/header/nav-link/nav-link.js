@@ -1,19 +1,19 @@
 import PropTypes from "prop-types";
 import linkStyles from "./nav-link.module.css";
-export default function NavLink({ icon, ...props }) {
+export default function NavLink({ icon, color, ...props }) {
   return (
-    <button
-      className={`${linkStyles.link} pt-4 pb-4 pr-5 pl-5 text text_type_main-default text_color_inactive`}
-      type="button"
+    <div
+      className={`${linkStyles.link} pt-4 pb-4 pr-5 pl-5 text text_type_main-default ${color}`}
     >
       {icon}
-      <span style={{ display: "inline-block" }} className="ml-2">
+      <span className={`ml-2`} style={{ display: "inline-block" }}>
         {props.children}
       </span>
-    </button>
+    </div>
   );
 }
 
 NavLink.propTypes = {
   icon: PropTypes.element,
+	color: PropTypes.string,
 };
