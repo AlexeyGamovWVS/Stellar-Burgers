@@ -1,11 +1,11 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import {
   Logo,
   BurgerIcon,
   ProfileIcon,
   ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import NavLink from "./nav-link";
 import headerStyles from "./header.module.css";
 
 class AppHeader extends React.Component {
@@ -45,21 +45,5 @@ class AppHeader extends React.Component {
     );
   }
 }
-
-function NavLink({className, icon, ...props}) {
-  return (
-    <button className={className} type="button">
-      {icon}
-      <span style={{ display: "inline-block" }} className="ml-2">
-        {props.children}
-      </span>
-    </button>
-  );
-}
-
-NavLink.propTypes = {
-	className: PropTypes.string,
-	icon: PropTypes.element,
-};
 
 export default AppHeader;
