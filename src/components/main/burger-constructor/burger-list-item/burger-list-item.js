@@ -44,5 +44,5 @@ BurgerListItem.propTypes = {
     __v: PropTypes.number,
   }),
   position: PropTypes.string,
-  iconVis: PropTypes.string,
+  iconVis: PropTypes.bool,
 };
