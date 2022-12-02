@@ -1,25 +1,25 @@
 import constructurStyles from "./burger-constructor.module.css";
-import data from "../../utils/data";
+import {data} from "../../utils/data";
 import BurgerComponents from "./burger-components/burger-components";
 import PriceBox from "./price-box/price-box";
 
-const bun = data.find((item) => item.name === "Краторная булка N-200i");
-const sauce = data.find(
+const BUN = data.find((item) => item.name === "Краторная булка N-200i");
+const SAUCE = data.find(
   (item) => item.name === "Соус традиционный галактический"
 );
-const meat = data.find(
+const MEAT = data.find(
   (item) => item.name === "Мясо бессмертных моллюсков Protostomia"
 );
-const tree = data.find((item) => item.name === "Плоды Фалленианского дерева");
-const tors = data.find((item) => item.name === "Хрустящие минеральные кольца");
+const TREE = data.find((item) => item.name === "Плоды Фалленианского дерева");
+const TORS = data.find((item) => item.name === "Хрустящие минеральные кольца");
 
-const yourChoice = [bun, sauce, meat, tree, tors, tors, bun];
+const YOUR_CHOICE = [BUN, SAUCE, MEAT, TREE, TORS, TORS, BUN];
 
 export default function BurgerConstructor() {
   return (
     <div className={`pt-25 ${constructurStyles.constructor}`}>
-      <BurgerComponents data={yourChoice} />
-      <PriceBox data={yourChoice} />
+      <BurgerComponents data={YOUR_CHOICE} />
+      <PriceBox data={YOUR_CHOICE} />
     </div>
   );
 }

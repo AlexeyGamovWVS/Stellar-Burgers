@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import ingredStyles from "./ingredients.module.css";
 import IngredientRow from "./ingredients-row/ingredients-row";
 import Ingredient from "./ingredient/ingredient";
+import { IngredientPropType } from "../../../utils/data";
 
 export default function Ingredients({ data }) {
   const separatedData = getIngredientCards(data);
@@ -15,22 +16,7 @@ export default function Ingredients({ data }) {
 }
 
 Ingredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    })
-  ).isRequired,
+  data: PropTypes.arrayOf(IngredientPropType).isRequired,
 };
 
 function getIngredientCards(data) {
@@ -41,7 +27,7 @@ function getIngredientCards(data) {
   data.forEach((element) => {
     const ingredientCard = (
       <Ingredient
-        key={element._id}
+				key={element._id}
         name={element.name}
         image={element.image}
         price={element.price}

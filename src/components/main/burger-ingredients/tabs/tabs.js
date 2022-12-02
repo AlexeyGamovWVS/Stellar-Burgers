@@ -2,33 +2,33 @@ import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import tabsStyles from "./tabs.module.css";
 
-const tabStates = {
+const TAB_STATUSES = {
   buns: "buns",
   sauces: "sauces",
   mains: "mains",
 };
 
 export default function Tabs() {
-  const [current, setCurrent] = React.useState(tabStates.buns);
+  const [current, setCurrent] = React.useState(TAB_STATUSES.buns);
   return (
     <div className={tabsStyles.tabs}>
       <Tab
-        value={tabStates.buns}
-        active={current === tabStates.buns}
+        value={TAB_STATUSES.buns}
+        active={current === TAB_STATUSES.buns}
         onClick={setCurrent}
       >
         Булки
       </Tab>
       <Tab
-        value={tabStates.sauces}
-        active={current === tabStates.sauces}
+        value={TAB_STATUSES.sauces}
+        active={current === TAB_STATUSES.sauces}
         onClick={setCurrent}
       >
         Соусы
       </Tab>
       <Tab
-        value={tabStates.mains}
-        active={current === tabStates.mains}
+        value={TAB_STATUSES.mains}
+        active={current === TAB_STATUSES.mains}
         onClick={setCurrent}
       >
         Начинки

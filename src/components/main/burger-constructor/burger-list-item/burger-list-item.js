@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import {IngredientPropType} from "../../../utils/data";
 import {
   ConstructorElement,
   DragIcon,
@@ -29,20 +30,7 @@ export default function BurgerListItem({ item, position, iconVis }) {
 }
 
 BurgerListItem.propTypes = {
-  item: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number,
-  }),
-  position: PropTypes.string,
-  iconVis: PropTypes.bool,
+  item: IngredientPropType.isRequired,
+  position: PropTypes.string.isRequired,
+  iconVis: PropTypes.bool.isRequired,
 };

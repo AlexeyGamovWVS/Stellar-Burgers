@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import BurgerListItem from "../burger-list-item/burger-list-item";
 import burgCompStyles from "./burger-components.module.css";
+import {IngredientPropType} from "../../../utils/data";
 
 export default function BurgerComponents({ data }) {
   let first;
@@ -49,20 +50,5 @@ export default function BurgerComponents({ data }) {
 }
 
 BurgerComponents.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    })
-  ).isRequired,
+  data: PropTypes.arrayOf(IngredientPropType).isRequired,
 };

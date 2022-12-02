@@ -7,3 +7,7 @@
   background: transparent;
   border-radius: 40px;
 }
+
+.linkText {
+	display: "inline-block";
+}
