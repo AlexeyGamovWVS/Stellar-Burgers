@@ -1,3 +1,10 @@
+/* Подключать модуль в app.js как оборачивающий компонент для всего приложения
+    <ErrorBoundary>
+      <AppHeader />
+      <AppMain data={ingredientsData}/>
+    </ErrorBoundary>
+*/
+
 import React from "react";
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
