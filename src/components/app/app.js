@@ -6,6 +6,7 @@ import api from "../utils/api";
 import Modal from "../modal/modal";
 import { ORDER_DATA } from "../utils/data";
 import OrderDetails from "../modal/orderDetails/orderDetails";
+import IngredientDetails from "../modal/ingredientDetails/ingredientDetails";
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -38,8 +39,8 @@ function App() {
 				</Modal>
 			)}
 			{currentIngredient && (
-				<Modal header='ingredient' onClose={closeIngredientPop}>
-					ингредиент
+				<Modal header='Детали ингредиента' onClose={closeIngredientPop}>
+					<IngredientDetails id={currentIngredient} data={ingredientsData} />
 				</Modal>
 			)}
     </ErrorBoundary>
