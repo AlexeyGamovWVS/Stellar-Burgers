@@ -4,8 +4,8 @@ import IngredientRow from "./ingredients-row/ingredients-row";
 import Ingredient from "./ingredient/ingredient";
 import { IngredientPropType } from "../../../utils/data";
 
-export default function Ingredients({ data }) {
-  const separatedData = getIngredientCards(data);
+export default function Ingredients({ data, opnIngredient }) {
+  const separatedData = getIngredientCards(data, opnIngredient);
   return (
     <div className={`${ingredStyles.rowsContainer} mt-10`}>
       <IngredientRow title="Булки">{separatedData.buns}</IngredientRow>
@@ -17,9 +17,10 @@ export default function Ingredients({ data }) {
 
 Ingredients.propTypes = {
   data: PropTypes.arrayOf(IngredientPropType).isRequired,
+	opnIngredient: PropTypes.func.isRequired,
 };
 
-function getIngredientCards(data) {
+function getIngredientCards(data, opnIngredient) {
   const buns = [],
     mains = [],
     sauces = [];
@@ -28,9 +29,11 @@ function getIngredientCards(data) {
     const ingredientCard = (
       <Ingredient
 				key={element._id}
+				opnId={element._id}
         name={element.name}
         image={element.image}
         price={element.price}
+				opnIngredient={opnIngredient}
       />
     );
     switch (element.type) {

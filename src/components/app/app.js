@@ -9,9 +9,12 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [ingredientsData, setIngredientsData] = React.useState([]);
 	const [isOrderVisible, setOrderVisibility] = React.useState(false);
+	const [currentIngredient, setCurrentIngredient] = React.useState(null);
 
 	const openOrderPop = () => setOrderVisibility(true);
 	const closeOrderPop = () => setOrderVisibility(false);
+	const openIngedientPop = (e) => setCurrentIngredient(e.currentTarget.id);
+	const closeIngredientPop = (e) => setCurrentIngredient(null);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -26,10 +29,15 @@ function App() {
 		: (
     <ErrorBoundary>
       <AppHeader />
-      <AppMain data={ingredientsData} opnOrder={openOrderPop}/>
+      <AppMain data={ingredientsData} opnOrder={openOrderPop} opnIngredient={openIngedientPop}/>
 			{isOrderVisible && (
 				<Modal header='ararart' onClose={closeOrderPop}>
 					ваш факинговый заказ
+				</Modal>
+			)}
+			{currentIngredient && (
+				<Modal header='ingredient' onClose={closeIngredientPop}>
+					ингредиент
 				</Modal>
 			)}
     </ErrorBoundary>
