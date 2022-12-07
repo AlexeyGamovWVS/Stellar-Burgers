@@ -18,16 +18,17 @@ function genOrder(data) {
 	return [BUN, SAUCE, MEAT, TREE, TORS, TORS, BUN];
 }
 
-export default function BurgerConstructor({data}) {
+export default function BurgerConstructor({data, opnOrder}) {
 	const YOUR_CHOICE = genOrder(data);
   return (
     <div className={`pt-25 ${constructurStyles.constructor}`}>
       <BurgerComponents data={YOUR_CHOICE} />
-      <PriceBox data={YOUR_CHOICE} />
+      <PriceBox data={YOUR_CHOICE} opnOrder={opnOrder}/>
     </div>
   );
 }
 
 BurgerConstructor.propTypes = {
 	data: PropTypes.arrayOf(IngredientPropType).isRequired,
+	opnOrder: PropTypes.func.isRequired,
 }

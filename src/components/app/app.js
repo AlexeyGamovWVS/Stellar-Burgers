@@ -10,7 +10,9 @@ function App() {
   const [ingredientsData, setIngredientsData] = React.useState([]);
 	const [isOrderVisible, setOrderVisibility] = React.useState(false);
 
-	
+	const openOrderPop = () => setOrderVisibility(true);
+	const closeOrderPop = () => setOrderVisibility(false);
+
   React.useEffect(() => {
     setIsLoading(true);
     api()
@@ -24,10 +26,12 @@ function App() {
 		: (
     <ErrorBoundary>
       <AppHeader />
-      <AppMain data={ingredientsData}/>
-			<Modal header='ararart'>
-				ваш факинговый заказ
-			</Modal>
+      <AppMain data={ingredientsData} opnOrder={openOrderPop}/>
+			{isOrderVisible && (
+				<Modal header='ararart' onClose={closeOrderPop}>
+					ваш факинговый заказ
+				</Modal>
+			)}
     </ErrorBoundary>
   );
 }

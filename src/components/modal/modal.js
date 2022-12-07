@@ -12,7 +12,7 @@ function Modal({ children, header, onClose }) {
         <ModalHeader close={onClose}>{header}</ModalHeader>
         {children}
       </div>
-      <ModalOverlay />
+      <ModalOverlay close={onClose}/>
     </>,
     modalRoot
   );
