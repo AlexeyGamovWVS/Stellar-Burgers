@@ -39,5 +39,5 @@ Substance.propTypes = {
 }
 IngredientDetails.propTypes = {
   id: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf(IngredientPropType),
+  data: PropTypes.arrayOf(IngredientPropType).isRequired,
 };
