@@ -8,7 +8,7 @@ const modalRoot = document.getElementById("modalRoot");
 function Modal({ children, header, onClose }) {
   return ReactDOM.createPortal(
     <>
-      <div className={`${modalStyles.modal} pl-10 pr-10 pt-10`}>
+      <div className={`${modalStyles.modal} p-10`}>
         <ModalHeader close={onClose}>{header}</ModalHeader>
         {children}
       </div>

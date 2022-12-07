@@ -4,6 +4,8 @@ import AppHeader from "../header/header";
 import AppMain from "../main/main";
 import api from "../utils/api";
 import Modal from "../modal/modal";
+import { ORDER_DATA } from "../utils/data";
+import OrderDetails from "../modal/orderDetails/orderDetails";
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -31,8 +33,8 @@ function App() {
       <AppHeader />
       <AppMain data={ingredientsData} opnOrder={openOrderPop} opnIngredient={openIngedientPop}/>
 			{isOrderVisible && (
-				<Modal header='ararart' onClose={closeOrderPop}>
-					ваш факинговый заказ
+				<Modal onClose={closeOrderPop}>
+					<OrderDetails order={ORDER_DATA}/>
 				</Modal>
 			)}
 			{currentIngredient && (

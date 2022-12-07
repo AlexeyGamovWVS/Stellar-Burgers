@@ -1,0 +1,1 @@
+import styles from "./ingredient-details.module.css";
