@@ -26,13 +26,13 @@ function App() {
       .catch((err) => alert(`Shit happens... ${err} Попробуйте обновить страничку`))
       .finally(() => setIsLoading(false));
   }, []);
-//	console.log(ingredientsData);
+
   return isLoading 
 		? (<p className="text text_type_main-large mt-30 ml-30">Загружаем продукты...</p>) 
 		: (
     <ErrorBoundary>
       <AppHeader />
-      <AppMain data={ingredientsData} opnOrder={openOrderPop} opnIngredient={openIngedientPop}/>
+      {ingredientsData.length && <AppMain data={ingredientsData} opnOrder={openOrderPop} opnIngredient={openIngedientPop}/>}
 			{isOrderVisible && (
 				<Modal onClose={closeOrderPop}>
 					<OrderDetails order={ORDER_DATA}/>

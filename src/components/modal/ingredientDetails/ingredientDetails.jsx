@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { IngredientPropType } from "../../utils/data";
 export default function IngredientDetails({ id, data }) {
   const item = data.find((el) => el._id === id);
-  console.log(item);
   return (
     <>
       <div className={styles.figure}>
@@ -34,7 +33,7 @@ function Substance({ amount, children }) {
 }
 
 Substance.propTypes = {
-	amount: PropTypes.string.isRequired,
+	amount: PropTypes.number.isRequired,
 	children: PropTypes.string.isRequired,
 }
 IngredientDetails.propTypes = {

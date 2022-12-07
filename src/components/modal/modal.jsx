@@ -53,7 +53,7 @@ Modal.propTypes = {
 
 ModalHeader.propTypes = {
 	close: PropTypes.func.isRequired,
-	children: PropTypes.string.isRequired
+	children: PropTypes.string
 }
 
 export default Modal;
