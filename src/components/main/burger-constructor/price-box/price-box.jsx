@@ -22,5 +22,5 @@ export default function PriceBox({ data, opnOrder }) {
 
 PriceBox.propTypes = {
   data: PropTypes.arrayOf(IngredientPropType.isRequired),
-	opnOrder: PropTypes.func.isRequired,
+  opnOrder: PropTypes.func.isRequired,
 };

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {IngredientPropType} from "../../../utils/data";
+import { IngredientPropType } from "../../../utils/data";
 import {
   ConstructorElement,
   DragIcon,

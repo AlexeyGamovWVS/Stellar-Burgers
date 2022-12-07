@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import modalStyles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 import ModalOverlay from "./modalOverlay/modalOverlay";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const modalRoot = document.getElementById("modalRoot");
 
@@ -46,14 +46,14 @@ function ModalHeader({ close, children }) {
 }
 
 Modal.propTypes = {
-	children: PropTypes.element.isRequired, 
-	header: PropTypes.string, 
-	onClose: PropTypes.func.isRequired
-}
+  children: PropTypes.element.isRequired,
+  header: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
+};
 
 ModalHeader.propTypes = {
-	close: PropTypes.func.isRequired,
-	children: PropTypes.string
-}
+  close: PropTypes.func.isRequired,
+  children: PropTypes.string,
+};
 
 export default Modal;

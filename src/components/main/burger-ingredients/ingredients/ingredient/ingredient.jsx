@@ -5,7 +5,13 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-export default function Ingredient({ name, price, image, opnIngredient, opnId }) {
+export default function Ingredient({
+  name,
+  price,
+  image,
+  opnIngredient,
+  opnId,
+}) {
   return (
     <li className={itemStyles.item} onClick={opnIngredient} id={opnId}>
       <Counter count={1} size="default" />
@@ -23,6 +29,6 @@ Ingredient.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
-	opnIngredient: PropTypes.func.isRequired,
-	opnId: PropTypes.string.isRequired
+  opnIngredient: PropTypes.func.isRequired,
+  opnId: PropTypes.string.isRequired,
 };

@@ -17,7 +17,7 @@ export default function Ingredients({ data, opnIngredient }) {
 
 Ingredients.propTypes = {
   data: PropTypes.arrayOf(IngredientPropType).isRequired,
-	opnIngredient: PropTypes.func.isRequired,
+  opnIngredient: PropTypes.func.isRequired,
 };
 
 function getIngredientCards(data, opnIngredient) {
@@ -28,12 +28,12 @@ function getIngredientCards(data, opnIngredient) {
   data.forEach((element) => {
     const ingredientCard = (
       <Ingredient
-				key={element._id}
-				opnId={element._id}
+        key={element._id}
+        opnId={element._id}
         name={element.name}
         image={element.image}
         price={element.price}
-				opnIngredient={opnIngredient}
+        opnIngredient={opnIngredient}
       />
     );
     switch (element.type) {

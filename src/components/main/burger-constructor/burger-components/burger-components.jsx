@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import BurgerListItem from "../burger-list-item/burger-list-item";
 import burgCompStyles from "./burger-components.module.css";
-import {IngredientPropType} from "../../../utils/data";
+import { IngredientPropType } from "../../../utils/data";
 
 export default function BurgerComponents({ data }) {
   let first;

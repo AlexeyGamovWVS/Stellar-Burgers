@@ -10,10 +10,10 @@ export default function IngredientDetails({ id, data }) {
       </div>
       <p className="text text_type_main-medium mt-4 mb-8">{item.name}</p>
       <ul className={`${styles.list} mb-5`}>
-				<Substance amount={item.calories}>Калории,ккал</Substance>
+        <Substance amount={item.calories}>Калории,ккал</Substance>
         <Substance amount={item.proteins}>Белки, г</Substance>
         <Substance amount={item.fat}>Жиры, г</Substance>
-				<Substance amount={item.carbohydrates}>Углеводы, г</Substance>
+        <Substance amount={item.carbohydrates}>Углеводы, г</Substance>
       </ul>
     </>
   );
@@ -33,9 +33,9 @@ function Substance({ amount, children }) {
 }
 
 Substance.propTypes = {
-	amount: PropTypes.number.isRequired,
-	children: PropTypes.string.isRequired,
-}
+  amount: PropTypes.number.isRequired,
+  children: PropTypes.string.isRequired,
+};
 IngredientDetails.propTypes = {
   id: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(IngredientPropType).isRequired,
