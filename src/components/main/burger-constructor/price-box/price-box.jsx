@@ -5,7 +5,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import priceStyles from "./price-box.module.css";
-export default function PriceBox({ data, opnOrder }) {
+export default function PriceBox({ data, onOpen }) {
   const sum = data.reduce((prev, next) => prev + next.price, 0);
   return (
     <div className={`${priceStyles.handlers} mt-10`}>
@@ -13,7 +13,7 @@ export default function PriceBox({ data, opnOrder }) {
         <p className="text text_type_digits-medium mr-2">{sum}</p>
         <CurrencyIcon type="primary" />
       </div>
-      <Button type="primary" size="large" htmlType="button" onClick={opnOrder}>
+      <Button type="primary" size="large" htmlType="button" onClick={onOpen}>
         Оформить заказ
       </Button>
     </div>
@@ -22,5 +22,5 @@ export default function PriceBox({ data, opnOrder }) {
 
 PriceBox.propTypes = {
   data: PropTypes.arrayOf(IngredientPropType.isRequired),
-  opnOrder: PropTypes.func.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };

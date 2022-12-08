@@ -16,7 +16,7 @@ function App() {
 
   const openOrderPop = () => setOrderVisibility(true);
   const closeOrderPop = () => setOrderVisibility(false);
-  const openIngedientPop = (e) => setCurrentIngredient(e.currentTarget.id);
+  const openIngredientPop = (e) => setCurrentIngredient(e.currentTarget.id);
   const closeIngredientPop = (e) => setCurrentIngredient(null);
 
   React.useEffect(() => {
@@ -39,8 +39,8 @@ function App() {
       {ingredientsData.length && (
         <AppMain
           data={ingredientsData}
-          opnOrder={openOrderPop}
-          opnIngredient={openIngedientPop}
+          onOpenOrder={openOrderPop}
+          onOpenIngredient={openIngredientPop}
         />
       )}
       {isOrderVisible && (

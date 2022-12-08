@@ -5,32 +5,32 @@ import PropTypes from "prop-types";
 import { IngredientPropType } from "../../utils/data";
 
 function genOrder(data) {
-  const BUN = data.find((item) => item.name === "Краторная булка N-200i");
-  const SAUCE = data.find(
+  const bun = data.find((item) => item.name === "Краторная булка N-200i");
+  const sauce = data.find(
     (item) => item.name === "Соус традиционный галактический"
   );
-  const MEAT = data.find(
+  const meat = data.find(
     (item) => item.name === "Мясо бессмертных моллюсков Protostomia"
   );
-  const TREE = data.find((item) => item.name === "Плоды Фалленианского дерева");
-  const TORS = data.find(
+  const tree = data.find((item) => item.name === "Плоды Фалленианского дерева");
+  const tors = data.find(
     (item) => item.name === "Хрустящие минеральные кольца"
   );
 
-  return [BUN, SAUCE, MEAT, TREE, TORS, TORS, BUN];
+  return [bun, sauce, meat, tree, tors, tors, bun];
 }
 
-export default function BurgerConstructor({ data, opnOrder }) {
-  const YOUR_CHOICE = genOrder(data);
+export default function BurgerConstructor({ data, onOpen }) {
+  const yourChioce = genOrder(data);
   return (
     <div className={`pt-25 ${constructurStyles.constructor}`}>
-      <BurgerComponents data={YOUR_CHOICE} />
-      <PriceBox data={YOUR_CHOICE} opnOrder={opnOrder} />
+      <BurgerComponents data={yourChioce} />
+      <PriceBox data={yourChioce} onOpen={onOpen} />
     </div>
   );
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(IngredientPropType).isRequired,
-  opnOrder: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(IngredientPropType.isRequired).isRequired,
+  onOpen: PropTypes.func.isRequired,
 };

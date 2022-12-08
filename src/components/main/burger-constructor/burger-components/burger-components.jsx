@@ -50,5 +50,5 @@ export default function BurgerComponents({ data }) {
 }
 
 BurgerComponents.propTypes = {
-  data: PropTypes.arrayOf(IngredientPropType).isRequired,
+  data: PropTypes.arrayOf(IngredientPropType.isRequired).isRequired,
 };

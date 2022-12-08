@@ -4,19 +4,19 @@ import mainStyles from "./main.module.css";
 import PropTypes from "prop-types";
 import { IngredientPropType } from "../utils/data";
 
-export default function Main({ data, opnOrder, opnIngredient }) {
+export default function Main({ data, onOpenOrder, onOpenIngredient }) {
   return (
     <main>
       <section className={mainStyles.main}>
-        <BurgerIngredients data={data} opnIngredient={opnIngredient} />
-        <BurgerConstructor data={data} opnOrder={opnOrder} />
+        <BurgerIngredients data={data} onOpen={onOpenIngredient} />
+        <BurgerConstructor data={data} onOpen={onOpenOrder} />
       </section>
     </main>
   );
 }
 
 Main.protoTypes = {
-  data: PropTypes.arrayOf(IngredientPropType).isRequired,
-  opnOrder: PropTypes.func.isRequired,
-  opnIngredient: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(IngredientPropType.isRequired).isRequired,
+  onOpenOrder: PropTypes.func.isRequired,
+  onOpenIngredient: PropTypes.func.isRequired,
 };
