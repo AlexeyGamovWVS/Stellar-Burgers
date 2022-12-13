@@ -2,18 +2,19 @@ import React from "react";
 import ErrorBoundary from "../utils/errorBoudary";
 import AppHeader from "../header/header";
 import AppMain from "../main/main";
-import api from "../utils/api";
+import { api } from "../utils/api";
 import Modal from "../modal/modal";
-import { ORDER_DATA } from "../utils/data";
 import OrderDetails from "../modal/orderDetails/orderDetails";
 import IngredientDetails from "../modal/ingredientDetails/ingredientDetails";
 import { IngredientsContext } from "../../services/appContext";
+import { OrderContext } from "../../services/orderContext";
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [ingredientsData, setIngredientsData] = React.useState([]);
   const [isOrderVisible, setOrderVisibility] = React.useState(false);
   const [currentIngredient, setCurrentIngredient] = React.useState(null);
+  const [orderDetails, setOrderDetails] = React.useState({});
 
   const openOrderPop = () => setOrderVisibility(true);
   const closeOrderPop = () => setOrderVisibility(false);
@@ -39,23 +40,25 @@ function App() {
       {ingredientsData.length && (
         <IngredientsContext.Provider value={ingredientsData}>
           <AppHeader />
-          <AppMain
-            onOpenOrder={openOrderPop}
-            onOpenIngredient={openIngredientPop}
-          />
-          {isOrderVisible && (
-            <Modal onClose={closeOrderPop}>
-              <OrderDetails order={ORDER_DATA} />
-            </Modal>
-          )}
-          {currentIngredient && (
-            <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
-              <IngredientDetails
-                id={currentIngredient}
-                data={ingredientsData}
-              />
-            </Modal>
-          )}
+          <OrderContext.Provider value={{ orderDetails, setOrderDetails }}>
+            <AppMain
+              onOpenOrder={openOrderPop}
+              onOpenIngredient={openIngredientPop}
+            />
+            {isOrderVisible && (
+              <Modal onClose={closeOrderPop}>
+                <OrderDetails />
+              </Modal>
+            )}
+            {currentIngredient && (
+              <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
+                <IngredientDetails
+                  id={currentIngredient}
+                  data={ingredientsData}
+                />
+              </Modal>
+            )}
+          </OrderContext.Provider>
         </IngredientsContext.Provider>
       )}
     </ErrorBoundary>

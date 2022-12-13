@@ -1,12 +1,14 @@
 import styles from "./order-details.module.css";
 import doneIcon from "../../../assets/images/done.gif";
-import PropTypes from "prop-types";
+import { useContext } from "react";
+import { OrderContext } from "../../../services/orderContext";
 
-export default function OrderDetails({ order }) {
+export default function OrderDetails() {
+	const {orderDetails} = useContext(OrderContext);
   return (
     <>
       <p className={`${styles.number} text text_type_digits-large mt-4`}>
-        {order._id}
+        {orderDetails.order.number}
       </p>
       <p className={`text text_type_main-medium mt-8`}>идентификатор заказа</p>
       <img className="mt-15" src={doneIcon} alt="Галочка." />
@@ -21,7 +23,3 @@ export default function OrderDetails({ order }) {
     </>
   );
 }
-
-OrderDetails.propTypes = {
-  order: PropTypes.shape({ _id: PropTypes.string.isRequired }).isRequired,
-};
