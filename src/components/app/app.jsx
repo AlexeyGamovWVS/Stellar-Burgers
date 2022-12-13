@@ -52,10 +52,7 @@ function App() {
             )}
             {currentIngredient && (
               <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
-                <IngredientDetails
-                  id={currentIngredient}
-                  data={ingredientsData}
-                />
+                <IngredientDetails id={currentIngredient} />
               </Modal>
             )}
           </OrderContext.Provider>

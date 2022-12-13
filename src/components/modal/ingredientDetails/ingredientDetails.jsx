@@ -1,8 +1,10 @@
 import styles from "./ingredient-details.module.css";
 import PropTypes from "prop-types";
-import { IngredientPropType } from "../../utils/data";
 import Substance from "./substance/substance";
-export default function IngredientDetails({ id, data }) {
+import { useContext } from "react";
+import { IngredientsContext } from "../../../services/appContext";
+export default function IngredientDetails({ id }) {
+	const data = useContext(IngredientsContext)
   const item = data.find((el) => el._id === id);
   return (
     <>
@@ -22,5 +24,4 @@ export default function IngredientDetails({ id, data }) {
 
 IngredientDetails.propTypes = {
   id: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf(IngredientPropType).isRequired,
 };
