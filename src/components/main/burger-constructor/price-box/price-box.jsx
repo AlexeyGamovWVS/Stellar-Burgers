@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
-import { IngredientPropType } from "../../../utils/data";
 import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import priceStyles from "./price-box.module.css";
-export default function PriceBox({ data, onOpen }) {
+import { useContext } from "react";
+import { ChoiceContext } from "../../../../services/appContext";
+export default function PriceBox({ onOpen }) {
+	const data = useContext(ChoiceContext);
   const sum = data.reduce((prev, next) => prev + next.price, 0);
   return (
     <div className={`${priceStyles.handlers} mt-10`}>
@@ -21,6 +23,5 @@ export default function PriceBox({ data, onOpen }) {
 }
 
 PriceBox.propTypes = {
-  data: PropTypes.arrayOf(IngredientPropType.isRequired),
   onOpen: PropTypes.func.isRequired,
 };

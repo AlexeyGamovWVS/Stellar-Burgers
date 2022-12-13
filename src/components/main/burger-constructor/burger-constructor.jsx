@@ -2,7 +2,11 @@ import constructurStyles from "./burger-constructor.module.css";
 import BurgerComponents from "./burger-components/burger-components";
 import PriceBox from "./price-box/price-box";
 import PropTypes from "prop-types";
-import { IngredientPropType } from "../../utils/data";
+import { useContext } from "react";
+import {
+  ChoiceContext,
+  IngredientsContext,
+} from "../../../services/appContext";
 
 function genOrder(data) {
   const bun = data.find((item) => item.name === "Краторная булка N-200i");
@@ -20,17 +24,19 @@ function genOrder(data) {
   return [bun, sauce, meat, tree, tors, tors, bun];
 }
 
-export default function BurgerConstructor({ data, onOpen }) {
+export default function BurgerConstructor({ onOpen }) {
+  const data = useContext(IngredientsContext);
   const yourChioce = genOrder(data);
   return (
     <div className={`pt-25 ${constructurStyles.constructor}`}>
-      <BurgerComponents data={yourChioce} />
-      <PriceBox data={yourChioce} onOpen={onOpen} />
+      <ChoiceContext.Provider value={yourChioce}>
+        <BurgerComponents />
+        <PriceBox onOpen={onOpen} />
+      </ChoiceContext.Provider>
     </div>
   );
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(IngredientPropType.isRequired).isRequired,
   onOpen: PropTypes.func.isRequired,
 };

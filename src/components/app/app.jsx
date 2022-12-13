@@ -7,6 +7,7 @@ import Modal from "../modal/modal";
 import { ORDER_DATA } from "../utils/data";
 import OrderDetails from "../modal/orderDetails/orderDetails";
 import IngredientDetails from "../modal/ingredientDetails/ingredientDetails";
+import { IngredientsContext } from "../../services/appContext";
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -35,23 +36,27 @@ function App() {
     </p>
   ) : (
     <ErrorBoundary>
-      <AppHeader />
       {ingredientsData.length && (
-        <AppMain
-          data={ingredientsData}
-          onOpenOrder={openOrderPop}
-          onOpenIngredient={openIngredientPop}
-        />
-      )}
-      {isOrderVisible && (
-        <Modal onClose={closeOrderPop}>
-          <OrderDetails order={ORDER_DATA} />
-        </Modal>
-      )}
-      {currentIngredient && (
-        <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
-          <IngredientDetails id={currentIngredient} data={ingredientsData} />
-        </Modal>
+        <IngredientsContext.Provider value={ingredientsData}>
+          <AppHeader />
+          <AppMain
+            onOpenOrder={openOrderPop}
+            onOpenIngredient={openIngredientPop}
+          />
+          {isOrderVisible && (
+            <Modal onClose={closeOrderPop}>
+              <OrderDetails order={ORDER_DATA} />
+            </Modal>
+          )}
+          {currentIngredient && (
+            <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
+              <IngredientDetails
+                id={currentIngredient}
+                data={ingredientsData}
+              />
+            </Modal>
+          )}
+        </IngredientsContext.Provider>
       )}
     </ErrorBoundary>
   );

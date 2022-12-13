@@ -2,9 +2,11 @@ import PropTypes from "prop-types";
 import ingredStyles from "./ingredients.module.css";
 import IngredientRow from "./ingredients-row/ingredients-row";
 import Ingredient from "./ingredient/ingredient";
-import { IngredientPropType } from "../../../utils/data";
+import { useContext } from "react";
+import { IngredientsContext } from "../../../../services/appContext";
 
-export default function Ingredients({ data, onOpen }) {
+export default function Ingredients({ onOpen }) {
+	const data = useContext(IngredientsContext);
   const separatedData = getIngredientCards(data, onOpen);
   return (
     <div className={`${ingredStyles.rowsContainer} mt-10`}>
@@ -16,7 +18,6 @@ export default function Ingredients({ data, onOpen }) {
 }
 
 Ingredients.propTypes = {
-  data: PropTypes.arrayOf(IngredientPropType.isRequired).isRequired,
   onOpen: PropTypes.func.isRequired,
 };
 

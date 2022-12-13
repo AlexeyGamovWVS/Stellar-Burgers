@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
 import BurgerListItem from "../burger-list-item/burger-list-item";
 import burgCompStyles from "./burger-components.module.css";
-import { IngredientPropType } from "../../../utils/data";
-
-export default function BurgerComponents({ data }) {
+import { ChoiceContext } from "../../../../services/appContext";
+import { useContext } from "react";
+export default function BurgerComponents() {
+	const data = useContext(ChoiceContext);
   let first;
   let last;
   const components = [];
@@ -48,7 +48,3 @@ export default function BurgerComponents({ data }) {
     </ul>
   );
 }
-
-BurgerComponents.propTypes = {
-  data: PropTypes.arrayOf(IngredientPropType.isRequired).isRequired,
-};
