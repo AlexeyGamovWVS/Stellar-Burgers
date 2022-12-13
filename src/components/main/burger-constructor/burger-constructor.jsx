@@ -21,7 +21,7 @@ function genOrder(data) {
     (item) => item.name === "Хрустящие минеральные кольца"
   );
 
-  return [bun, sauce, meat, tree, tors, tors, bun];
+  return [bun, sauce, meat, tree, tors, tors];
 }
 
 export default function BurgerConstructor({ onOpen }) {

@@ -2,15 +2,24 @@ import BurgerListItem from "../burger-list-item/burger-list-item";
 import burgCompStyles from "./burger-components.module.css";
 import { ChoiceContext } from "../../../../services/appContext";
 import { useContext } from "react";
+import bunImage from "../../../../assets/images/default-bun.png";
+
+const EMPTY_BUN = {
+  name: "Выберите булку",
+  price: 0,
+  image: bunImage,
+};
+
 export default function BurgerComponents() {
-	const data = useContext(ChoiceContext);
-  let first;
-  let last;
+  const chosenItems = useContext(ChoiceContext);
+  let firstBun;
+  let lastBun;
   const components = [];
-  data.forEach((element, index, arr) => {
-    switch (index) {
-      case 0:
-        first = (
+
+  chosenItems.forEach((element, index) => {
+    switch (element.type) {
+      case "bun":
+        firstBun = (
           <BurgerListItem
             item={element}
             position="top"
@@ -18,14 +27,12 @@ export default function BurgerComponents() {
             key={element._id + index}
           />
         );
-        break;
-      case arr.length - 1:
-        last = (
+        lastBun = (
           <BurgerListItem
             item={element}
             position="bottom"
             iconVis={false}
-            key={element._id + index}
+            key={element._id + index + "bottom"}
           />
         );
         break;
@@ -42,9 +49,27 @@ export default function BurgerComponents() {
   });
   return (
     <ul className={burgCompStyles.primaryList}>
-      {first}
-      <ul className={burgCompStyles.secondaryList}>{components}</ul>
-      {last}
+      {firstBun ? (
+        firstBun
+      ) : (
+        <BurgerListItem
+          item={EMPTY_BUN}
+          position="top"
+          iconVis={false}
+          key={Math.floor(Math.random() * 999999999999999)}
+        />
+      )}
+      <ul className={burgCompStyles.secondaryList}>{components.length > 0 && components}</ul>
+      {lastBun ? (
+        lastBun
+      ) : (
+        <BurgerListItem
+          item={EMPTY_BUN}
+          position="bottom"
+          iconVis={false}
+          key={Math.floor(Math.random() * 999999999999999)}
+        />
+      )}
     </ul>
   );
 }
