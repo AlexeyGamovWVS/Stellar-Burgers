@@ -15,7 +15,6 @@ function App() {
   const [currentIngredient, setCurrentIngredient] = React.useState(null);
   const [orderDetails, setOrderDetails] = React.useState(null);
 
-  const closeOrderPop = () => setOrderDetails(null);
   const openIngredientPop = (e) => setCurrentIngredient(e.currentTarget.id);
   const closeIngredientPop = (e) => setCurrentIngredient(null);
 
@@ -43,12 +42,12 @@ function App() {
               onOpenIngredient={openIngredientPop}
             />
             {orderDetails !== null && (
-                <Modal onClose={closeOrderPop}>
+                <Modal onClose={()=> setOrderDetails(null)}>
                   <OrderDetails />
                 </Modal>
               )}
             {currentIngredient && (
-              <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
+              <Modal header="Детали ингредиента" onClose={(closeIngredientPop)}>
                 <IngredientDetails id={currentIngredient} />
               </Modal>
             )}
