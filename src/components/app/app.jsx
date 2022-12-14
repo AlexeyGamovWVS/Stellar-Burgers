@@ -3,17 +3,11 @@ import ErrorBoundary from "../utils/errorBoudary";
 import AppHeader from "../header/header";
 import AppMain from "../main/main";
 import { api } from "../utils/api";
-import Modal from "../modal/modal";
-import IngredientDetails from "../modal/ingredientDetails/ingredientDetails";
 import { IngredientsContext } from "../../services/appContext";
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [ingredientsData, setIngredientsData] = React.useState([]);
-  const [currentIngredient, setCurrentIngredient] = React.useState(null);
-
-  const openIngredientPop = (e) => setCurrentIngredient(e.currentTarget.id);
-  const closeIngredientPop = (e) => setCurrentIngredient(null);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -32,15 +26,12 @@ function App() {
   ) : (
     <ErrorBoundary>
       {ingredientsData.length && (
-        <IngredientsContext.Provider value={ingredientsData}>
+        <>
           <AppHeader />
-          <AppMain onOpenIngredient={openIngredientPop} />
-          {currentIngredient && (
-            <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
-              <IngredientDetails id={currentIngredient} />
-            </Modal>
-          )}
-        </IngredientsContext.Provider>
+          <IngredientsContext.Provider value={ingredientsData}>
+            <AppMain />
+          </IngredientsContext.Provider>
+        </>
       )}
     </ErrorBoundary>
   );
