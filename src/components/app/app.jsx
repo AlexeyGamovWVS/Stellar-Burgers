@@ -12,12 +12,10 @@ import { OrderContext } from "../../services/orderContext";
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [ingredientsData, setIngredientsData] = React.useState([]);
-  const [isOrderVisible, setOrderVisibility] = React.useState(false);
   const [currentIngredient, setCurrentIngredient] = React.useState(null);
-  const [orderDetails, setOrderDetails] = React.useState({});
+  const [orderDetails, setOrderDetails] = React.useState(null);
 
-  const openOrderPop = () => setOrderVisibility(true);
-  const closeOrderPop = () => setOrderVisibility(false);
+  const closeOrderPop = () => setOrderDetails(null);
   const openIngredientPop = (e) => setCurrentIngredient(e.currentTarget.id);
   const closeIngredientPop = (e) => setCurrentIngredient(null);
 
@@ -42,14 +40,13 @@ function App() {
           <AppHeader />
           <OrderContext.Provider value={{ orderDetails, setOrderDetails }}>
             <AppMain
-              onOpenOrder={openOrderPop}
               onOpenIngredient={openIngredientPop}
             />
-            {isOrderVisible && (
-              <Modal onClose={closeOrderPop}>
-                <OrderDetails />
-              </Modal>
-            )}
+            {orderDetails !== null && (
+                <Modal onClose={closeOrderPop}>
+                  <OrderDetails />
+                </Modal>
+              )}
             {currentIngredient && (
               <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
                 <IngredientDetails id={currentIngredient} />

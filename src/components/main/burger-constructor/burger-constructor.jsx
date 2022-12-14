@@ -1,7 +1,6 @@
 import constructurStyles from "./burger-constructor.module.css";
 import BurgerComponents from "./burger-components/burger-components";
 import PriceBox from "./price-box/price-box";
-import PropTypes from "prop-types";
 import { useContext } from "react";
 import {
   ChoiceContext,
@@ -24,19 +23,15 @@ function genOrder(data) {
   return [bun, sauce, meat, tree, tors, tors];
 }
 
-export default function BurgerConstructor({ onOpen }) {
+export default function BurgerConstructor() {
   const data = useContext(IngredientsContext);
   const yourChioce = genOrder(data);
   return (
     <div className={`pt-25 ${constructurStyles.constructor}`}>
       <ChoiceContext.Provider value={yourChioce}>
         <BurgerComponents />
-        <PriceBox onOpen={onOpen} />
+        <PriceBox />
       </ChoiceContext.Provider>
     </div>
   );
 }
-
-BurgerConstructor.propTypes = {
-  onOpen: PropTypes.func.isRequired,
-};

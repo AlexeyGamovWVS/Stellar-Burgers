@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {
   CurrencyIcon,
   Button,
@@ -8,17 +7,14 @@ import { useContext } from "react";
 import { ChoiceContext } from "../../../../services/appContext";
 import { sendOrder } from "../../../utils/api";
 import { OrderContext } from "../../../../services/orderContext";
-export default function PriceBox({ onOpen }) {
+export default function PriceBox() {
   const data = useContext(ChoiceContext);
   const { setOrderDetails } = useContext(OrderContext);
+	
   const orderBtnClick = () => {
     const dataIds = data.map((item) => item._id);
     sendOrder(dataIds)
-      .then((res) => {
-        onOpen();
-        console.log(res);
-        setOrderDetails(res);
-      })
+      .then((res) => setOrderDetails(res))
       .catch((err) => {
         alert(
           "Не удалось отправить заказ, вероятно у нас какие-то неполадки с сервером. Попробуйте ещё раз позднее. " +
@@ -51,7 +47,3 @@ export default function PriceBox({ onOpen }) {
     </div>
   );
 }
-
-PriceBox.propTypes = {
-  onOpen: PropTypes.func.isRequired,
-};
