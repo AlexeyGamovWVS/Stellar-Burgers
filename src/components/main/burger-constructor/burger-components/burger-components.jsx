@@ -17,6 +17,7 @@ const GET_RANDOM = () => {
 
 export default function BurgerComponents() {
   const chosenItems = useContext(ChoiceContext);
+	
   const ingredients = useMemo(
     () => chosenItems.filter((item) => item.type !== COMPONENT_TYPES.buns),
     [chosenItems]

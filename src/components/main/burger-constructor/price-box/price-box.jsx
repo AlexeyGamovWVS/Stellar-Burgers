@@ -15,6 +15,7 @@ export default function PriceBox() {
 
   const orderBtnClick = () => {
     const dataIds = data.map((item) => item._id);
+		
     sendOrder(dataIds)
       .then((res) => setOrderDetails(res))
       .catch((err) => {
