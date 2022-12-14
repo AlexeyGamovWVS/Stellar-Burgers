@@ -3,6 +3,7 @@ import burgCompStyles from "./burger-components.module.css";
 import { ChoiceContext } from "../../../../services/appContext";
 import { useContext, useMemo } from "react";
 import bunImage from "../../../../assets/images/default-bun.png";
+import { COMPONENT_TYPES } from "../../../utils/data";
 
 const EMPTY_BUN = {
   name: "Выберите булку",
@@ -17,12 +18,12 @@ const GET_RANDOM = () => {
 export default function BurgerComponents() {
   const chosenItems = useContext(ChoiceContext);
   const ingredients = useMemo(
-    () => chosenItems.filter((item) => item.type !== "bun"),
+    () => chosenItems.filter((item) => item.type !== COMPONENT_TYPES.buns),
     [chosenItems]
   );
 	//надо ли для булки использовать useMemo?...
   const bun = useMemo(
-    () => chosenItems.find((item) => item.type === "bun"),
+    () => chosenItems.find((item) => item.type === COMPONENT_TYPES.buns),
     [chosenItems]
   );
 

@@ -1,7 +1,7 @@
 import constructurStyles from "./burger-constructor.module.css";
 import BurgerComponents from "./burger-components/burger-components";
 import PriceBox from "./price-box/price-box";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import {
   ChoiceContext,
   IngredientsContext,
@@ -29,7 +29,7 @@ function genOrder(data) {
 export default function BurgerConstructor() {
   const data = useContext(IngredientsContext);
   const [orderDetails, setOrderDetails] = useState(null);
-  const yourChioce = genOrder(data);
+  const yourChioce = useMemo(() => genOrder(data), [data]);
   return (
     <div className={`pt-25 ${constructurStyles.constructor}`}>
       <ChoiceContext.Provider value={yourChioce}>

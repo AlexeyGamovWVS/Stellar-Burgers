@@ -1,11 +1,11 @@
 import styles from "./ingredient-details.module.css";
 import PropTypes from "prop-types";
 import Substance from "./substance/substance";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { IngredientsContext } from "../../../services/appContext";
 export default function IngredientDetails({ id }) {
-	const data = useContext(IngredientsContext)
-  const item = data.find((el) => el._id === id);
+  const data = useContext(IngredientsContext);
+  const item = useMemo(() => data.find((el) => el._id === id), [data, id]);
   return (
     <>
       <div className={styles.figure}>

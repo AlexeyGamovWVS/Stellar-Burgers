@@ -1,5 +1,10 @@
 import PropTypes from "prop-types";
 const URL_API = "https://norma.nomoreparties.space/api";
+const COMPONENT_TYPES = {
+  buns: "bun",
+  sauces: "sauce",
+  mains: "main",
+};
 
 const IngredientPropType = PropTypes.shape({
   _id: PropTypes.string,
@@ -16,4 +21,4 @@ const IngredientPropType = PropTypes.shape({
   __v: PropTypes.number,
 });
 
-export { IngredientPropType, URL_API };
+export { IngredientPropType, URL_API, COMPONENT_TYPES };
