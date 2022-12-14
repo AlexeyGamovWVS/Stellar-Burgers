@@ -1,11 +1,14 @@
 import constructurStyles from "./burger-constructor.module.css";
 import BurgerComponents from "./burger-components/burger-components";
 import PriceBox from "./price-box/price-box";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   ChoiceContext,
   IngredientsContext,
 } from "../../../services/appContext";
+import { OrderContext } from "../../../services/orderContext";
+import OrderDetails from "../../modal/orderDetails/orderDetails";
+import Modal from "../../modal/modal";
 
 function genOrder(data) {
   const bun = data.find((item) => item.name === "Краторная булка N-200i");
@@ -25,12 +28,20 @@ function genOrder(data) {
 
 export default function BurgerConstructor() {
   const data = useContext(IngredientsContext);
+  const [orderDetails, setOrderDetails] = useState(null);
   const yourChioce = genOrder(data);
   return (
     <div className={`pt-25 ${constructurStyles.constructor}`}>
       <ChoiceContext.Provider value={yourChioce}>
         <BurgerComponents />
-        <PriceBox />
+        <OrderContext.Provider value={{ orderDetails, setOrderDetails }}>
+          <PriceBox />
+          {orderDetails !== null && (
+            <Modal onClose={() => setOrderDetails(null)}>
+              <OrderDetails />
+            </Modal>
+          )}
+        </OrderContext.Provider>
       </ChoiceContext.Provider>
     </div>
   );
