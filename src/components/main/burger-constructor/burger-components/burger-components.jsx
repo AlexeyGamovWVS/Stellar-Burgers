@@ -1,54 +1,59 @@
-import PropTypes from "prop-types";
 import BurgerListItem from "../burger-list-item/burger-list-item";
 import burgCompStyles from "./burger-components.module.css";
-import { IngredientPropType } from "../../../utils/data";
+import { ChoiceContext } from "../../../../services/appContext";
+import { useContext, useMemo } from "react";
+import bunImage from "../../../../assets/images/default-bun.png";
+import { COMPONENT_TYPES } from "../../../utils/data";
 
-export default function BurgerComponents({ data }) {
-  let first;
-  let last;
-  const components = [];
-  data.forEach((element, index, arr) => {
-    switch (index) {
-      case 0:
-        first = (
-          <BurgerListItem
-            item={element}
-            position="top"
-            iconVis={false}
-            key={element._id + index}
-          />
-        );
-        break;
-      case arr.length - 1:
-        last = (
-          <BurgerListItem
-            item={element}
-            position="bottom"
-            iconVis={false}
-            key={element._id + index}
-          />
-        );
-        break;
-      default:
-        components.push(
-          <BurgerListItem
-            item={element}
-            position="default"
-            iconVis={true}
-            key={element._id + index}
-          />
-        );
-    }
-  });
+const EMPTY_BUN = {
+  name: "Выберите булку",
+  price: 0,
+  image: bunImage,
+};
+
+const GET_RANDOM = () => {
+  return `${Math.floor(Math.random() * 999999999999999)}`;
+};
+
+export default function BurgerComponents() {
+  const chosenItems = useContext(ChoiceContext);
+	
+  const ingredients = useMemo(
+    () => chosenItems.filter((item) => item.type !== COMPONENT_TYPES.buns),
+    [chosenItems]
+  );
+	//надо ли для булки использовать useMemo?...
+  const bun = useMemo(
+    () => chosenItems.find((item) => item.type === COMPONENT_TYPES.buns),
+    [chosenItems]
+  );
+
   return (
     <ul className={burgCompStyles.primaryList}>
-      {first}
-      <ul className={burgCompStyles.secondaryList}>{components}</ul>
-      {last}
+      <BurgerListItem
+        item={bun ? bun : EMPTY_BUN}
+        position="top"
+        iconVis={false}
+        key={bun ? bun._id : GET_RANDOM()}
+      />
+
+      <ul className={burgCompStyles.secondaryList}>
+        {ingredients.map((item, index) => (
+          <BurgerListItem
+            item={item}
+            position="default"
+            iconVis={true}
+            key={item._id + index}
+          />
+        ))}
+      </ul>
+
+      <BurgerListItem
+        item={bun ? bun : EMPTY_BUN}
+        position="bottom"
+        iconVis={false}
+        key={bun ? bun._id + GET_RANDOM() : GET_RANDOM()}
+      />
     </ul>
   );
 }
-
-BurgerComponents.propTypes = {
-  data: PropTypes.arrayOf(IngredientPropType.isRequired).isRequired,
-};

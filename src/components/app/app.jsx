@@ -2,22 +2,12 @@ import React from "react";
 import ErrorBoundary from "../utils/errorBoudary";
 import AppHeader from "../header/header";
 import AppMain from "../main/main";
-import api from "../utils/api";
-import Modal from "../modal/modal";
-import { ORDER_DATA } from "../utils/data";
-import OrderDetails from "../modal/orderDetails/orderDetails";
-import IngredientDetails from "../modal/ingredientDetails/ingredientDetails";
+import { api } from "../utils/api";
+import { IngredientsContext } from "../../services/appContext";
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [ingredientsData, setIngredientsData] = React.useState([]);
-  const [isOrderVisible, setOrderVisibility] = React.useState(false);
-  const [currentIngredient, setCurrentIngredient] = React.useState(null);
-
-  const openOrderPop = () => setOrderVisibility(true);
-  const closeOrderPop = () => setOrderVisibility(false);
-  const openIngredientPop = (e) => setCurrentIngredient(e.currentTarget.id);
-  const closeIngredientPop = (e) => setCurrentIngredient(null);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -35,23 +25,13 @@ function App() {
     </p>
   ) : (
     <ErrorBoundary>
-      <AppHeader />
       {ingredientsData.length && (
-        <AppMain
-          data={ingredientsData}
-          onOpenOrder={openOrderPop}
-          onOpenIngredient={openIngredientPop}
-        />
-      )}
-      {isOrderVisible && (
-        <Modal onClose={closeOrderPop}>
-          <OrderDetails order={ORDER_DATA} />
-        </Modal>
-      )}
-      {currentIngredient && (
-        <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
-          <IngredientDetails id={currentIngredient} data={ingredientsData} />
-        </Modal>
+        <>
+          <AppHeader />
+          <IngredientsContext.Provider value={ingredientsData}>
+            <AppMain />
+          </IngredientsContext.Provider>
+        </>
       )}
     </ErrorBoundary>
   );
