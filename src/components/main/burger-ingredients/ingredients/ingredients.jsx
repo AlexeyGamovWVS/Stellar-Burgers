@@ -61,7 +61,7 @@ export default function Ingredients() {
       <IngredientRow title="Начинки">{separatedData.mains}</IngredientRow>
       {selectedIngredient && (
         <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
-          <IngredientDetails selectedIngredient={selectedIngredient} />
+          <IngredientDetails />
         </Modal>
       )}
     </div>

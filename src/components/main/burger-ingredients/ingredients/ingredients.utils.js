@@ -14,7 +14,7 @@ export default function getIngredientCards(data, onOpen, addToChoice) {
         image={element.image}
         price={element.price}
         onOpen={onOpen}
-				addToChoice={addToChoice}
+        addToChoice={addToChoice}
       />
     );
     switch (element.type) {

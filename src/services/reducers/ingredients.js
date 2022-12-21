@@ -8,7 +8,7 @@ const initialState = {
   items: [],
   itemsRequest: false,
   itemsFailed: false,
-	itemsRequestMessage: "",
+  itemsRequestMessage: "",
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -17,7 +17,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         itemsRequest: true,
-				itemsRequestMessage: "Загружаем продукты...",
+        itemsRequestMessage: "Загружаем продукты...",
       };
     }
     case GET_ITEMS_SUCCESS: {
@@ -26,7 +26,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         itemsRequest: false,
         itemsFailed: false,
         items: action.items,
-				itemsRequestMessage: '',
+        itemsRequestMessage: "",
       };
     }
     case GET_ITEMS_FAILED: {
@@ -34,7 +34,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         itemsRequest: false,
         itemsFailed: true,
-				itemsRequestMessage: `Shit happens... ${action.err} Попробуйте обновить страничку`,
+        itemsRequestMessage: `Shit happens... ${action.err} Попробуйте обновить страничку`,
       };
     }
     default: {

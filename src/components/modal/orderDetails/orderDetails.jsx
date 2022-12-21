@@ -1,10 +1,9 @@
 import styles from "./order-details.module.css";
 import doneIcon from "../../../assets/images/done.gif";
-import { useContext } from "react";
-import { OrderContext } from "../../../services/orderContext";
+import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
-	const {orderDetails} = useContext(OrderContext);
+  const { orderDetails } = useSelector((store) => store.order);
   return (
     <>
       <p className={`${styles.number} text text_type_digits-large mt-4`}>

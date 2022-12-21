@@ -11,10 +11,15 @@ export default function Ingredient({
   image,
   onOpen,
   opnId,
-	addToChoice,
+  addToChoice,
 }) {
   return (
-    <li className={itemStyles.item} onClick={onOpen} id={opnId} onContextMenu={addToChoice}>
+    <li
+      className={itemStyles.item}
+      onClick={onOpen}
+      id={opnId}
+      onContextMenu={addToChoice}
+    >
       <Counter count={1} size="default" />
       <img className={`ml-4 mr-4`} src={image} alt={name} />
       <div className={itemStyles.price}>
@@ -32,4 +37,5 @@ Ingredient.propTypes = {
   image: PropTypes.string.isRequired,
   onOpen: PropTypes.func.isRequired,
   opnId: PropTypes.string.isRequired,
+  onContextMenu: PropTypes.func.isRequired,
 };

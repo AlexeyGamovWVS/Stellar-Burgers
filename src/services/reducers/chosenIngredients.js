@@ -1,6 +1,7 @@
 import {
   ADD_ITEM_TO_CHOICE,
   REMOVE_ITEM_FROM_CHOICE,
+  CLEAN_BURGER,
 } from "../actions/chosenIngredients";
 
 const initialState = {
@@ -10,6 +11,13 @@ const initialState = {
 
 export const selectedItemsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CLEAN_BURGER: {
+      return {
+        ...state,
+        selectedItems: [],
+        bunIsSelected: false,
+      };
+    }
     case ADD_ITEM_TO_CHOICE:
       return {
         ...state,

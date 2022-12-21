@@ -3,30 +3,17 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import priceStyles from "./price-box.module.css";
-import { useContext, useMemo } from "react";
-import { sendOrder } from "../../../utils/api";
-import { OrderContext } from "../../../../services/orderContext";
+import { useMemo } from "react";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOrderData } from "../../../../services/actions/order";
 export default function PriceBox() {
-	const {selectedItems} = useSelector(store => store.selectedItems);
-  const { setOrderDetails } = useContext(OrderContext);
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { selectedItems, bunIsSelected } = useSelector((store) => store.selectedItems);
 
   const orderBtnClick = () => {
     const dataIds = selectedItems.map((item) => item._id);
-		
-		dispatch(sendOrderData(dataIds));
-
-    sendOrder(dataIds)
-      .then((res) => setOrderDetails(res))
-      .catch((err) => {
-        alert(
-          "Не удалось отправить заказ, вероятно у нас какие-то неполадки с сервером. Попробуйте ещё раз позднее. " +
-            err
-        );
-      });
+    dispatch(sendOrderData(dataIds));
   };
 
   const sum = useMemo(() => {
@@ -50,6 +37,7 @@ export default function PriceBox() {
         size="large"
         htmlType="button"
         onClick={orderBtnClick}
+				disabled={(!bunIsSelected || selectedItems.length < 2)}
       >
         Оформить заказ
       </Button>
