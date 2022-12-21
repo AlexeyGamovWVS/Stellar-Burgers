@@ -1,6 +1,20 @@
 import Ingredient from "./ingredient/ingredient";
 import { COMPONENT_TYPES } from "../../../utils/data";
-export default function getIngredientCards(data, onOpen, addToChoice) {
+
+export const currentRow = (box) => {
+  const boxRect = box.getBoundingClientRect();
+  const buns = box.querySelector(`#${COMPONENT_TYPES.buns}`);
+  const sauces = box.querySelector(`#${COMPONENT_TYPES.sauces}`);
+  const mains = box.querySelector(`#${COMPONENT_TYPES.mains}`);
+  const rows = [buns, sauces, mains];
+  const newRow = rows.find(row => {
+		const rowRect = row.getBoundingClientRect();
+		return (rowRect.y - boxRect.y >= -30) & (rowRect.y - boxRect.y < 100)
+	})
+  return newRow ? newRow.id : null;
+};
+
+export function getIngredientCards(data, onOpen, addToChoice) {
   const buns = [],
     mains = [],
     sauces = [];

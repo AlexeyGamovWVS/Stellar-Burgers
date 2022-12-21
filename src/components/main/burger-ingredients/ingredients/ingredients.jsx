@@ -1,6 +1,6 @@
 import ingredStyles from "./ingredients.module.css";
 import IngredientRow from "./ingredients-row/ingredients-row";
-import getIngredientCards from "./ingredients.utils";
+import { getIngredientCards, currentRow } from "./ingredients.utils";
 import Modal from "../../../modal/modal";
 import IngredientDetails from "../../../modal/ingredientDetails/ingredientDetails";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import {
   REMOVE_ITEM_FROM_CHOICE,
 } from "../../../../services/actions/chosenIngredients";
 import { COMPONENT_TYPES } from "../../../utils/data";
+import { SET_ACTIVE_TAB } from "../../../../services/actions/tabs";
 const findElement = (target, items) => {
   return items.find((item) => item._id === target.id);
 };
@@ -21,6 +22,7 @@ export default function Ingredients() {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.allItems);
   const { selectedIngredient } = useSelector((store) => store.currentWatchItem);
+  const { activeTab } = useSelector((store) => store.tabs);
   const { bunIsSelected, selectedItems } = useSelector(
     (store) => store.selectedItems
   );
@@ -79,13 +81,18 @@ export default function Ingredients() {
   );
 
   const scrollHandler = (e) => {
-		console.log(e);
+    const newRow = currentRow(e.currentTarget);
+    newRow &&
+      newRow !== activeTab &&
+      dispatch({
+        type: SET_ACTIVE_TAB,
+        currentTab: newRow,
+      });
   };
 
   return (
     <div
       onScroll={scrollHandler}
-      id={`rows_scroll_container`}
       className={`${ingredStyles.rowsContainer} mt-10`}
     >
       <IngredientRow id={COMPONENT_TYPES.buns} title="Булки">
