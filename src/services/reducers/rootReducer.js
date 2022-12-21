@@ -1,10 +1,8 @@
 import { combineReducers } from "redux";
-
-const initialState = {
-	allItems: [],
-	selectedItems: [],
-	cuttentWatchItem: {},
-	oreder: {},
-}
-
-export const rootReducer = combineReducers({});
+import { ingredientsReducer } from "./ingredients";
+export const rootReducer = combineReducers({
+	allItems: ingredientsReducer,
+//	selectedItems: [],
+//	cuttentWatchItem: {},
+//	order: {},
+});

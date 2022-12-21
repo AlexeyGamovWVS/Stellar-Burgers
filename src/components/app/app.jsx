@@ -4,6 +4,7 @@ import AppHeader from "../header/header";
 import AppMain from "../main/main";
 import { api } from "../utils/api";
 import { IngredientsContext } from "../../services/appContext";
+import { useSelector } from "react-redux";
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
