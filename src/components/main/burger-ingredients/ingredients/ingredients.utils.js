@@ -1,5 +1,5 @@
 import Ingredient from "./ingredient/ingredient";
-import { COMPONENT_TYPES} from "../../../utils/data";
+import { COMPONENT_TYPES } from "../../../utils/data";
 export default function getIngredientCards(data, onOpen) {
   const buns = [],
     mains = [],
