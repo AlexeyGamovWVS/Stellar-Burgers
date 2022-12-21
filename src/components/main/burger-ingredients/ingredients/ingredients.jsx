@@ -79,7 +79,7 @@ export default function Ingredients() {
   );
 
   const scrollHandler = (e) => {
-    getElemCoordinates(e.currentTarget);
+		console.log(e);
   };
 
   return (
@@ -104,37 +104,4 @@ export default function Ingredients() {
       )}
     </div>
   );
-}
-
-function getElemCoordinates(elem) {
-
-  const options = {
-    root: elem,
-    rootMargin: "0px",
-    threshold: 0,
-  };
-
-  const targets = Array.from(Object.values(COMPONENT_TYPES)).map(id => elem.querySelector(`#${id}`));
-	
-	const observer = new IntersectionObserver(intersectionChecker, options);
-	
-	function intersectionChecker(items) {
-		let intersectedItems = [];
-		items.forEach((element) => {
-			element.isIntersecting ? intersectedItems.push(element) : console.log('no');
-		});
-		changeState(intersectedItems[0]);
-	}
-
-	function setUpChecking(targets) {
-		targets.forEach((target) => {
-			observer.observe(target);
-		});
-	}
-
-	function changeState(element) {
-		
-		return element.id
-	}
-	setUpChecking(targets);
 }
