@@ -13,4 +13,5 @@ export default function IngredientRow({ title, children, id }) {
 IngredientRow.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
+	id: PropTypes.string.isRequired,
 };

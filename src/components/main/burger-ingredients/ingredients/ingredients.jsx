@@ -77,11 +77,26 @@ export default function Ingredients() {
     openIngredientPop,
     addToChoice
   );
+
+  const scrollHandler = (e) => {
+    getElemCoordinates(e.currentTarget);
+  };
+
   return (
-    <div className={`${ingredStyles.rowsContainer} mt-10`}>
-      <IngredientRow id={COMPONENT_TYPES.buns} title="Булки">{separatedData.buns}</IngredientRow>
-      <IngredientRow id={COMPONENT_TYPES.sauces} title="Соусы">{separatedData.sauces}</IngredientRow>
-      <IngredientRow id={COMPONENT_TYPES.mains} title="Начинки">{separatedData.mains}</IngredientRow>
+    <div
+      onScroll={scrollHandler}
+      id={`rows_scroll_container`}
+      className={`${ingredStyles.rowsContainer} mt-10`}
+    >
+      <IngredientRow id={COMPONENT_TYPES.buns} title="Булки">
+        {separatedData.buns}
+      </IngredientRow>
+      <IngredientRow id={COMPONENT_TYPES.sauces} title="Соусы">
+        {separatedData.sauces}
+      </IngredientRow>
+      <IngredientRow id={COMPONENT_TYPES.mains} title="Начинки">
+        {separatedData.mains}
+      </IngredientRow>
       {selectedIngredient && (
         <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
           <IngredientDetails />
@@ -89,4 +104,37 @@ export default function Ingredients() {
       )}
     </div>
   );
+}
+
+function getElemCoordinates(elem) {
+
+  const options = {
+    root: elem,
+    rootMargin: "0px",
+    threshold: 0,
+  };
+
+  const targets = Array.from(Object.values(COMPONENT_TYPES)).map(id => elem.querySelector(`#${id}`));
+	
+	const observer = new IntersectionObserver(intersectionChecker, options);
+	
+	function intersectionChecker(items) {
+		let intersectedItems = [];
+		items.forEach((element) => {
+			element.isIntersecting ? intersectedItems.push(element) : console.log('no');
+		});
+		changeState(intersectedItems[0]);
+	}
+
+	function setUpChecking(targets) {
+		targets.forEach((target) => {
+			observer.observe(target);
+		});
+	}
+
+	function changeState(element) {
+		
+		return element.id
+	}
+	setUpChecking(targets);
 }
