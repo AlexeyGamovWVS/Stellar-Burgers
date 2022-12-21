@@ -1,9 +1,9 @@
 import BurgerListItem from "../burger-list-item/burger-list-item";
 import burgCompStyles from "./burger-components.module.css";
-import { ChoiceContext } from "../../../../services/appContext";
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import bunImage from "../../../../assets/images/default-bun.png";
 import { COMPONENT_TYPES } from "../../../utils/data";
+import { useSelector } from "react-redux";
 
 const EMPTY_BUN = {
   name: "Выберите булку",
@@ -16,18 +16,18 @@ const GET_RANDOM = () => {
 };
 
 export default function BurgerComponents() {
-  const chosenItems = useContext(ChoiceContext);
-	
+	const {selectedItems} = useSelector(store => store.selectedItems);
+
   const ingredients = useMemo(
-    () => chosenItems.filter((item) => item.type !== COMPONENT_TYPES.buns),
-    [chosenItems]
-  );
-	//надо ли для булки использовать useMemo?...
-  const bun = useMemo(
-    () => chosenItems.find((item) => item.type === COMPONENT_TYPES.buns),
-    [chosenItems]
+    () => selectedItems.filter((item) => item.type !== COMPONENT_TYPES.buns),
+    [selectedItems]
   );
 
+	const bun = useMemo(
+    () => selectedItems.find((item) => item.type === COMPONENT_TYPES.buns),
+    [selectedItems]
+  );
+	
   return (
     <ul className={burgCompStyles.primaryList}>
       <BurgerListItem
@@ -38,7 +38,7 @@ export default function BurgerComponents() {
       />
 
       <ul className={burgCompStyles.secondaryList}>
-        {ingredients.map((item, index) => (
+        {ingredients.length > 0 && ingredients.map((item, index) => (
           <BurgerListItem
             item={item}
             position="default"

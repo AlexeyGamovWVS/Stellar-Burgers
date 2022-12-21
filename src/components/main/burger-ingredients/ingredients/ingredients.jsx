@@ -33,10 +33,6 @@ export default function Ingredients() {
     });
   };
 
-  // const hasBunChoice = useMemo(() => {
-  // 	return selectedItems.find((item) => item.type === COMPONENT_TYPES.buns)
-  // });
-
   const addToChoice = (e) => {
     const target = findElement(e.currentTarget, items);
     target && target.type === COMPONENT_TYPES.buns
