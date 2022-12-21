@@ -5,26 +5,32 @@ import { COMPONENT_TYPES } from "../../../utils/data";
 
 export default function Tabs() {
   const [current, setCurrent] = React.useState(COMPONENT_TYPES.buns);
+  const handleClick = (element) => {
+    setCurrent(element);
+    document
+      .querySelector(`#${element}`)
+      .scrollIntoView({ block: "start", behavior: "smooth" });
+  };
   return (
     <div className={tabsStyles.tabs}>
       <Tab
         value={COMPONENT_TYPES.buns}
         active={current === COMPONENT_TYPES.buns}
-        onClick={setCurrent}
+        onClick={handleClick}
       >
         Булки
       </Tab>
       <Tab
         value={COMPONENT_TYPES.sauces}
         active={current === COMPONENT_TYPES.sauces}
-        onClick={setCurrent}
+        onClick={handleClick}
       >
         Соусы
       </Tab>
       <Tab
         value={COMPONENT_TYPES.mains}
         active={current === COMPONENT_TYPES.mains}
-        onClick={setCurrent}
+        onClick={handleClick}
       >
         Начинки
       </Tab>

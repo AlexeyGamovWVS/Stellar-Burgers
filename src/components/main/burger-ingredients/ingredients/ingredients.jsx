@@ -79,9 +79,9 @@ export default function Ingredients() {
   );
   return (
     <div className={`${ingredStyles.rowsContainer} mt-10`}>
-      <IngredientRow title="Булки">{separatedData.buns}</IngredientRow>
-      <IngredientRow title="Соусы">{separatedData.sauces}</IngredientRow>
-      <IngredientRow title="Начинки">{separatedData.mains}</IngredientRow>
+      <IngredientRow id={COMPONENT_TYPES.buns} title="Булки">{separatedData.buns}</IngredientRow>
+      <IngredientRow id={COMPONENT_TYPES.sauces} title="Соусы">{separatedData.sauces}</IngredientRow>
+      <IngredientRow id={COMPONENT_TYPES.mains} title="Начинки">{separatedData.mains}</IngredientRow>
       {selectedIngredient && (
         <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
           <IngredientDetails />
