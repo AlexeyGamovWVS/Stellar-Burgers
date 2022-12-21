@@ -37,5 +37,5 @@ Ingredient.propTypes = {
   image: PropTypes.string.isRequired,
   onOpen: PropTypes.func.isRequired,
   opnId: PropTypes.string.isRequired,
-  onContextMenu: PropTypes.func.isRequired,
+  addToChoice: PropTypes.func.isRequired,
 };

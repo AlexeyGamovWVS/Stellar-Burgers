@@ -8,7 +8,10 @@ import {
   REMOVE_SELECTED_INGREDIENT,
   SET_SELECTED_INGREDIENT,
 } from "../../../../services/actions/currentItem";
-import { ADD_ITEM_TO_CHOICE } from "../../../../services/actions/chosenIngredients";
+import {
+  ADD_ITEM_TO_CHOICE,
+  REMOVE_ITEM_FROM_CHOICE,
+} from "../../../../services/actions/chosenIngredients";
 import { COMPONENT_TYPES } from "../../../utils/data";
 const findElement = (target, items) => {
   return items.find((item) => item._id === target.id);
@@ -18,7 +21,9 @@ export default function Ingredients() {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.allItems);
   const { selectedIngredient } = useSelector((store) => store.currentWatchItem);
-  const { bunIsSelected } = useSelector((store) => store.selectedItems);
+  const { bunIsSelected, selectedItems } = useSelector(
+    (store) => store.selectedItems
+  );
 
   const openIngredientPop = (e) => {
     dispatch({
@@ -33,15 +38,33 @@ export default function Ingredients() {
     });
   };
 
+  const replaceBun = (target) => {
+    if (!findElement(target, selectedItems)) {
+      dispatch({
+        type: REMOVE_ITEM_FROM_CHOICE,
+        chosenItem: selectedItems.find(
+          (item) => item.type === COMPONENT_TYPES.buns
+        ),
+        isBun: true,
+      });
+      dispatch({
+        type: ADD_ITEM_TO_CHOICE,
+        chosenItem: findElement(target, items),
+        isBun: true,
+      });
+    }
+  };
+
   const addToChoice = (e) => {
     const target = findElement(e.currentTarget, items);
     target && target.type === COMPONENT_TYPES.buns
-      ? !bunIsSelected &&
-        dispatch({
-          type: ADD_ITEM_TO_CHOICE,
-          chosenItem: target,
-          isBun: true,
-        })
+      ? !bunIsSelected
+        ? dispatch({
+            type: ADD_ITEM_TO_CHOICE,
+            chosenItem: target,
+            isBun: true,
+          })
+        : replaceBun(e.currentTarget)
       : dispatch({
           type: ADD_ITEM_TO_CHOICE,
           chosenItem: target,
