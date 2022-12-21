@@ -9,17 +9,22 @@ export function getIngredientsData() {
     dispatch({
       type: GET_ITEMS_REQUEST,
     });
-    api().then((res) => {
-      if (res && res.success) {
+    api()
+      .then((res) => {
+        res
+          ? dispatch({
+              type: GET_ITEMS_SUCCESS,
+              items: res.data,
+            })
+          : dispatch({
+              type: GET_ITEMS_FAILED,
+            });
+      })
+      .catch((err) => {
         dispatch({
-          type: GET_ITEMS_SUCCESS,
-          allItems: res.data,
+          type: GET_ITEMS_FAILED,
+          err,
         });
-      } else {
-        dispatch({ type: GET_ITEMS_FAILED });
-      }
-    }).catch(err => {
-			dispatch({type: GET_ITEMS_FAILED})
-		})
+      });
   };
 }
