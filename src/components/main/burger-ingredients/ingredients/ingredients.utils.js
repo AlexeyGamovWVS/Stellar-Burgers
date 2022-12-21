@@ -1,6 +1,6 @@
 import Ingredient from "./ingredient/ingredient";
 import { COMPONENT_TYPES } from "../../../utils/data";
-export default function getIngredientCards(data, onOpen) {
+export default function getIngredientCards(data, onOpen, addToChoice) {
   const buns = [],
     mains = [],
     sauces = [];
@@ -14,6 +14,7 @@ export default function getIngredientCards(data, onOpen) {
         image={element.image}
         price={element.price}
         onOpen={onOpen}
+				addToChoice={addToChoice}
       />
     );
     switch (element.type) {

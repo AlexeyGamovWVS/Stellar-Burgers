@@ -8,25 +8,56 @@ import {
   REMOVE_SELECTED_INGREDIENT,
   SET_SELECTED_INGREDIENT,
 } from "../../../../services/actions/currentItem";
+import { ADD_ITEM_TO_CHOICE } from "../../../../services/actions/chosenIngredients";
+import { COMPONENT_TYPES } from "../../../utils/data";
+const findElement = (target, items) => {
+  return items.find((item) => item._id === target.id);
+};
 
 export default function Ingredients() {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.allItems);
   const { selectedIngredient } = useSelector((store) => store.currentWatchItem);
+  const { bunIsSelected } = useSelector((store) => store.selectedItems);
 
   const openIngredientPop = (e) => {
     dispatch({
       type: SET_SELECTED_INGREDIENT,
-      ingredientData: items.find((item) => item._id === e.currentTarget.id),
+      ingredientData: findElement(e.currentTarget, items),
     });
   };
+
   const closeIngredientPop = () => {
     dispatch({
       type: REMOVE_SELECTED_INGREDIENT,
     });
   };
 
-  const separatedData = getIngredientCards(items, openIngredientPop);
+  // const hasBunChoice = useMemo(() => {
+  // 	return selectedItems.find((item) => item.type === COMPONENT_TYPES.buns)
+  // });
+
+  const addToChoice = (e) => {
+    const target = findElement(e.currentTarget, items);
+    target && target.type === COMPONENT_TYPES.buns
+      ? !bunIsSelected &&
+        dispatch({
+          type: ADD_ITEM_TO_CHOICE,
+          chosenItem: target,
+          isBun: true,
+        })
+      : dispatch({
+          type: ADD_ITEM_TO_CHOICE,
+          chosenItem: target,
+          isBun: false,
+        });
+  };
+
+  const separatedData = getIngredientCards(
+    items,
+    openIngredientPop,
+    addToChoice
+  );
   return (
     <div className={`${ingredStyles.rowsContainer} mt-10`}>
       <IngredientRow title="Булки">{separatedData.buns}</IngredientRow>

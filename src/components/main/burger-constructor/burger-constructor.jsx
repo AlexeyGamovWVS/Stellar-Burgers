@@ -10,11 +10,14 @@ import { OrderContext } from "../../../services/orderContext";
 import OrderDetails from "../../modal/orderDetails/orderDetails";
 import Modal from "../../modal/modal";
 import { genOrder } from "./burger-constructor.utils";
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_ITEM_TO_CHOICE } from "../../../services/actions/chosenIngredients";
 
 export default function BurgerConstructor() {
-  const data = useContext(IngredientsContext);
+  const { items } = useSelector((store) => store.allItems);
+  const { selectedItems } = useSelector((store) => store.selectedItems);
   const [orderDetails, setOrderDetails] = useState(null);
-  const yourChioce = useMemo(() => genOrder(data), [data]);
+  const yourChioce = useMemo(() => genOrder(items), [items]);
   return (
     <div className={`pt-25 ${constructurStyles.constructor}`}>
       <ChoiceContext.Provider value={yourChioce}>
