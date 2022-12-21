@@ -9,5 +9,5 @@ export const rootReducer = combineReducers({
   selectedItems: selectedItemsReducer,
   currentWatchItem: currentItemReducer,
   order: orderReducer,
-	tabs: tabsReducer,
+  tabs: tabsReducer,
 });

@@ -8,12 +8,12 @@ export async function api() {
 export async function sendOrder(data) {
   const res = await fetch(`${URL_API}/orders`, {
     method: "POST",
-		headers: {
-			'Content-Type': 'application/json'
-		},
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ ingredients: data }),
   });
-	return checkResult(res);
+  return checkResult(res);
 }
 
 function checkResult(res) {

@@ -8,7 +8,7 @@ import { ORDER_ITEMS_RESET } from "../../../services/actions/order";
 import { CLEAN_BURGER } from "../../../services/actions/chosenIngredients";
 
 export default function BurgerConstructor() {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { orderDetails } = useSelector((store) => store.order);
 
   const resetOrder = () => {
@@ -19,7 +19,7 @@ export default function BurgerConstructor() {
       type: ORDER_ITEMS_RESET,
     });
   };
-	
+
   return (
     <div className={`pt-25 ${constructurStyles.constructor}`}>
       <BurgerComponents />

@@ -7,10 +7,10 @@ export const currentRow = (box) => {
   const sauces = box.querySelector(`#${COMPONENT_TYPES.sauces}`);
   const mains = box.querySelector(`#${COMPONENT_TYPES.mains}`);
   const rows = [buns, sauces, mains];
-  const newRow = rows.find(row => {
-		const rowRect = row.getBoundingClientRect();
-		return (rowRect.y - boxRect.y >= -30) & (rowRect.y - boxRect.y < 100)
-	})
+  const newRow = rows.find((row) => {
+    const rowRect = row.getBoundingClientRect();
+    return (rowRect.y - boxRect.y >= -30) & (rowRect.y - boxRect.y < 100);
+  });
   return newRow ? newRow.id : null;
 };
 

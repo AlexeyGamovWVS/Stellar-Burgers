@@ -1,4 +1,3 @@
-import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import tabsStyles from "./tabs.module.css";
 import { COMPONENT_TYPES } from "../../../utils/data";
@@ -6,14 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { SET_ACTIVE_TAB } from "../../../../services/actions/tabs";
 
 export default function Tabs() {
-	const dispatch = useDispatch();
-	const { activeTab } = useSelector(store => store.tabs);
-	
+  const dispatch = useDispatch();
+  const { activeTab } = useSelector((store) => store.tabs);
+
   const handleClick = (element) => {
-		dispatch({
-			type: SET_ACTIVE_TAB,
-			currentTab: element,
-		})
+    dispatch({
+      type: SET_ACTIVE_TAB,
+      currentTab: element,
+    });
     document
       .querySelector(`#${element}`)
       .scrollIntoView({ block: "start", behavior: "smooth" });

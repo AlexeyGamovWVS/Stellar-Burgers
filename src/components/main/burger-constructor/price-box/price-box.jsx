@@ -9,7 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendOrderData } from "../../../../services/actions/order";
 export default function PriceBox() {
   const dispatch = useDispatch();
-  const { selectedItems, bunIsSelected } = useSelector((store) => store.selectedItems);
+  const { selectedItems, bunIsSelected } = useSelector(
+    (store) => store.selectedItems
+  );
 
   const orderBtnClick = () => {
     const dataIds = selectedItems.map((item) => item._id);
@@ -37,7 +39,7 @@ export default function PriceBox() {
         size="large"
         htmlType="button"
         onClick={orderBtnClick}
-				disabled={(!bunIsSelected || selectedItems.length < 2)}
+        disabled={!bunIsSelected || selectedItems.length < 2}
       >
         Оформить заказ
       </Button>

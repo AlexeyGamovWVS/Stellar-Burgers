@@ -2,7 +2,7 @@ import styles from "./ingredient-details.module.css";
 import Substance from "./substance/substance";
 import { useSelector } from "react-redux";
 export default function IngredientDetails() {
-	const { selectedIngredient } = useSelector((store) => store.currentWatchItem);
+  const { selectedIngredient } = useSelector((store) => store.currentWatchItem);
   return (
     <>
       <div className={styles.figure}>
