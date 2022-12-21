@@ -4,18 +4,21 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import priceStyles from "./price-box.module.css";
 import { useContext, useMemo } from "react";
-import { ChoiceContext } from "../../../../services/appContext";
 import { sendOrder } from "../../../utils/api";
 import { OrderContext } from "../../../../services/orderContext";
 import { COMPONENT_TYPES } from "../../../utils/data";
-
+import { useDispatch, useSelector } from "react-redux";
+import { sendOrderData } from "../../../../services/actions/order";
 export default function PriceBox() {
-  const data = useContext(ChoiceContext);
+	const {selectedItems} = useSelector(store => store.selectedItems);
   const { setOrderDetails } = useContext(OrderContext);
+	const dispatch = useDispatch();
 
   const orderBtnClick = () => {
-    const dataIds = data.map((item) => item._id);
+    const dataIds = selectedItems.map((item) => item._id);
 		
+		dispatch(sendOrderData(dataIds));
+
     sendOrder(dataIds)
       .then((res) => setOrderDetails(res))
       .catch((err) => {
@@ -27,14 +30,14 @@ export default function PriceBox() {
   };
 
   const sum = useMemo(() => {
-    return data.reduce(
+    return selectedItems.reduce(
       (acc, currentItem) =>
         currentItem.type === COMPONENT_TYPES.buns
           ? acc + currentItem.price * 2
           : acc + currentItem.price,
       0
     );
-  }, [data]);
+  }, [selectedItems]);
 
   return (
     <div className={`${priceStyles.handlers} mt-10`}>
