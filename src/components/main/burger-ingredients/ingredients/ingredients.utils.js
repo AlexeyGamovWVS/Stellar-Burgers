@@ -14,7 +14,7 @@ export const currentRow = (box) => {
   return newRow ? newRow.id : null;
 };
 
-export function getIngredientCards(data, onOpen, addToChoice) {
+export function getIngredientCards(data, onOpen) {
   const buns = [],
     mains = [],
     sauces = [];
@@ -22,13 +22,13 @@ export function getIngredientCards(data, onOpen, addToChoice) {
   data.forEach((element) => {
     const ingredientCard = (
       <Ingredient
+        type={element.type}
         key={element._id}
-        opnId={element._id}
+        id={element._id}
         name={element.name}
         image={element.image}
         price={element.price}
         onOpen={onOpen}
-        addToChoice={addToChoice}
       />
     );
     switch (element.type) {

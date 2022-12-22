@@ -2,11 +2,63 @@ import BurgerListItem from "../burger-list-item/burger-list-item";
 import burgCompStyles from "./burger-components.module.css";
 import { useMemo } from "react";
 import { COMPONENT_TYPES } from "../../../utils/data";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GET_RANDOM, EMPTY_BUN } from "./burger-components.utils";
+import { useDrop } from "react-dnd";
+import {
+  ADD_ITEM_TO_CHOICE,
+  REMOVE_ITEM_FROM_CHOICE,
+} from "../../../../services/actions/chosenIngredients";
 
 export default function BurgerComponents() {
-  const { selectedItems } = useSelector((store) => store.selectedItems);
+  //const { selectedItems } = useSelector((store) => store.selectedItems);
+  const dispatch = useDispatch();
+  const { items } = useSelector((store) => store.allItems);
+  const { selectedIngredient } = useSelector((store) => store.currentWatchItem);
+  const { bunIsSelected, selectedItems } = useSelector(
+    (store) => store.selectedItems
+  );
+  const replaceBun = (target) => {
+    if (!findElement(target, selectedItems)) {
+      dispatch({
+        type: REMOVE_ITEM_FROM_CHOICE,
+        chosenItem: selectedItems.find(
+          (item) => item.type === COMPONENT_TYPES.buns
+        ),
+        isBun: true,
+      });
+      dispatch({
+        type: ADD_ITEM_TO_CHOICE,
+        chosenItem: findElement(target, items),
+        isBun: true,
+      });
+    }
+  };
+  const findElement = (target, items) => {
+    return items.find((item) => item._id === target.id);
+  };
+  const [{ isHover }, drop] = useDrop({
+    accept: "ingredient",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(item) {
+      const target = findElement(item, items);
+      target && target.type === COMPONENT_TYPES.buns
+        ? !bunIsSelected
+          ? dispatch({
+              type: ADD_ITEM_TO_CHOICE,
+              chosenItem: target,
+              isBun: true,
+            })
+          : replaceBun(item)
+        : dispatch({
+            type: ADD_ITEM_TO_CHOICE,
+            chosenItem: target,
+            isBun: false,
+          });
+    },
+  });
 
   const ingredients = useMemo(
     () => selectedItems.filter((item) => item.type !== COMPONENT_TYPES.buns),
@@ -19,7 +71,18 @@ export default function BurgerComponents() {
   );
 
   return (
-    <ul className={burgCompStyles.primaryList}>
+    <ul
+      ref={drop}
+      className={burgCompStyles.primaryList}
+      style={
+        isHover
+          ? {
+              boxShadow: "4px 4px 8px 0px rgba(255, 255, 255, 0.2)",
+              borderRadius: "60px",
+            }
+          : null
+      }
+    >
       <BurgerListItem
         item={bun ? bun : EMPTY_BUN}
         position="top"
