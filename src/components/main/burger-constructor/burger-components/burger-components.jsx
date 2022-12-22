@@ -3,7 +3,7 @@ import burgCompStyles from "./burger-components.module.css";
 import { useMemo } from "react";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_RANDOM, EMPTY_BUN } from "./burger-components.utils";
+import { GET_RANDOM, EMPTY_BUN, findElement } from "./burger-components.utils";
 import { useDrop } from "react-dnd";
 import {
   ADD_ITEM_TO_CHOICE,
@@ -11,13 +11,12 @@ import {
 } from "../../../../services/actions/chosenIngredients";
 
 export default function BurgerComponents() {
-  //const { selectedItems } = useSelector((store) => store.selectedItems);
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.allItems);
-  const { selectedIngredient } = useSelector((store) => store.currentWatchItem);
   const { bunIsSelected, selectedItems } = useSelector(
     (store) => store.selectedItems
   );
+
   const replaceBun = (target) => {
     if (!findElement(target, selectedItems)) {
       dispatch({
@@ -34,14 +33,13 @@ export default function BurgerComponents() {
       });
     }
   };
-  const findElement = (target, items) => {
-    return items.find((item) => item._id === target.id);
-  };
+	
   const [{ isHover }, drop] = useDrop({
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
+
     drop(item) {
       const target = findElement(item, items);
       target && target.type === COMPONENT_TYPES.buns

@@ -9,3 +9,7 @@ export const EMPTY_BUN = {
 export const GET_RANDOM = () => {
   return `${Math.floor(Math.random() * 999999999999999)}`;
 };
+
+export const findElement = (target, items) => {
+	return items.find((item) => item._id === target.id);
+};
