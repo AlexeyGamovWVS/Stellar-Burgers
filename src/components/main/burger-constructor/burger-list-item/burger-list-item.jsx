@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { IngredientPropType } from "../../../utils/data";
+import { COMPONENT_TYPES, IngredientPropType } from "../../../utils/data";
 import {
   ConstructorElement,
   DragIcon,
@@ -7,6 +7,7 @@ import {
 import itemStyles from "./burger-list-item.module.css";
 import { useDispatch } from "react-redux";
 import { REMOVE_ITEM_FROM_CHOICE } from "../../../../services/actions/chosenIngredients";
+import { useDrag } from "react-dnd";
 export default function BurgerListItem({ item, position, iconVis }) {
   const visibility = iconVis
     ? itemStyles.dragIcon_visible
@@ -20,8 +21,17 @@ export default function BurgerListItem({ item, position, iconVis }) {
 			chosenItem: item,
 		})
 	}
+
+	const [{ isDrag }, drag] = useDrag({
+    type: "ingredient",
+    item: { item },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
+
   return (
-    <li className={itemStyles.item}>
+    <li {...(item.type !== COMPONENT_TYPES.buns && {ref: drag})}  className={itemStyles.item}>
       <div className={`${visibility} mr-2`}>
         <DragIcon type="primary" />
       </div>

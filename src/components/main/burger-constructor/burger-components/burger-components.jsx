@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_RANDOM, EMPTY_BUN, findElement } from "./burger-components.utils";
-import { useDrop } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
 import {
   ADD_ITEM_TO_CHOICE,
 	REMOVE_ITEM_FROM_CHOICE,
@@ -16,7 +16,7 @@ export default function BurgerComponents() {
   const { bunIsSelected, selectedItems } = useSelector(
     (store) => store.selectedItems
   );
-
+	
   const replaceBun = (target, index) => {
     if (!findElement(target, selectedItems)) {
       dispatch({
