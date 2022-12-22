@@ -1,5 +1,6 @@
 import Ingredient from "./ingredient/ingredient";
 import { COMPONENT_TYPES } from "../../../utils/data";
+import { GET_RANDOM } from "../../burger-constructor/burger-components/burger-components.utils";
 
 export const currentRow = (box) => {
   const boxRect = box.getBoundingClientRect();
@@ -29,6 +30,7 @@ export function getIngredientCards(data, onOpen) {
         image={element.image}
         price={element.price}
         onOpen={onOpen}
+				index={element._id + GET_RANDOM()}
       />
     );
     switch (element.type) {

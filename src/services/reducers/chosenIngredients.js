@@ -29,7 +29,7 @@ export const selectedItemsReducer = (state = initialState, action) => {
         ...state,
         selectedItems: [
           ...state.selectedItems.filter(
-            (item) => item._id !== action.chosenItem._id
+            (item) => item.index !== action.chosenItem.index
           ),
         ],
         bunIsSelected: action.isBun ? false : state.bunIsSelected,

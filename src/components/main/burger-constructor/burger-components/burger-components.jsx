@@ -7,7 +7,7 @@ import { GET_RANDOM, EMPTY_BUN, findElement } from "./burger-components.utils";
 import { useDrop } from "react-dnd";
 import {
   ADD_ITEM_TO_CHOICE,
-  REMOVE_ITEM_FROM_CHOICE,
+	REMOVE_ITEM_FROM_CHOICE,
 } from "../../../../services/actions/chosenIngredients";
 
 export default function BurgerComponents() {
@@ -17,7 +17,7 @@ export default function BurgerComponents() {
     (store) => store.selectedItems
   );
 
-  const replaceBun = (target) => {
+  const replaceBun = (target, index) => {
     if (!findElement(target, selectedItems)) {
       dispatch({
         type: REMOVE_ITEM_FROM_CHOICE,
@@ -28,12 +28,12 @@ export default function BurgerComponents() {
       });
       dispatch({
         type: ADD_ITEM_TO_CHOICE,
-        chosenItem: findElement(target, items),
+        chosenItem: { ...findElement(target, items), index },
         isBun: true,
       });
     }
   };
-	
+
   const [{ isHover }, drop] = useDrop({
     accept: "ingredient",
     collect: (monitor) => ({
@@ -41,7 +41,7 @@ export default function BurgerComponents() {
     }),
 
     drop(item) {
-      const target = findElement(item, items);
+      const target = { ...findElement(item, items), index: GET_RANDOM() };
       target && target.type === COMPONENT_TYPES.buns
         ? !bunIsSelected
           ? dispatch({
@@ -49,7 +49,7 @@ export default function BurgerComponents() {
               chosenItem: target,
               isBun: true,
             })
-          : replaceBun(item)
+          : replaceBun(item, target.index)
         : dispatch({
             type: ADD_ITEM_TO_CHOICE,
             chosenItem: target,
