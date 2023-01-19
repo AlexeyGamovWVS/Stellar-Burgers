@@ -2,6 +2,7 @@ import {
   ADD_ITEM_TO_CHOICE,
   REMOVE_ITEM_FROM_CHOICE,
   CLEAN_BURGER,
+  SORT_ITEMS,
 } from "../actions/chosenIngredients";
 
 const initialState = {
@@ -33,6 +34,11 @@ export const selectedItemsReducer = (state = initialState, action) => {
           ),
         ],
         bunIsSelected: action.isBun ? false : state.bunIsSelected,
+      };
+    case SORT_ITEMS:
+      return {
+        ...state,
+        selectedItems: action.newChosenItems,
       };
     default:
       return state;
