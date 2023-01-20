@@ -6,7 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import itemStyles from "./burger-list-item.module.css";
 import { useDispatch } from "react-redux";
-import { REMOVE_ITEM_FROM_CHOICE } from "../../../../services/actions/chosenIngredients";
+import { REMOVE_ITEM_FROM_CHOICE } from "../../../../services/actions/selectedItems";
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
 export default function BurgerListItem({
@@ -85,4 +85,6 @@ BurgerListItem.propTypes = {
   item: IngredientPropType.isRequired,
   position: PropTypes.string.isRequired,
   iconVis: PropTypes.bool.isRequired,
+	index: PropTypes.number, 
+	moveListItem: PropTypes.func,
 };

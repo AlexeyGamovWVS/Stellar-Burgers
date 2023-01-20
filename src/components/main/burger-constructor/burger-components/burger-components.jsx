@@ -8,8 +8,8 @@ import { useDrop } from "react-dnd";
 import {
   ADD_ITEM_TO_CHOICE,
   REMOVE_ITEM_FROM_CHOICE,
-  SORT_ITEMS,
-} from "../../../../services/actions/chosenIngredients";
+  sortComponents,
+} from "../../../../services/actions/selectedItems";
 
 export default function BurgerComponents() {
   const dispatch = useDispatch();
@@ -17,20 +17,14 @@ export default function BurgerComponents() {
   const { bunIsSelected, selectedItems } = useSelector(
     (store) => store.selectedItems
   );
+
   const moveListItem = useCallback(
     (dragIndex, hoverIndex) => {
-      const updatedSelectedItems = selectedItems;
-      const dragItem = selectedItems[dragIndex];
-      const hoverItem = selectedItems[hoverIndex];
-      updatedSelectedItems[dragIndex] = hoverItem;
-      updatedSelectedItems[hoverIndex] = dragItem;
-      dispatch({
-        type: SORT_ITEMS,
-        newChosenItems: updatedSelectedItems,
-      });
+      dispatch(sortComponents([...selectedItems], dragIndex, hoverIndex));
     },
     [dispatch, selectedItems]
   );
+
   const replaceBun = (target, index) => {
     if (!findElement(target, selectedItems)) {
       dispatch({
@@ -76,6 +70,7 @@ export default function BurgerComponents() {
     () => selectedItems.find((item) => item.type === COMPONENT_TYPES.buns),
     [selectedItems]
   );
+
   return (
     <ul
       ref={drop}

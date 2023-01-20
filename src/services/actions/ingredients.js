@@ -11,14 +11,12 @@ export function getIngredientsData() {
     });
     api()
       .then((res) => {
-        res
+        res.success
           ? dispatch({
               type: GET_ITEMS_SUCCESS,
               items: res.data,
             })
-          : dispatch({
-              type: GET_ITEMS_FAILED,
-            });
+          : Promise.reject(`Ошибка загрузки данных с сервера: ${res.status}`);
       })
       .catch((err) => {
         dispatch({

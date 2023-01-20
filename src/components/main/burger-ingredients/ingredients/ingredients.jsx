@@ -9,16 +9,17 @@ import {
   SET_SELECTED_INGREDIENT,
 } from "../../../../services/actions/currentItem";
 import { COMPONENT_TYPES } from "../../../utils/data";
-import { SET_ACTIVE_TAB } from "../../../../services/actions/tabs";
+import PropTypes from "prop-types";
+
 const findElement = (target, items) => {
   return items.find((item) => item._id === target.id);
 };
 
-export default function Ingredients() {
+export default function Ingredients({ activeTab, setActiveTab, rowsRefObj }) {
+
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.allItems);
   const { selectedIngredient } = useSelector((store) => store.currentWatchItem);
-  const { activeTab } = useSelector((store) => store.tabs);
 
   const openIngredientPop = (e) => {
     dispatch({
@@ -33,19 +34,11 @@ export default function Ingredients() {
     });
   };
 
-  const separatedData = getIngredientCards(
-    items,
-    openIngredientPop,
-  );
+  const separatedData = getIngredientCards(items, openIngredientPop);
 
   const scrollHandler = (e) => {
     const newRow = currentRow(e.currentTarget);
-    newRow &&
-      newRow !== activeTab &&
-      dispatch({
-        type: SET_ACTIVE_TAB,
-        currentTab: newRow,
-      });
+    newRow && newRow !== activeTab && setActiveTab(newRow);
   };
 
   return (
@@ -53,13 +46,13 @@ export default function Ingredients() {
       onScroll={scrollHandler}
       className={`${ingredStyles.rowsContainer} mt-10`}
     >
-      <IngredientRow id={COMPONENT_TYPES.buns} title="Булки">
+      <IngredientRow rowRef={rowsRefObj.bunsRef} id={COMPONENT_TYPES.buns} title="Булки">
         {separatedData.buns}
       </IngredientRow>
-      <IngredientRow id={COMPONENT_TYPES.sauces} title="Соусы">
+      <IngredientRow rowRef={rowsRefObj.saucesRef} id={COMPONENT_TYPES.sauces} title="Соусы">
         {separatedData.sauces}
       </IngredientRow>
-      <IngredientRow id={COMPONENT_TYPES.mains} title="Начинки">
+      <IngredientRow rowRef={rowsRefObj.mainsRef} id={COMPONENT_TYPES.mains} title="Начинки">
         {separatedData.mains}
       </IngredientRow>
       {selectedIngredient && (
@@ -70,3 +63,9 @@ export default function Ingredients() {
     </div>
   );
 }
+
+Ingredients.propTypes = {
+  activeTab: PropTypes.string.isRequired,
+	setActiveTab: PropTypes.func.isRequired,
+	rowsRefObj: PropTypes.object.isRequired,
+};

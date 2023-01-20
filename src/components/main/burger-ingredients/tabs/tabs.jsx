@@ -1,21 +1,28 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import tabsStyles from "./tabs.module.css";
 import { COMPONENT_TYPES } from "../../../utils/data";
-import { useDispatch, useSelector } from "react-redux";
-import { SET_ACTIVE_TAB } from "../../../../services/actions/tabs";
+import PropTypes from "prop-types";
 
-export default function Tabs() {
-  const dispatch = useDispatch();
-  const { activeTab } = useSelector((store) => store.tabs);
-
-  const handleClick = (element) => {
-    dispatch({
-      type: SET_ACTIVE_TAB,
-      currentTab: element,
-    });
-    document
-      .querySelector(`#${element}`)
-      .scrollIntoView({ block: "start", behavior: "smooth" });
+export default function Tabs({activeTab, setActiveTab, rowsRefObj}) {
+	const handleClick = (element) => {
+    let scrollRef;
+    switch (element) {
+      case COMPONENT_TYPES.buns:
+				setActiveTab(COMPONENT_TYPES.buns);
+        scrollRef = rowsRefObj.bunsRef;
+        break;
+      case COMPONENT_TYPES.sauces:
+				setActiveTab(COMPONENT_TYPES.sauces);
+        scrollRef = rowsRefObj.saucesRef;
+        break;
+      case COMPONENT_TYPES.mains:
+				setActiveTab(COMPONENT_TYPES.mains);
+        scrollRef = rowsRefObj.mainsRef;
+        break;
+      default:
+        break;
+    }
+    scrollRef.current.scrollIntoView({ block: "start", behavior: "smooth" });
   };
   return (
     <div className={tabsStyles.tabs}>
@@ -43,3 +50,9 @@ export default function Tabs() {
     </div>
   );
 }
+
+Tabs.propTypes = {
+  activeTab: PropTypes.string.isRequired,
+	setActiveTab: PropTypes.func.isRequired,
+	rowsRefObj: PropTypes.object.isRequired,
+};

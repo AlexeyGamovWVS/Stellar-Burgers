@@ -5,7 +5,7 @@ import OrderDetails from "../../modal/orderDetails/orderDetails";
 import Modal from "../../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
 import { ORDER_ITEMS_RESET } from "../../../services/actions/order";
-import { CLEAN_BURGER } from "../../../services/actions/chosenIngredients";
+import { CLEAN_BURGER } from "../../../services/actions/selectedItems";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();

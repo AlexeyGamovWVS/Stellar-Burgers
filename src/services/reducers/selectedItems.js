@@ -3,7 +3,7 @@ import {
   REMOVE_ITEM_FROM_CHOICE,
   CLEAN_BURGER,
   SORT_ITEMS,
-} from "../actions/chosenIngredients";
+} from "../actions/selectedItems";
 
 const initialState = {
   selectedItems: [],
@@ -44,3 +44,4 @@ export const selectedItemsReducer = (state = initialState, action) => {
       return state;
   }
 };
+

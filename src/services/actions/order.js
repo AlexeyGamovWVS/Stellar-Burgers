@@ -11,14 +11,12 @@ export function sendOrderData(data) {
     });
     sendOrder(data)
       .then((res) => {
-        res
+        res.success
           ? dispatch({
               type: ORDER_ITEMS_SUCCESS,
               orderDetails: res,
             })
-          : dispatch({
-              type: ORDER_ITEMS_FAILED,
-            });
+          : Promise.reject(`Ошибка загрузки данных с сервера: ${res.status}`);
       })
       .catch((err) => {
         dispatch({
