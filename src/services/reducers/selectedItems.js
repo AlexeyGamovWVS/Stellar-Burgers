@@ -3,11 +3,13 @@ import {
   REMOVE_ITEM_FROM_CHOICE,
   CLEAN_BURGER,
   SORT_ITEMS,
+  ADD_BUN_TO_CHOICE,
+  REMOVE_BUN_FROM_CHOICE,
 } from "../actions/selectedItems";
 
 const initialState = {
   selectedItems: [],
-  bunIsSelected: false,
+  selectedBun: null,
 };
 
 export const selectedItemsReducer = (state = initialState, action) => {
@@ -16,14 +18,23 @@ export const selectedItemsReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedItems: [],
-        bunIsSelected: false,
+				selectedBun: null,
       };
     }
     case ADD_ITEM_TO_CHOICE:
       return {
         ...state,
         selectedItems: [...state.selectedItems, action.chosenItem],
-        bunIsSelected: action.isBun ? true : state.bunIsSelected,
+      };
+    case ADD_BUN_TO_CHOICE:
+      return {
+        ...state,
+        selectedBun: action.chosenItem,
+      };
+    case REMOVE_BUN_FROM_CHOICE:
+      return {
+        ...state,
+        selectedBun: null,
       };
     case REMOVE_ITEM_FROM_CHOICE:
       return {
@@ -33,7 +44,6 @@ export const selectedItemsReducer = (state = initialState, action) => {
             (item) => item.index !== action.chosenItem.index
           ),
         ],
-        bunIsSelected: action.isBun ? false : state.bunIsSelected,
       };
     case SORT_ITEMS:
       return {
@@ -44,4 +54,3 @@ export const selectedItemsReducer = (state = initialState, action) => {
       return state;
   }
 };
-

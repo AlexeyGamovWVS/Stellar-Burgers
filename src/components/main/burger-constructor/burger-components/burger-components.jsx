@@ -1,46 +1,23 @@
 import BurgerListItem from "../burger-list-item/burger-list-item";
 import burgCompStyles from "./burger-components.module.css";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_RANDOM, EMPTY_BUN, findElement } from "./burger-components.utils";
 import { useDrop } from "react-dnd";
 import {
   ADD_ITEM_TO_CHOICE,
-  REMOVE_ITEM_FROM_CHOICE,
+  ADD_BUN_TO_CHOICE,
+  REMOVE_BUN_FROM_CHOICE,
   sortComponents,
 } from "../../../../services/actions/selectedItems";
 
 export default function BurgerComponents() {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.allItems);
-  const { bunIsSelected, selectedItems } = useSelector(
+  const { selectedItems, selectedBun } = useSelector(
     (store) => store.selectedItems
   );
-
-  const moveListItem = useCallback(
-    (dragIndex, hoverIndex) => {
-      dispatch(sortComponents([...selectedItems], dragIndex, hoverIndex));
-    },
-    [dispatch, selectedItems]
-  );
-
-  const replaceBun = (target, index) => {
-    if (!findElement(target, selectedItems)) {
-      dispatch({
-        type: REMOVE_ITEM_FROM_CHOICE,
-        chosenItem: selectedItems.find(
-          (item) => item.type === COMPONENT_TYPES.buns
-        ),
-        isBun: true,
-      });
-      dispatch({
-        type: ADD_ITEM_TO_CHOICE,
-        chosenItem: { ...findElement(target, items), index },
-        isBun: true,
-      });
-    }
-  };
 
   const [{ isHover }, drop] = useDrop({
     accept: "ingredient",
@@ -51,11 +28,10 @@ export default function BurgerComponents() {
     drop(item) {
       const target = { ...findElement(item, items), index: GET_RANDOM() };
       target && target.type === COMPONENT_TYPES.buns
-        ? !bunIsSelected
+        ? !selectedBun
           ? dispatch({
-              type: ADD_ITEM_TO_CHOICE,
+              type: ADD_BUN_TO_CHOICE,
               chosenItem: target,
-              isBun: true,
             })
           : replaceBun(item, target.index)
         : dispatch({
@@ -66,9 +42,23 @@ export default function BurgerComponents() {
     },
   });
 
-  const bun = useMemo(
-    () => selectedItems.find((item) => item.type === COMPONENT_TYPES.buns),
-    [selectedItems]
+	const replaceBun = (target, index) => {
+    if (target !== selectedBun) {
+      dispatch({
+        type: REMOVE_BUN_FROM_CHOICE,
+      });
+      dispatch({
+        type: ADD_BUN_TO_CHOICE,
+        chosenItem: { ...findElement(target, items), index },
+      });
+    }
+  };
+
+	const moveListItem = useCallback(
+    (dragIndex, hoverIndex) => {
+      dispatch(sortComponents([...selectedItems], dragIndex, hoverIndex));
+    },
+    [dispatch, selectedItems]
   );
 
   return (
@@ -85,34 +75,31 @@ export default function BurgerComponents() {
       }
     >
       <BurgerListItem
-        item={bun ? bun : EMPTY_BUN}
+        item={selectedBun ? selectedBun : EMPTY_BUN}
         position="top"
         iconVis={false}
-        key={bun ? bun._id : GET_RANDOM()}
+        key={selectedBun ? selectedBun._id : GET_RANDOM()}
       />
 
       <ul className={burgCompStyles.secondaryList}>
         {selectedItems.length > 0 &&
-          selectedItems.map(
-            (item, index) =>
-              item.type !== COMPONENT_TYPES.buns && (
-                <BurgerListItem
-                  item={item}
-                  position="default"
-                  iconVis={true}
-                  key={item._id + index}
-                  index={index}
-                  moveListItem={moveListItem}
-                />
-              )
-          )}
+          selectedItems.map((item, index) => (
+            <BurgerListItem
+              item={item}
+              position="default"
+              iconVis={true}
+              key={item._id + index}
+              index={index}
+              moveListItem={moveListItem}
+            />
+          ))}
       </ul>
 
       <BurgerListItem
-        item={bun ? bun : EMPTY_BUN}
+        item={selectedBun ? selectedBun : EMPTY_BUN}
         position="bottom"
         iconVis={false}
-        key={bun ? bun._id + GET_RANDOM() : GET_RANDOM()}
+        key={selectedBun ? selectedBun._id + GET_RANDOM() : GET_RANDOM()}
       />
     </ul>
   );

@@ -9,24 +9,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendOrderData } from "../../../../services/actions/order";
 export default function PriceBox() {
   const dispatch = useDispatch();
-  const { selectedItems, bunIsSelected } = useSelector(
+  const { selectedItems, selectedBun } = useSelector(
     (store) => store.selectedItems
   );
+	
+	const fullOrder = useMemo(()=>{
+		const fullArray = [...selectedItems];
+		if (selectedBun) {
+			fullArray.unshift(selectedBun)
+		}
+		return fullArray;
+	},[selectedBun, selectedItems])
 
   const orderBtnClick = () => {
-    const dataIds = selectedItems.map((item) => item._id);
+    const dataIds = fullOrder.map((item) => item._id);
     dispatch(sendOrderData(dataIds));
   };
 
   const sum = useMemo(() => {
-    return selectedItems.reduce(
+    return fullOrder.reduce(
       (acc, currentItem) =>
         currentItem.type === COMPONENT_TYPES.buns
           ? acc + currentItem.price * 2
           : acc + currentItem.price,
       0
     );
-  }, [selectedItems]);
+  }, [fullOrder]);
 
   return (
     <div className={`${priceStyles.handlers} mt-10`}>
@@ -39,7 +47,7 @@ export default function PriceBox() {
         size="large"
         htmlType="button"
         onClick={orderBtnClick}
-        disabled={!bunIsSelected || selectedItems.length < 2}
+        disabled={!selectedBun || selectedItems.length < 2}
       >
         Оформить заказ
       </Button>
