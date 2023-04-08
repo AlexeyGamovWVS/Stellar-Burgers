@@ -4,12 +4,13 @@ import AppHeader from "../header/header";
 import AppMain from "../main/main";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredientsData } from "../../services/actions/ingredients";
+import IngredientMain from "../fullingredient/fullingredient";
+import Registration from "../registration/registration/registration";
 
 function App() {
   const dispatch = useDispatch();
-  const { items, itemsRequest, itemsRequestMessage, itemsFailed } = useSelector(
-    (store) => store.allItems
-  );
+  const { items, itemsRequest, itemsRequestMessage, itemsFailed } =
+    useSelector((store) => store.allItems);
 
   React.useEffect(() => {
     dispatch(getIngredientsData());
@@ -25,6 +26,8 @@ function App() {
         <>
           <AppHeader />
           <AppMain />
+          <IngredientMain />
+          <Registration />
         </>
       )}
     </ErrorBoundary>
