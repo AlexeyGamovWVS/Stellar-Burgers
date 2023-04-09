@@ -1,4 +1,4 @@
-import { sendOrder } from "../../components/utils/api";
+import { sendOrder } from "../../utils/api";
 export const ORDER_ITEMS_REQUEST = "ORDER_ITEMS_REQUEST";
 export const ORDER_ITEMS_SUCCESS = "ORDER_ITEMS_SUCCESS";
 export const ORDER_ITEMS_FAILED = "ORDER_ITEMS_FAILED";
@@ -16,7 +16,9 @@ export function sendOrderData(data) {
               type: ORDER_ITEMS_SUCCESS,
               orderDetails: res,
             })
-          : Promise.reject(`Ошибка загрузки данных с сервера: ${res.status}`);
+          : Promise.reject(
+              `Ошибка загрузки данных с сервера: ${res.status}`
+            );
       })
       .catch((err) => {
         dispatch({

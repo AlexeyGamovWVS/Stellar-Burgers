@@ -1,7 +1,7 @@
 import BurgerListItem from "../burger-list-item/burger-list-item";
 import burgCompStyles from "./burger-components.module.css";
 import { useCallback } from "react";
-import { COMPONENT_TYPES } from "../../utils/data";
+import { COMPONENT_TYPES } from "../../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
 import {
   GET_RANDOM,

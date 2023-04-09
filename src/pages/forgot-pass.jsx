@@ -28,7 +28,7 @@ export function ForgotPage() {
     if (forgotPassDetails && !forgotPassErrMsg) {
       navigate("/reset-password"); // временная навигация, вероятно неверно, см следующий спринт
     }
-  }, [forgotPassDetails, forgotPassErrMsg]);
+  }, [forgotPassDetails, forgotPassErrMsg, navigate]);
   //checking request ends
 
   const handleForSubmit = (e) => {

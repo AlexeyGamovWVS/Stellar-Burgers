@@ -8,7 +8,7 @@ import {
   REMOVE_SELECTED_INGREDIENT,
   SET_SELECTED_INGREDIENT,
 } from "../../../services/actions/currentItem";
-import { COMPONENT_TYPES } from "../../utils/data";
+import { COMPONENT_TYPES } from "../../../utils/data";
 import PropTypes from "prop-types";
 
 const findElement = (target, items) => {

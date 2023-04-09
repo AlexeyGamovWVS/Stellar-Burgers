@@ -5,6 +5,9 @@ import {
 } from "../actions/profile";
 
 const initialState = {
+	userInfo: null,
+	accessToken: null,
+	refreshToken: null,
   forgotPassDetails: null,
   forgotPassRequest: false,
   forgotPassFailed: false,

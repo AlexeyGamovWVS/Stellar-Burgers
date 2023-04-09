@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import {
   COMPONENT_TYPES,
   IngredientPropType,
-} from "../../utils/data";
+} from "../../../utils/data";
 import {
   ConstructorElement,
   DragIcon,

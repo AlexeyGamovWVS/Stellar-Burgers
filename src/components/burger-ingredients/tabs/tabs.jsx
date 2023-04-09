@@ -1,6 +1,6 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import tabsStyles from "./tabs.module.css";
-import { COMPONENT_TYPES } from "../../utils/data";
+import { COMPONENT_TYPES } from "../../../utils/data";
 import PropTypes from "prop-types";
 
 export default function Tabs({

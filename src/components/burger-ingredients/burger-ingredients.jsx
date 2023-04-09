@@ -2,7 +2,7 @@ import burgerIngrStyles from "./burger-ingredients.module.css";
 import Tabs from "./tabs/tabs";
 import Ingredients from "./ingredients/ingredients";
 import { useRef, useState } from "react";
-import { COMPONENT_TYPES } from "../utils/data";
+import { COMPONENT_TYPES } from "../../utils/data";
 export default function BurgerIngredients() {
   const [activeTab, setActiveTab] = useState(COMPONENT_TYPES.buns);
   const rowsRefObj = {

@@ -1,5 +1,5 @@
 import Ingredient from "./ingredient/ingredient";
-import { COMPONENT_TYPES } from "../../utils/data";
+import { COMPONENT_TYPES } from "../../../utils/data";
 import { GET_RANDOM } from "../../burger-constructor/burger-components/burger-components.utils";
 
 export const currentRow = (box) => {

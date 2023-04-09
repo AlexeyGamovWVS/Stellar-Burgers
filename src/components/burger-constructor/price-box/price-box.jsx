@@ -4,7 +4,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import priceStyles from "./price-box.module.css";
 import { useMemo } from "react";
-import { COMPONENT_TYPES } from "../../utils/data";
+import { COMPONENT_TYPES } from "../../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOrderData } from "../../../services/actions/order";
 export default function PriceBox() {

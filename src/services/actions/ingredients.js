@@ -1,4 +1,4 @@
-import { api } from "../../components/utils/api";
+import { api } from "../../utils/api";
 
 export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";
 export const GET_ITEMS_SUCCESS = "GET_ITEMS_SUCCESS";
@@ -16,7 +16,9 @@ export function getIngredientsData() {
               type: GET_ITEMS_SUCCESS,
               items: res.data,
             })
-          : Promise.reject(`Ошибка загрузки данных с сервера: ${res.status}`);
+          : Promise.reject(
+              `Ошибка загрузки данных с сервера: ${res.status}`
+            );
       })
       .catch((err) => {
         dispatch({

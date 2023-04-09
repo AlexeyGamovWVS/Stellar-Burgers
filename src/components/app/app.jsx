@@ -1,5 +1,5 @@
 import React from "react";
-import ErrorBoundary from "../utils/errorBoudary";
+import ErrorBoundary from "../../utils/errorBoudary";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   HomePage,
@@ -7,7 +7,7 @@ import {
   LoginPage,
   ForgotPage,
   ProfilePage,
-	ErrorPage,
+  ErrorPage,
 } from "../../pages";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredientsData } from "../../services/actions/ingredients";
@@ -37,7 +37,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPage />} />
             <Route path="/reset-password" element={<ResetPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-						<Route path="*" element={<ErrorPage />} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
       )}
