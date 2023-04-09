@@ -1,15 +1,22 @@
+import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../components/burger-constructor/burger-constructor";
+import mainStyles from "./home.module.css";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 import AppHeader from "../components/header/header";
-import AppMain from "../components/main/main";
-import IngredientMain from "../components/fullingredient/fullingredient";
-import Registration from "../components/registration/registration/registration";
 
 export function HomePage() {
-	return (
-		<>
-		 <AppHeader />
-		 <AppMain />
-		 <IngredientMain />
-		 <Registration />
-		</>
-	)
+  return (
+    <>
+      <AppHeader />
+      <main>
+        <section className={mainStyles.main}>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
+        </section>
+      </main>
+    </>
+  );
 }

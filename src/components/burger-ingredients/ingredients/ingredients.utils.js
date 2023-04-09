@@ -1,5 +1,5 @@
 import Ingredient from "./ingredient/ingredient";
-import { COMPONENT_TYPES } from "../../../utils/data";
+import { COMPONENT_TYPES } from "../../utils/data";
 import { GET_RANDOM } from "../../burger-constructor/burger-components/burger-components.utils";
 
 export const currentRow = (box) => {
@@ -10,7 +10,9 @@ export const currentRow = (box) => {
   const rows = [buns, sauces, mains];
   const newRow = rows.find((row) => {
     const rowRect = row.getBoundingClientRect();
-    return (rowRect.y - boxRect.y >= -30) & (rowRect.y - boxRect.y < 100);
+    return (
+      (rowRect.y - boxRect.y >= -30) & (rowRect.y - boxRect.y < 100)
+    );
   });
   return newRow ? newRow.id : null;
 };
@@ -30,7 +32,7 @@ export function getIngredientCards(data, onOpen) {
         image={element.image}
         price={element.price}
         onOpen={onOpen}
-				index={element._id + GET_RANDOM()}
+        index={element._id + GET_RANDOM()}
       />
     );
     switch (element.type) {

@@ -1,11 +1,11 @@
 import constructurStyles from "./burger-constructor.module.css";
 import BurgerComponents from "./burger-components/burger-components";
 import PriceBox from "./price-box/price-box";
-import OrderDetails from "../../modal/orderDetails/orderDetails";
-import Modal from "../../modal/modal";
+import OrderDetails from "../modal/orderDetails/orderDetails";
+import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
-import { ORDER_ITEMS_RESET } from "../../../services/actions/order";
-import { CLEAN_BURGER } from "../../../services/actions/selectedItems";
+import { ORDER_ITEMS_RESET } from "../../services/actions/order";
+import { CLEAN_BURGER } from "../../services/actions/selectedItems";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();

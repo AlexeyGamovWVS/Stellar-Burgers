@@ -1,12 +1,15 @@
 import PropTypes from "prop-types";
-import { COMPONENT_TYPES, IngredientPropType } from "../../../utils/data";
+import {
+  COMPONENT_TYPES,
+  IngredientPropType,
+} from "../../utils/data";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import itemStyles from "./burger-list-item.module.css";
 import { useDispatch } from "react-redux";
-import { REMOVE_ITEM_FROM_CHOICE } from "../../../../services/actions/selectedItems";
+import { REMOVE_ITEM_FROM_CHOICE } from "../../../services/actions/selectedItems";
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
 export default function BurgerListItem({
@@ -45,9 +48,12 @@ export default function BurgerListItem({
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
-      if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return;
+      const hoverActualY =
+        monitor.getClientOffset().y - hoverBoundingRect.top;
+      if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY)
+        return;
+      if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY)
+        return;
       moveListItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
@@ -58,7 +64,9 @@ export default function BurgerListItem({
 
   return (
     <li
-      {...(item.type !== COMPONENT_TYPES.buns && { ref: dragDropRef })}
+      {...(item.type !== COMPONENT_TYPES.buns && {
+        ref: dragDropRef,
+      })}
       className={itemStyles.item}
       style={isDrag ? { opacity: 0.5 } : { opacity: 1 }}
     >
@@ -85,6 +93,6 @@ BurgerListItem.propTypes = {
   item: IngredientPropType.isRequired,
   position: PropTypes.string.isRequired,
   iconVis: PropTypes.bool.isRequired,
-	index: PropTypes.number, 
-	moveListItem: PropTypes.func,
+  index: PropTypes.number,
+  moveListItem: PropTypes.func,
 };

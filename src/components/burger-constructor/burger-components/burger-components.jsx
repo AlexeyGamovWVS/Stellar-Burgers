@@ -1,16 +1,20 @@
 import BurgerListItem from "../burger-list-item/burger-list-item";
 import burgCompStyles from "./burger-components.module.css";
 import { useCallback } from "react";
-import { COMPONENT_TYPES } from "../../../utils/data";
+import { COMPONENT_TYPES } from "../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_RANDOM, EMPTY_BUN, findElement } from "./burger-components.utils";
+import {
+  GET_RANDOM,
+  EMPTY_BUN,
+  findElement,
+} from "./burger-components.utils";
 import { useDrop } from "react-dnd";
 import {
   ADD_ITEM_TO_CHOICE,
   ADD_BUN_TO_CHOICE,
   REMOVE_BUN_FROM_CHOICE,
   sortComponents,
-} from "../../../../services/actions/selectedItems";
+} from "../../../services/actions/selectedItems";
 
 export default function BurgerComponents() {
   const dispatch = useDispatch();
@@ -26,7 +30,10 @@ export default function BurgerComponents() {
     }),
 
     drop(item) {
-      const target = { ...findElement(item, items), index: GET_RANDOM() };
+      const target = {
+        ...findElement(item, items),
+        index: GET_RANDOM(),
+      };
       target && target.type === COMPONENT_TYPES.buns
         ? !selectedBun
           ? dispatch({
@@ -42,7 +49,7 @@ export default function BurgerComponents() {
     },
   });
 
-	const replaceBun = (target, index) => {
+  const replaceBun = (target, index) => {
     if (target !== selectedBun) {
       dispatch({
         type: REMOVE_BUN_FROM_CHOICE,
@@ -54,9 +61,11 @@ export default function BurgerComponents() {
     }
   };
 
-	const moveListItem = useCallback(
+  const moveListItem = useCallback(
     (dragIndex, hoverIndex) => {
-      dispatch(sortComponents([...selectedItems], dragIndex, hoverIndex));
+      dispatch(
+        sortComponents([...selectedItems], dragIndex, hoverIndex)
+      );
     },
     [dispatch, selectedItems]
   );
@@ -99,7 +108,9 @@ export default function BurgerComponents() {
         item={selectedBun ? selectedBun : EMPTY_BUN}
         position="bottom"
         iconVis={false}
-        key={selectedBun ? selectedBun._id + GET_RANDOM() : GET_RANDOM()}
+        key={
+          selectedBun ? selectedBun._id + GET_RANDOM() : GET_RANDOM()
+        }
       />
     </ul>
   );

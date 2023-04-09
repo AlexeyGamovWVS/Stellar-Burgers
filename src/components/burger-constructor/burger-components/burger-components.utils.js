@@ -1,4 +1,4 @@
-import bunImage from "../../../../assets/images/default-bun.png";
+import bunImage from "../../../assets/images/default-bun.png";
 
 export const EMPTY_BUN = {
   name: "Выберите булку",
@@ -11,5 +11,5 @@ export const GET_RANDOM = () => {
 };
 
 export const findElement = (target, items) => {
-	return items.find((item) => item._id === target.id);
+  return items.find((item) => item._id === target.id);
 };

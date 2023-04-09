@@ -4,22 +4,22 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import priceStyles from "./price-box.module.css";
 import { useMemo } from "react";
-import { COMPONENT_TYPES } from "../../../utils/data";
+import { COMPONENT_TYPES } from "../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
-import { sendOrderData } from "../../../../services/actions/order";
+import { sendOrderData } from "../../../services/actions/order";
 export default function PriceBox() {
   const dispatch = useDispatch();
   const { selectedItems, selectedBun } = useSelector(
     (store) => store.selectedItems
   );
-	
-	const fullOrder = useMemo(()=>{
-		const fullArray = [...selectedItems];
-		if (selectedBun) {
-			fullArray.unshift(selectedBun)
-		}
-		return fullArray;
-	},[selectedBun, selectedItems])
+
+  const fullOrder = useMemo(() => {
+    const fullArray = [...selectedItems];
+    if (selectedBun) {
+      fullArray.unshift(selectedBun);
+    }
+    return fullArray;
+  }, [selectedBun, selectedItems]);
 
   const orderBtnClick = () => {
     const dataIds = fullOrder.map((item) => item._id);
