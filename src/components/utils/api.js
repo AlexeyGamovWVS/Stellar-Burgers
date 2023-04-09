@@ -16,6 +16,17 @@ export async function sendOrder(data) {
   return checkResult(res);
 }
 
+export async function sendEmail(data) {
+  const res = await fetch(`${URL_API}/password-reset`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ingredients: data }),
+  });
+  return checkResult(res);
+}
+
 function checkResult(res) {
   return res.ok
     ? res.json()
