@@ -5,7 +5,7 @@ import {
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/header/header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sendEmailForgotPassword } from "../services/actions/profile";
 
@@ -13,16 +13,23 @@ export function ForgotPage() {
   const [emailValue, setEmailValue] = useState("");
   const inputEmailRef = useRef(null);
   const dispatch = useDispatch();
-	
-	//checking request starts
+
+  //для временной навигации старт
+  const navigate = useNavigate();
+  //для временной навигации конец
+
+  //checking request starts
   const { forgotPassDetails, forgotPassErrMsg } = useSelector(
     (store) => store.profile
   );
   useEffect(() => {
     console.log(forgotPassDetails);
     console.log(forgotPassErrMsg);
+    if (forgotPassDetails && !forgotPassErrMsg) {
+      navigate("/reset-password"); // временная навигация, вероятно неверно, см следующий спринт
+    }
   }, [forgotPassDetails, forgotPassErrMsg]);
-	//checking request ends
+  //checking request ends
 
   const handleForSubmit = (e) => {
     e.preventDefault();
