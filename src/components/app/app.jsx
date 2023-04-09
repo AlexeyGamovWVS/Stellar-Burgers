@@ -7,6 +7,7 @@ import {
   LoginPage,
   ForgotPage,
   ProfilePage,
+	ErrorPage,
 } from "../../pages";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredientsData } from "../../services/actions/ingredients";
@@ -36,6 +37,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPage />} />
             <Route path="/reset-password" element={<ResetPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+						<Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
       )}
