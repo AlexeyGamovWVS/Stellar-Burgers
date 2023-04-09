@@ -1,11 +1,9 @@
 import React from "react";
 import ErrorBoundary from "../utils/errorBoudary";
-import AppHeader from "../header/header";
-import AppMain from "../main/main";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HomePage } from "../../pages";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredientsData } from "../../services/actions/ingredients";
-import IngredientMain from "../fullingredient/fullingredient";
-import Registration from "../registration/registration/registration";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,12 +21,11 @@ function App() {
   ) : (
     <ErrorBoundary>
       {items.length && (
-        <>
-          <AppHeader />
-          <AppMain />
-          <IngredientMain />
-          <Registration />
-        </>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+          </Routes>
+        </BrowserRouter>
       )}
     </ErrorBoundary>
   );
