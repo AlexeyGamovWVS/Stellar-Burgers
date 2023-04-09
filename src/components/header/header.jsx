@@ -6,6 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import NavLink from "./nav-link/nav-link";
 import headerStyles from "./header.module.css";
+import { Link } from "react-router-dom";
 
 function AppHeader() {
   return (
@@ -14,7 +15,12 @@ function AppHeader() {
         <ul className={headerStyles.list}>
           <li className={`${headerStyles.link} mr-2`}>
             <NavLink
-              icon={<BurgerIcon type="primary" color="text-color-active" />}
+              icon={
+                <BurgerIcon
+                  type="primary"
+                  color="text-color-active"
+                />
+              }
             >
               Конструктор
             </NavLink>
@@ -28,9 +34,9 @@ function AppHeader() {
             </NavLink>
           </li>
         </ul>
-        <a href="/" className={headerStyles.logo}>
+        <Link to="/" className={headerStyles.logo}>
           <Logo />
-        </a>
+        </Link>
         <NavLink
           icon={<ProfileIcon type="secondary" />}
           color="text_color_inactive"

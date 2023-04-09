@@ -1,9 +1,15 @@
 import React from "react";
 import ErrorBoundary from "../utils/errorBoudary";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HomePage, RegistrationPage } from "../../pages";
+import {
+  HomePage,
+  RegistrationPage,
+  LoginPage,
+  ForgotPage,
+} from "../../pages";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredientsData } from "../../services/actions/ingredients";
+import { ResetPage } from "../../pages/reset-pass";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,7 +30,11 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
-						<Route path="/register" element={<RegistrationPage />} />
+            <Route path="/register" element={<RegistrationPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/forgot-password" element={<ForgotPage />} />
+						<Route path="/reset-password" element={<ResetPage />} />
+						 
           </Routes>
         </BrowserRouter>
       )}

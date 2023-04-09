@@ -1,7 +1,6 @@
-import styles from "./registration.module.css";
+import styles from "./login.module.css";
 import { useRef, useState } from "react";
 import {
-  Input,
   EmailInput,
   Button,
   PasswordInput,
@@ -9,11 +8,9 @@ import {
 import AppHeader from "../components/header/header";
 import { Link } from "react-router-dom";
 
-export function RegistrationPage() {
-  const [nameValue, setNameValue] = useState("");
+export function LoginPage() {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const inputNameRef = useRef(null);
   const inputEmailRef = useRef(null);
   const inputPasswordRef = useRef(null);
 
@@ -22,24 +19,13 @@ export function RegistrationPage() {
       <AppHeader />
       <main className={styles.main}>
         <form className={styles.form}>
-          <h1 className="text text_type_main-medium">Регистрация</h1>
-          <Input
-            type={"text"}
-            placeholder={"Имя"}
-            pattern="[a-zA-Z]"
-            onChange={(e) => setNameValue(e.target.value)}
-            value={nameValue}
-            name={"name"}
-            ref={inputNameRef}
-            errorText={"Ошибка. Введите корректное имя пользователя"}
-            extraClass="ml-1"
-          />
+          <h1 className="text text_type_main-medium">Вход</h1>
           <EmailInput
             onChange={(e) => setEmailValue(e.target.value)}
             value={emailValue}
             name={"email"}
             isIcon={false}
-            errorText={"Ошибка. проверьте правильность почты"}
+            errorText={"Ошибка. Проверьте правильность почты"}
             ref={inputEmailRef}
             extraClass="ml-1"
           />
@@ -52,14 +38,20 @@ export function RegistrationPage() {
             extraClass="ml-1"
           />
           <Button htmlType="submit" type="primary" size="medium">
-            Зарегистрироваться
+            Войти
           </Button>
         </form>
         <div className={styles.actions}>
           <p className="text text_type_main-default text_color_inactive">
-            Уже зарегситрированы?&nbsp;
-            <Link to="/login" className={styles.actions__link}>
-              Войти
+            Вы — новый пользователь?&nbsp;
+            <Link to="/register" className={styles.actions__link}>
+              Зарегистрироваться
+            </Link>
+          </p>
+          <p className="text text_type_main-default text_color_inactive">
+            Забыли пароль?&nbsp;
+            <Link to="/forgot-password" className={styles.actions__link}>
+              Восстановить пароль
             </Link>
           </p>
         </div>
