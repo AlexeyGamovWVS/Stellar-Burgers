@@ -6,6 +6,15 @@
   text-align: center;
   position: relative;
   cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.item:hover {
+  opacity: 0.75;
+}
+
+.item_drag {
+  opacity: 0.5;
 }
 
 .price {

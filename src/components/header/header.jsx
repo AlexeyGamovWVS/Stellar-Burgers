@@ -4,44 +4,60 @@ import {
   ProfileIcon,
   ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import NavLink from "./nav-link/nav-link";
-import headerStyles from "./header.module.css";
-import { Link } from "react-router-dom";
+import styles from "./header.module.css";
+import { Link, NavLink } from "react-router-dom";
 
 function AppHeader() {
   return (
-    <header className={`${headerStyles.header} pt-4 pb-4`}>
-      <nav className={headerStyles.nav}>
-        <ul className={headerStyles.list}>
-          <li className={`${headerStyles.link} mr-2`}>
+    <header className={`${styles.header} pt-4 pb-4`}>
+      <nav className={styles.nav}>
+        <ul className={styles.list}>
+          <li className={`${styles.link} mr-2`}>
             <NavLink
-              icon={
-                <BurgerIcon
-                  type="primary"
-                  color="text-color-active"
-                />
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.link} pt-4 pb-4 pr-5 pl-5 text text_type_main-default ${styles.link_active}`
+                  : `${styles.link} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`
               }
+              to="/"
             >
-              Конструктор
+              <BurgerIcon type="secondary" />
+              <span className={`ml-2 ${styles.linkText}`}>
+                Конструктор
+              </span>
             </NavLink>
           </li>
-          <li className={`${headerStyles.link} mr-2`}>
+          <li className={`${styles.link} mr-2`}>
             <NavLink
-              icon={<ListIcon type="secondary" />}
-              color="text_color_inactive"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.link} pt-4 pb-4 pr-5 pl-5 text text_type_main-default ${styles.link_active}`
+                  : `${styles.link} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`
+              }
+              to="/profile/orders"
             >
-              Лента Заказов
+              <ListIcon type="secondary" />
+              <span className={`ml-2 ${styles.linkText}`}>
+                Лента Заказов
+              </span>
             </NavLink>
           </li>
         </ul>
-        <Link to="/" className={headerStyles.logo}>
+        <Link to="/" className={styles.logo}>
           <Logo />
         </Link>
         <NavLink
-          icon={<ProfileIcon type="secondary" />}
-          color="text_color_inactive"
+          className={({ isActive }) =>
+            isActive
+              ? `${styles.link} pt-4 pb-4 pr-5 pl-5 text text_type_main-default ${styles.link_active}`
+              : `${styles.link} pt-4 pb-4 pr-5 pl-5 text text_type_main-default`
+          }
+          to="/profile"
         >
-          Личный кабинет
+          <ProfileIcon type="secondary" />
+          <span className={`ml-2 ${styles.linkText}`}>
+            Личный кабинет
+          </span>
         </NavLink>
       </nav>
     </header>
