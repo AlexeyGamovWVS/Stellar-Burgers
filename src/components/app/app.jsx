@@ -6,6 +6,7 @@ import {
   RegistrationPage,
   LoginPage,
   ForgotPage,
+  ProfilePage,
 } from "../../pages";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredientsData } from "../../services/actions/ingredients";
@@ -33,8 +34,8 @@ function App() {
             <Route path="/register" element={<RegistrationPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/forgot-password" element={<ForgotPage />} />
-						<Route path="/reset-password" element={<ResetPage />} />
-						 
+            <Route path="/reset-password" element={<ResetPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </BrowserRouter>
       )}
