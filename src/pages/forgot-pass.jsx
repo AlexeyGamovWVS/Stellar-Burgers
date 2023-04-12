@@ -18,16 +18,15 @@ export function ForgotPage() {
   //для временной навигации конец
 
   //checking request starts
-  const { forgotPassDetails, forgotPassErrMsg } = useSelector(
+  const { forgotPassMessage, forgotPassSuccess } = useSelector(
     (store) => store.profile
   );
   useEffect(() => {
-    console.log(forgotPassDetails);
-    console.log(forgotPassErrMsg);
-    if (forgotPassDetails && !forgotPassErrMsg) {
+    console.log(forgotPassMessage);
+    if (forgotPassMessage && forgotPassSuccess) {
       navigate("/reset-password", {replace: true}); // временная навигация, вероятно неверно, см следующий спринт
     }
-  }, [forgotPassDetails, forgotPassErrMsg, navigate]);
+  }, [forgotPassMessage, forgotPassSuccess, navigate]);
   //checking request ends
 
   const handleForSubmit = (e) => {

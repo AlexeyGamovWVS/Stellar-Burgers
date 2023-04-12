@@ -2,6 +2,7 @@ import {
   sendEmail,
   sendLoginData,
   sendRegisterData,
+  sendResetPassRequest,
 } from "../../utils/api";
 
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
@@ -74,8 +75,7 @@ export function loginUser(email, password) {
       type: LOGIN_USER_REQUEST,
     });
     sendLoginData(email, password)
-      .then((res) => {
-        console.log(res);
+      .then((res) =>
         res.success
           ? dispatch({
               type: LOGIN_USER_SUCCESS,
@@ -83,14 +83,39 @@ export function loginUser(email, password) {
               accessToken: res.accessToken,
               refreshToken: res.refreshToken,
             })
-          : Promise.reject(`Ошибка входа в аккаунт: ${res.status}`);
-      })
+          : Promise.reject(`Ошибка входа в аккаунт: ${res.status}`)
+      )
       .catch((err) => {
         dispatch({
           type: LOGIN_USER_FAILED,
           err,
         });
-        console.error(err);
       });
+  };
+}
+
+export function resetPassword(password, token) {
+  return function (dispatch) {
+    dispatch({
+      type: RESET_PASSWORD_REQUEST,
+    });
+    sendResetPassRequest(password, token)
+      .then((res) => {
+        console.log(res);
+        res.succes
+          ? dispatch({
+              type: RESET_PASSWORD_SUCCESS,
+              message: res.message,
+            })
+          : Promise.reject(
+              `Ошибка при смене пароля или отправки данных на сервер: ${res.status}`
+            );
+      })
+      .catch((err) =>
+        dispatch({
+          type: RESET_PASSWORD_FAILED,
+          err,
+        })
+      );
   };
 }

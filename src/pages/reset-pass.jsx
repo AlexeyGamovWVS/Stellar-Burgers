@@ -7,16 +7,24 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/header/header";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { resetPassword } from "../services/actions/profile";
 
 export function ResetPage() {
   const [codeValue, setCodeValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-
+	const dispatch = useDispatch();
+	const onSubmit = (e) => {
+		e.preventDefault();
+		if (passwordValue && codeValue) {
+			dispatch(resetPassword(passwordValue, codeValue));
+		}
+	}
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <form className={styles.form}>
+        <form onSubmit={onSubmit} className={styles.form}>
           <h1 className="text text_type_main-medium">
             Восстановление пароля
           </h1>

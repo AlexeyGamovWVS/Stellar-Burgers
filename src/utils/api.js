@@ -44,6 +44,11 @@ export async function sendLoginData(email, password) {
     headers: {
       "Content-Type": "application/json",
     },
+    // mode: 'cors',
+    // cache: 'no-cache',
+    // credentials: 'same-origin',
+    // redirect: '/profile',
+    // referrerPolicy: 'no-referrer',
     body: JSON.stringify({ email, password }),
   });
   return checkResult(res);
@@ -60,18 +65,13 @@ export async function sendLoginData(email, password) {
 // С помощью useSelector получаем доступ к данным о текущем пользователе.
 // PROFIT!
 
-export async function sendLoginRequest(data) {
-  const res = await fetch(`${URL_API}/login`, {
+export async function sendResetPassRequest(password, token) {
+  const res = await fetch(`${URL_API}/password-reset/reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    // mode: 'cors',
-    // cache: 'no-cache',
-    // credentials: 'same-origin',
-    // redirect: '/profile',
-    // referrerPolicy: 'no-referrer',
-    body: JSON.stringify(data),
+    body: JSON.stringify({ password, token }),
   });
   return checkResult(res);
 }

@@ -29,9 +29,11 @@ export function RegistrationPage() {
     (store) => store.profile
   );
   useEffect(() => {
-    console.log("user: " + userInfo.email + userInfo.name);
-    console.log("accessToken: " + accessToken);
-    console.log("refreshToken: " + refreshToken);
+		if (userInfo) {
+			console.log("user: " + userInfo.email + userInfo.name);
+			console.log("accessToken: " + accessToken);
+			console.log("refreshToken: " + refreshToken);
+		}
   }, [accessToken, refreshToken, userInfo]);
 	//test checking ends
 

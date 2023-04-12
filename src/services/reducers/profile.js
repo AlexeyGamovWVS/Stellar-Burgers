@@ -8,6 +8,9 @@ import {
   REGISTER_USER_FAILED,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
+	RESET_PASSWORD_FAILED,
+	RESET_PASSWORD_REQUEST,
+	RESET_PASSWORD_SUCCESS,
 } from "../actions/profile";
 
 const initialState = {
@@ -15,16 +18,20 @@ const initialState = {
   accessToken: null,
   refreshToken: null,
   isAuthenticated: false,
-  forgotPassDetails: null,
+  forgotPassMessage: null,
   forgotPassRequest: false,
+	forgotPassSuccess: false,
   forgotPassFailed: false,
-  forgotPassErrMsg: "",
   registrRequest: false,
   registrSuccess: false,
   registrFail: false,
   loginRequest: false,
   loginSucces: false,
   loginFail: false,
+  resetPassRequest: false,
+  resetPassSuccess: false,
+	resetPassFail: false,
+  resetPassMessage: null,
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -33,7 +40,9 @@ export const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         forgotPassRequest: true,
-        forgotPassErrMsg: "",
+				forgotPassFailed: false,
+				forgotPassSuccess: false,
+				forgotPassMessage: null,
       };
     }
     case FORGOT_PASSWORD_SUCCESS: {
@@ -41,8 +50,8 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         forgotPassRequest: false,
         forgotPassFailed: false,
-        forgotPassDetails: action.message,
-        forgotPassErrMsg: "",
+				forgotPassSuccess: true,
+        forgotPassMessage: action.message,
       };
     }
     case FORGOT_PASSWORD_FAILED: {
@@ -50,10 +59,37 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         forgotPassRequest: false,
         forgotPassFailed: true,
-        forgotPassDetails: null,
-        forgotPassErrMsg: `Shit happens ${action.err}`,
+				forgotPassSuccess: false,
+				forgotPassMessage: `Не удалось изменить пароль: ${action.err}`,
       };
     }
+		case RESET_PASSWORD_REQUEST: {
+			return {
+				...state,
+				resetPassMessage: null,
+				resetPassSuccess: false,
+				resetPassRequest: true,
+				resetPassFail: false,
+			}
+		}
+		case RESET_PASSWORD_SUCCESS: {
+			return {
+				...state,
+				resetPassMessage: action.message,
+				resetPassSuccess: true,
+				resetPassRequest: false,
+				resetPassFail: false,
+			}
+		}
+		case RESET_PASSWORD_FAILED: {
+			return {
+				...state,
+				resetPassMessage: `Не удалось изменить пароль: ${action.err}`,
+				resetPassSuccess: false,
+				resetPassRequest: false,
+				resetPassFail: true,
+			}
+		}
     case REGISTER_USER_REQUEST: {
       return {
         ...state,
