@@ -26,6 +26,17 @@ export async function sendEmail(data) {
   });
   return checkResult(res);
 }
+
+export async function sendRegisterData(email, name, password) {
+  const res = await fetch(`${URL_API}/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, name, password }),
+  });
+	return checkResult(res);
+}
 // newrequests !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // лагоритм сохранения данных о пользователе в стейт
 // Авторизация пользователей в приложении.

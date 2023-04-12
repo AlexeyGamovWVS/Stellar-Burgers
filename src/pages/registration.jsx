@@ -1,5 +1,5 @@
 import styles from "./registration.module.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Input,
   EmailInput,
@@ -8,6 +8,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/header/header";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../services/actions/profile";
 
 export function RegistrationPage() {
   const [nameValue, setNameValue] = useState("");
@@ -16,17 +18,33 @@ export function RegistrationPage() {
   const inputNameRef = useRef(null);
   const inputEmailRef = useRef(null);
   const inputPasswordRef = useRef(null);
+  const dispatch = useDispatch();
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (nameValue && emailValue && passwordValue) {
+      dispatch(registerUser(emailValue, nameValue, passwordValue));
+    } else return;
+  };
+
+  //test checking
+  const { userInfo, accessToken, refreshToken } = useSelector(
+    (store) => store.profile
+  );
+  useEffect(() => {
+    console.log("user: " + userInfo);
+    console.log("accessToken: " + accessToken);
+    console.log("refreshToken: " + refreshToken);
+  }, [accessToken, refreshToken, userInfo]);
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <form className={styles.form}>
+        <form onSubmit={onSubmit} className={styles.form}>
           <h1 className="text text_type_main-medium">Регистрация</h1>
           <Input
             type={"text"}
             placeholder={"Имя"}
-            pattern="[a-zA-Z]"
             onChange={(e) => setNameValue(e.target.value)}
             value={nameValue}
             name={"name"}
