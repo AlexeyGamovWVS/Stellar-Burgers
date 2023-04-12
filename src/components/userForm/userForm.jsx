@@ -37,6 +37,7 @@ export function UserForm() {
   }, [userInfo]);
 
   const onNameEditIconClick = (e) => {
+		setProfileEditing(true);
     setNameFieldState(false);
 		setTimeout(() => nameRef.current.focus(), 0)
 		setEmailFieldState(true);
@@ -44,6 +45,7 @@ export function UserForm() {
   };
 
   const onEmailIconClick = (e) => {
+		setProfileEditing(true);
     setEmailFieldState(false);
 		setTimeout(() => emailRef.current.focus(), 0);
 		setNameFieldState(true);
@@ -51,6 +53,7 @@ export function UserForm() {
   };
 
   const onPassIconClick = (e) => {
+		setProfileEditing(true);
     setPassFieldState(false);
 		setTimeout(() => passRef.current.focus(), 0)
 		setNameFieldState(true);
@@ -104,7 +107,8 @@ export function UserForm() {
         onIconClick={onPassIconClick}
         disabled={passFieldState}
       />
-      <div className={styles.handlers}>
+      {isProfileEditing && (
+				<div className={styles.handlers}>
         <Button
           htmlType="button"
           type="secondary"
@@ -117,6 +121,7 @@ export function UserForm() {
           Сохранить
         </Button>
       </div>
+			)}
     </form>
   );
 }
