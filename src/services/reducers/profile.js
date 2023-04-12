@@ -2,6 +2,9 @@ import {
   FORGOT_PASSWORD_FAILED,
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
+  LOGIN_USER_FAILED,
+  LOGIN_USER_REQUEST,
+  LOGIN_USER_SUCCESS,
   REGISTER_USER_FAILED,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
@@ -19,6 +22,9 @@ const initialState = {
   registrRequest: false,
   registrSuccess: false,
   registrFail: false,
+  loginRequest: false,
+  loginSucces: false,
+  loginFail: false,
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -73,6 +79,33 @@ export const profileReducer = (state = initialState, action) => {
         registrRequest: false,
         registrSuccess: false,
         registrFail: true,
+      };
+    }
+    case LOGIN_USER_REQUEST: {
+      return {
+        ...state,
+        loginRequest: true,
+        loginSuccess: false,
+        loginFail: false,
+      };
+    }
+    case LOGIN_USER_SUCCESS: {
+      return {
+        ...state,
+        loginRequest: false,
+        loginSuccess: true,
+        loginFail: false,
+        userInfo: action.user,
+        accessToken: action.accessToken,
+        refreshToken: action.refreshToken,
+      };
+    }
+    case LOGIN_USER_FAILED: {
+      return {
+        ...state,
+        loginRequest: false,
+        loginSuccess: false,
+        loginFail: true,
       };
     }
     default: {

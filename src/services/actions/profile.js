@@ -1,4 +1,8 @@
-import { sendEmail, sendRegisterData } from "../../utils/api";
+import {
+  sendEmail,
+  sendLoginData,
+  sendRegisterData,
+} from "../../utils/api";
 
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
@@ -60,6 +64,33 @@ export function registerUser(email, name, password) {
           type: REGISTER_USER_FAILED,
           err,
         });
+      });
+  };
+}
+
+export function loginUser(email, password) {
+  return function (dispatch) {
+    dispatch({
+      type: LOGIN_USER_REQUEST,
+    });
+    sendLoginData(email, password)
+      .then((res) => {
+        console.log(res);
+        res.success
+          ? dispatch({
+              type: LOGIN_USER_SUCCESS,
+              user: res.user,
+              accessToken: res.accessToken,
+              refreshToken: res.refreshToken,
+            })
+          : Promise.reject(`Ошибка входа в аккаунт: ${res.status}`);
+      })
+      .catch((err) => {
+        dispatch({
+          type: LOGIN_USER_FAILED,
+          err,
+        });
+        console.error(err);
       });
   };
 }

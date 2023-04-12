@@ -1,5 +1,5 @@
 import styles from "./reset-pass.module.css";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   Input,
   Button,
@@ -11,23 +11,21 @@ import { Link } from "react-router-dom";
 export function ResetPage() {
   const [codeValue, setCodeValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const inputCodeRef = useRef(null);
-  const inputPasswordRef = useRef(null);
 
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
         <form className={styles.form}>
-          <h1 className="text text_type_main-medium">Восстановление пароля</h1>
+          <h1 className="text text_type_main-medium">
+            Восстановление пароля
+          </h1>
           <PasswordInput
             onChange={(e) => setPasswordValue(e.target.value)}
             placeholder={"Введите новый пароль"}
             value={passwordValue}
             name={"password"}
-            ref={inputPasswordRef}
             errorText={"Ошибка. Введите другой пароль"}
-            extraClass="ml-1"
           />
           <Input
             type={"text"}
@@ -35,9 +33,7 @@ export function ResetPage() {
             onChange={(e) => setCodeValue(e.target.value)}
             value={codeValue}
             name={"code"}
-            ref={inputCodeRef}
             errorText={"Ошибка. код введен неверно"}
-            extraClass="ml-1"
           />
           <Button htmlType="submit" type="primary" size="medium">
             Сохранить

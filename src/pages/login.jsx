@@ -1,5 +1,5 @@
 import styles from "./login.module.css";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   EmailInput,
   Button,
@@ -7,18 +7,39 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/header/header";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../services/actions/profile";
 
 export function LoginPage() {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const inputEmailRef = useRef(null);
-  const inputPasswordRef = useRef(null);
+	const dispatch = useDispatch();
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+		if (emailValue && passwordValue) {
+			dispatch(loginUser(emailValue, passwordValue));
+		} else return
+  };
+
+  //test checking starts
+  const { userInfo, accessToken, refreshToken } = useSelector(
+    (store) => store.profile
+  );
+  useEffect(() => {
+		if (userInfo) {
+			console.log("user: " + userInfo.name + ' ' + userInfo.email);
+			console.log("accessToken: " + accessToken);
+			console.log("refreshToken: " + refreshToken);
+		}
+  }, [accessToken, refreshToken, userInfo]);
+  //test checking ends
 
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <form className={styles.form}>
+        <form onSubmit={onSubmit} className={styles.form}>
           <h1 className="text text_type_main-medium">Вход</h1>
           <EmailInput
             onChange={(e) => setEmailValue(e.target.value)}
@@ -26,16 +47,12 @@ export function LoginPage() {
             name={"email"}
             isIcon={false}
             errorText={"Ошибка. Проверьте правильность почты"}
-            ref={inputEmailRef}
-            extraClass="ml-1"
           />
           <PasswordInput
             onChange={(e) => setPasswordValue(e.target.value)}
             value={passwordValue}
             name={"password"}
-            ref={inputPasswordRef}
             errorText={"Ошибка. Введите другой пароль"}
-            extraClass="ml-1"
           />
           <Button htmlType="submit" type="primary" size="medium">
             Войти
@@ -50,7 +67,10 @@ export function LoginPage() {
           </p>
           <p className="text text_type_main-default text_color_inactive">
             Забыли пароль?&nbsp;
-            <Link to="/forgot-password" className={styles.actions__link}>
+            <Link
+              to="/forgot-password"
+              className={styles.actions__link}
+            >
               Восстановить пароль
             </Link>
           </p>

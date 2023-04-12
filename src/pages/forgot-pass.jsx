@@ -1,17 +1,16 @@
 import styles from "./login.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/header/header";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sendEmailForgotPassword } from "../services/actions/profile";
 
 export function ForgotPage() {
   const [emailValue, setEmailValue] = useState("");
-  const inputEmailRef = useRef(null);
   const dispatch = useDispatch();
 
   //для временной навигации старт
@@ -53,8 +52,6 @@ export function ForgotPage() {
             name={"email"}
             isIcon={false}
             errorText={"Ошибка. Проверьте правильность почты"}
-            ref={inputEmailRef}
-            extraClass="ml-1"
           />
           <Button htmlType="submit" type="primary" size="medium">
             Восстановить
