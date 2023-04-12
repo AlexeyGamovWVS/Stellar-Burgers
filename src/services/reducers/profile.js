@@ -8,6 +8,7 @@ const initialState = {
 	userInfo: null,
 	accessToken: null,
 	refreshToken: null,
+	isAuthenticated: false,
   forgotPassDetails: null,
   forgotPassRequest: false,
   forgotPassFailed: false,

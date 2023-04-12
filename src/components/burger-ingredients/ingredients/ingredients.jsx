@@ -2,7 +2,7 @@ import ingredStyles from "./ingredients.module.css";
 import IngredientRow from "./ingredients-row/ingredients-row";
 import { getIngredientCards, currentRow } from "./ingredients.utils";
 import Modal from "../../modal/modal";
-import IngredientDetails from "../../modal/ingredientDetails/ingredientDetails";
+import IngredientDetails from "../../ingredientDetails/ingredientDetails";
 import { useDispatch, useSelector } from "react-redux";
 import {
   REMOVE_SELECTED_INGREDIENT,
