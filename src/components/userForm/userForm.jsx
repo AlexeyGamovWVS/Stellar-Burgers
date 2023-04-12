@@ -3,9 +3,7 @@ import styles from "./userForm.module.css";
 import { useEffect, useRef, useState } from "react";
 import {
   Button,
-  EmailInput,
   Input,
-  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export function UserForm() {

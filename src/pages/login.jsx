@@ -34,7 +34,7 @@ export function LoginPage() {
       console.log("refreshToken: " + refreshToken);
       navigate("/profile");
     }
-  }, [accessToken, refreshToken, userInfo]);
+  }, [accessToken, navigate, refreshToken, userInfo]);
   //test checking ends
 
   return (
