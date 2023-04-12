@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import styles from "./userForm.module.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Button,
   EmailInput,
@@ -11,17 +11,50 @@ import {
 export function UserForm() {
   const { userInfo } = useSelector((store) => store.profile);
 
-  const { nameValue, setNameValue } = useState("name");
-  const { emailValue, setEmailValue } = useState("");
-  const { passwordValue, setPasswordValue } = useState("");
-  const { isProfileEditing, setProfileEditing } = useState(false);
-  const nameRef = useRef();
-  // useEffect(() => {
-  // 	isProfileEditing ? nameRef
-  // })
+  const [nameValue, setNameValue] = useState("Your Name");
+  const [emailValue, setEmailValue] = useState("test@mail.ru");
+  const [passwordValue, setPasswordValue] = useState("Password");
+
+  const [nameFieldState, setNameFieldState] = useState(true);
+  const [emailFieldState, setEmailFieldState] = useState(true);
+  const [passFieldState, setPassFieldState] = useState(true);
+
+  const [isProfileEditing, setProfileEditing] = useState(false);
+
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const passRef = useRef(null);
+
+  const setData = (userInfo) => {
+    setNameValue(userInfo.name);
+    setEmailValue(userInfo.email);
+    setPasswordValue(userInfo.password);
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
+    userInfo ? setData(userInfo) : null;
+  }, [userInfo]);
+
   const onNameEditIconClick = (e) => {
-    nameRef.disabled = false;
-    setProfileEditing(true);
+    setNameFieldState(false);
+		setTimeout(() => nameRef.current.focus(), 0)
+		setEmailFieldState(true);
+		setPassFieldState(true);
+  };
+
+  const onEmailIconClick = (e) => {
+    setEmailFieldState(false);
+		setTimeout(() => emailRef.current.focus(), 0);
+		setNameFieldState(true);
+		setPassFieldState(true);
+  };
+
+  const onPassIconClick = (e) => {
+    setPassFieldState(false);
+		setTimeout(() => passRef.current.focus(), 0)
+		setNameFieldState(true);
+		setEmailFieldState(true);
   };
 
   const onSubmit = (e) => {
@@ -40,28 +73,36 @@ export function UserForm() {
         placeholder={"Имя"}
         onChange={(e) => setNameValue(e.target.value)}
         value={nameValue}
+        error={false}
         name={"name"}
         errorText={"Ошибка. Проверьте корректность ввода имени"}
-        isIcon={true}
         icon={"EditIcon"}
         onIconClick={onNameEditIconClick}
         ref={nameRef}
-        disabled
+        disabled={nameFieldState}
       />
-      <EmailInput
+      <Input
         onChange={(e) => setEmailValue(e.target.value)}
         value={emailValue}
         name={"email"}
-        isIcon={true}
         errorText={"Ошибка. проверьте правильность почты"}
         placeholder={"Логин"}
+        icon={"EditIcon"}
+        onIconClick={onEmailIconClick}
+        ref={emailRef}
+        disabled={emailFieldState}
       />
-      <PasswordInput
+      <Input
+        type="password"
         onChange={(e) => setPasswordValue(e.target.value)}
         value={passwordValue}
         name={"password"}
         errorText={"Ошибка. Введите другой пароль"}
         icon={"EditIcon"}
+        placeholder={"Пароль"}
+        ref={passRef}
+        onIconClick={onPassIconClick}
+        disabled={passFieldState}
       />
       <div className={styles.handlers}>
         <Button

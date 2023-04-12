@@ -104,7 +104,7 @@ export const profileReducer = (state = initialState, action) => {
         registrRequest: false,
         registrSuccess: true,
         registrFail: false,
-        userInfo: action.user,
+				userInfo: {...action.user, password: action.password},
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
       };
@@ -131,7 +131,7 @@ export const profileReducer = (state = initialState, action) => {
         loginRequest: false,
         loginSuccess: true,
         loginFail: false,
-        userInfo: action.user,
+        userInfo: {...action.user, password: action.password},
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
       };

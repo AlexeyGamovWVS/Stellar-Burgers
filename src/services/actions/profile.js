@@ -57,6 +57,7 @@ export function registerUser(email, name, password) {
               user: res.user,
               accessToken: res.accessToken,
               refreshToken: res.refreshToken,
+							password: password,
             })
           : Promise.reject(`Ошибка обработки данных: ${res.status}`);
       })
@@ -82,6 +83,7 @@ export function loginUser(email, password) {
               user: res.user,
               accessToken: res.accessToken,
               refreshToken: res.refreshToken,
+							password: password,
             })
           : Promise.reject(`Ошибка входа в аккаунт: ${res.status}`)
       )
@@ -106,6 +108,7 @@ export function resetPassword(password, token) {
           ? dispatch({
               type: RESET_PASSWORD_SUCCESS,
               message: res.message,
+							password: password,
             })
           : Promise.reject(
               `Ошибка при смене пароля или отправки данных на сервер: ${res.status}`

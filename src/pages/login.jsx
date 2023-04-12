@@ -6,32 +6,34 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/header/header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../services/actions/profile";
 
 export function LoginPage() {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
-		if (emailValue && passwordValue) {
-			dispatch(loginUser(emailValue, passwordValue));
-		} else return
+    if (emailValue && passwordValue) {
+      dispatch(loginUser(emailValue, passwordValue));
+    } else return;
   };
 
   //test checking starts
+  const navigate = useNavigate();
   const { userInfo, accessToken, refreshToken } = useSelector(
     (store) => store.profile
   );
   useEffect(() => {
-		if (userInfo) {
-			console.log("user: " + userInfo.name + ' ' + userInfo.email);
-			console.log("accessToken: " + accessToken);
-			console.log("refreshToken: " + refreshToken);
-		}
+    if (userInfo) {
+      console.log("user: " + userInfo.name + " " + userInfo.email);
+      console.log("accessToken: " + accessToken);
+      console.log("refreshToken: " + refreshToken);
+      navigate("/profile");
+    }
   }, [accessToken, refreshToken, userInfo]);
   //test checking ends
 
