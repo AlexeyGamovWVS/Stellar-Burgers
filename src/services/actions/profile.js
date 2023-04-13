@@ -1,6 +1,7 @@
 import {
   sendEmail,
   sendLoginData,
+  sendLogoutRequest,
   sendRefreshToken,
   sendRegisterData,
   sendResetPassRequest,
@@ -26,6 +27,10 @@ export const LOGIN_USER_FAILED = "LOGIN_USER_FAILED";
 export const REFRESH_TOKEN_REQUEST = "REFRESH_TOKEN_REQUEST";
 export const REFRESH_TOKEN_SUCCESS = "REFRESH_TOKEN_SUCCESS";
 export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
+
+export const LOGOUT_USER_REQUEST = "LOGOUT_USER_REQUEST";
+export const LOGOUT_USER_SUCCESS = "LOGOUT_USER_SUCCESS";
+export const LOGOUT_USER_FAILED = "LOGOUT_USER_FAILED";
 
 export function sendEmailForgotPassword(email) {
   return function (dispatch) {
@@ -96,7 +101,7 @@ export function loginUser(email, password) {
           dispatch({
             type: LOGIN_USER_SUCCESS,
             user: res.user,
-            accessToken: res.accessToken.split("Bearer ")[1],
+            accessToken: res.accessToken,
             password: password,
           });
         } else {
@@ -106,6 +111,27 @@ export function loginUser(email, password) {
       .catch((err) => {
         dispatch({
           type: LOGIN_USER_FAILED,
+          err,
+        });
+      });
+  };
+}
+
+export function logoutUser() {
+  return function (dispatch) {
+    dispatch({ type: LOGOUT_USER_REQUEST });
+    sendLogoutRequest(getCookie("refreshToken"))
+      .then((res) =>
+        res.success
+          ? dispatch({
+              type: LOGOUT_USER_SUCCESS,
+              message: res.message,
+            })
+          : Promise.reject(`Ошибка выхода из аккаунта: ${res.status}`)
+      )
+      .catch((err) => {
+        dispatch({
+          type: LOGOUT_USER_FAILED,
           err,
         });
       });

@@ -5,6 +5,9 @@ import {
   LOGIN_USER_FAILED,
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
+  LOGOUT_USER_FAILED,
+  LOGOUT_USER_REQUEST,
+  LOGOUT_USER_SUCCESS,
   REFRESH_TOKEN_FAILED,
   REFRESH_TOKEN_REQUEST,
   REFRESH_TOKEN_SUCCESS,
@@ -31,6 +34,10 @@ const initialState = {
   loginRequest: false,
   loginSucces: false,
   loginFail: false,
+	logoutRequest: false,
+  logoutSucces: false,
+  logoutFail: false,
+	logoutMsg: null,
   resetPassRequest: false,
   resetPassSuccess: false,
 	resetPassFail: false,
@@ -172,6 +179,37 @@ export const profileReducer = (state = initialState, action) => {
         loginRequest: false,
         loginSuccess: false,
         loginFail: true,
+				logoutMsg: action.err
+      };
+    }
+		case LOGOUT_USER_REQUEST: {
+      return {
+        ...state,
+        logoutRequest: true,
+        logoutSuccess: false,
+        logoutFail: false,
+				logoutMsg: null,
+      };
+    }
+    case LOGOUT_USER_SUCCESS: {
+      return {
+        ...state,
+        logoutRequest: false,
+        logoutSuccess: true,
+        logoutFail: false,
+				logoutMsg: action.message,
+        userInfo: null,
+        accessToken: null,
+        refreshToken: null,
+      };
+    }
+    case LOGOUT_USER_FAILED: {
+      return {
+        ...state,
+        logoutRequest: false,
+        logoutSuccess: false,
+        logoutFail: true,
+				logoutMsg: action.err,
       };
     }
     default: {

@@ -71,6 +71,16 @@ export async function sendResetPassRequest(password, token) {
   return checkResult(res);
 }
 
+export async function sendLogoutRequest(token) {
+	const res = await fetch(`${URL_API}/auth/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token }),
+  });
+  return checkResult(res);
+}
 // Сохранение токена в куку
 
 // const signIn = async form => {

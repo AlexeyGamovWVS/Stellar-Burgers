@@ -33,3 +33,9 @@ export function getCookie(name) {
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+export function cleanTokenCookies(cookiesNames) {
+  cookiesNames.forEach((cookie) => {
+    setCookie(cookie, "");
+  });
+}
