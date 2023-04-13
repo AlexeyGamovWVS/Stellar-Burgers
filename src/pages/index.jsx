@@ -5,5 +5,15 @@ import { ForgotPage } from "./forgot-pass";
 import { ProfilePage } from "./profile";
 import { ErrorPage } from "./error-page";
 import { IngredientPage } from "./ingredient";
+import { OrdersPage } from "./orders";
 
-export { HomePage, RegistrationPage, LoginPage, ForgotPage, ProfilePage, ErrorPage, IngredientPage };
+export {
+  HomePage,
+  RegistrationPage,
+  LoginPage,
+  ForgotPage,
+  ProfilePage,
+  ErrorPage,
+  IngredientPage,
+	OrdersPage,
+};

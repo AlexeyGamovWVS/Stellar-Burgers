@@ -1,16 +1,16 @@
-import styles from "./profile.module.css";
+import styles from "./orders.module.css";
 import AppHeader from "../components/header/header";
-import { UserForm } from "../components/userForm/userForm";
 import { AsideNavigation } from "../components/asideNavigation/asideNavigation";
+import { OrderHistory } from "../components/orderHistory/orderHistory";
 
-export function ProfilePage() {
+export function OrdersPage() {
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
         <AsideNavigation />
         <div className={styles.content}>
-          <UserForm />
+          <OrderHistory />
         </div>
       </main>
     </>

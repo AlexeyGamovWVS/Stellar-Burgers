@@ -8,7 +8,8 @@ import {
   ForgotPage,
   ProfilePage,
   ErrorPage,
-	IngredientPage,
+  IngredientPage,
+  OrdersPage,
 } from "../../pages";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredientsData } from "../../services/actions/ingredients";
@@ -38,7 +39,11 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPage />} />
             <Route path="/reset-password" element={<ResetPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-						<Route path="/ingredients/:id" element={<IngredientPage />} />
+            <Route
+              path="/ingredients/:id"
+              element={<IngredientPage />}
+            />
+            <Route path="/profile/orders" element={<OrdersPage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
