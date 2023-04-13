@@ -4,6 +4,7 @@ import {
   sendRegisterData,
   sendResetPassRequest,
 } from "../../utils/api";
+import { getCookie, setCookie } from "../../utils/cookie";
 
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
@@ -51,15 +52,20 @@ export function registerUser(email, name, password) {
     });
     sendRegisterData(email, name, password)
       .then((res) => {
-        res.success
-          ? dispatch({
-              type: REGISTER_USER_SUCCESS,
-              user: res.user,
-              accessToken: res.accessToken,
-              refreshToken: res.refreshToken,
-							password: password,
-            })
-          : Promise.reject(`Ошибка обработки данных: ${res.status}`);
+        if (res.success) {
+          if (res.accessToken)
+            setCookie("accsessToken", res.accessToken);
+          if (res.refreshToken)
+            setCookie("refreshToken", res.refreshToken);
+          dispatch({
+            type: REGISTER_USER_SUCCESS,
+            user: res.user,
+            accessToken: res.accessToken,
+            refreshToken: res.refreshToken,
+            password: password,
+          });
+        } else
+          Promise.reject(`Ошибка обработки данных: ${res.status}`);
       })
       .catch((err) => {
         dispatch({
@@ -76,17 +82,22 @@ export function loginUser(email, password) {
       type: LOGIN_USER_REQUEST,
     });
     sendLoginData(email, password)
-      .then((res) =>
-        res.success
-          ? dispatch({
-              type: LOGIN_USER_SUCCESS,
-              user: res.user,
-              accessToken: res.accessToken,
-              refreshToken: res.refreshToken,
-							password: password,
-            })
-          : Promise.reject(`Ошибка входа в аккаунт: ${res.status}`)
-      )
+      .then((res) => {
+        if (res.success) {
+          if (res.accessToken)
+            setCookie("accsessToken", res.accessToken);
+          if (res.refreshToken)
+            setCookie("refreshToken", res.refreshToken);
+          dispatch({
+            type: LOGIN_USER_SUCCESS,
+            user: res.user,
+            accessToken: res.accessToken.split("Bearer ")[1],
+            password: password,
+          });
+        } else {
+          Promise.reject(`Ошибка входа в аккаунт: ${res.status}`);
+        }
+      })
       .catch((err) => {
         dispatch({
           type: LOGIN_USER_FAILED,
@@ -108,7 +119,7 @@ export function resetPassword(password, token) {
           ? dispatch({
               type: RESET_PASSWORD_SUCCESS,
               message: res.message,
-							password: password,
+              password: password,
             })
           : Promise.reject(
               `Ошибка при смене пароля или отправки данных на сервер: ${res.status}`

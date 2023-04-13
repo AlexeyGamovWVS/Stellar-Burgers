@@ -32,7 +32,7 @@ export function LoginPage() {
       console.log("user: " + userInfo.name + " " + userInfo.email);
       console.log("accessToken: " + accessToken);
       console.log("refreshToken: " + refreshToken);
-      navigate("/profile");
+      navigate("/");
     }
   }, [accessToken, navigate, refreshToken, userInfo]);
   //test checking ends

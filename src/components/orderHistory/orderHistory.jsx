@@ -1,7 +1,5 @@
 import styles from "./orderHistory.module.css";
 
 export function OrderHistory() {
-	return(
-		<p>Order History</p>
-	)
+  return <p className={styles.text}>Order History</p>;
 }
