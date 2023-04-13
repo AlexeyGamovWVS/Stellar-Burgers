@@ -1,6 +1,7 @@
 import {
   sendEmail,
   sendLoginData,
+  sendRefreshToken,
   sendRegisterData,
   sendResetPassRequest,
 } from "../../utils/api";
@@ -21,6 +22,10 @@ export const REGISTER_USER_FAILED = "REGISTER_USER_FAILED";
 export const LOGIN_USER_REQUEST = "LOGIN_USER_REQUEST";
 export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
 export const LOGIN_USER_FAILED = "LOGIN_USER_FAILED";
+
+export const REFRESH_TOKEN_REQUEST = "REFRESH_TOKEN_REQUEST";
+export const REFRESH_TOKEN_SUCCESS = "REFRESH_TOKEN_SUCCESS";
+export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
 
 export function sendEmailForgotPassword(email) {
   return function (dispatch) {
@@ -104,6 +109,34 @@ export function loginUser(email, password) {
           err,
         });
       });
+  };
+}
+
+export function refreshToken() {
+  return function (dispatch) {
+    dispatch({ type: REFRESH_TOKEN_REQUEST });
+    sendRefreshToken(getCookie("refreshToken"))
+      .then((res) => {
+        if (res.success) {
+          if (res.accessToken)
+            setCookie("accsessToken", res.accessToken);
+          if (res.refreshToken)
+            setCookie("refreshToken", res.refreshToken);
+          dispatch({
+            type: REFRESH_TOKEN_SUCCESS,
+          });
+        } else {
+          Promise.reject(
+            `Не удалось обновить токен доступа: ${res.status}`
+          );
+        }
+      })
+      .catch((err) =>
+        dispatch({
+          type: REFRESH_TOKEN_FAILED,
+          err,
+        })
+      );
   };
 }
 

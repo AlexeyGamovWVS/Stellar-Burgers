@@ -44,26 +44,21 @@ export async function sendLoginData(email, password) {
     headers: {
       "Content-Type": "application/json",
     },
-    // mode: 'cors',
-    // cache: 'no-cache',
-    // credentials: 'same-origin',
-    // redirect: '/profile',
-    // referrerPolicy: 'no-referrer',
     body: JSON.stringify({ email, password }),
   });
   return checkResult(res);
 }
-// newrequests !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// лагоритм сохранения данных о пользователе в стейт
-// Авторизация пользователей в приложении.
-// Получение данных от сервера о текущем пользователе.
-// Сохранение данных в глобальное хранилище.
-// Использование этих данных на любом нужном уровне приложения для вариативного рендеринга компонентов и контента.
 
-// Другими словами: Отправляем экшен, который выполняет запрос на авторизацию.
-// После успешного выполнения запроса на авторизацию записываем данные в Redux.
-// С помощью useSelector получаем доступ к данным о текущем пользователе.
-// PROFIT!
+export async function sendRefreshToken(token) {
+  const res = await fetch(`${URL_API}/auth/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token }),
+  });
+  return checkResult(res);
+}
 
 export async function sendResetPassRequest(password, token) {
   const res = await fetch(`${URL_API}/password-reset/reset`, {
@@ -103,13 +98,6 @@ export async function sendResetPassRequest(password, token) {
 //     setUser({ ...data.user, id: data.user._id });
 //   }
 // };
-
-// export function getCookie(name) {
-//   const matches = document.cookie.match(
-//     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
-//   );
-//   return matches ? decodeURIComponent(matches[1]) : undefined;
-// }
 
 // отправляем запрос на роут аутентификации
 // export const getChatsRequest = async () =>

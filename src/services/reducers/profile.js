@@ -5,6 +5,9 @@ import {
   LOGIN_USER_FAILED,
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
+  REFRESH_TOKEN_FAILED,
+  REFRESH_TOKEN_REQUEST,
+  REFRESH_TOKEN_SUCCESS,
   REGISTER_USER_FAILED,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
@@ -32,10 +35,37 @@ const initialState = {
   resetPassSuccess: false,
 	resetPassFail: false,
   resetPassMessage: null,
+	refreshTokenRequest: false,
+	refreshTokenSuccess: false,
+	refreshTokenFail: false,
 };
 
 export const profileReducer = (state = initialState, action) => {
   switch (action.type) {
+		case REFRESH_TOKEN_REQUEST: {
+			return {
+				...state,
+				refreshTokenRequest: true,
+				refreshTokenSuccess: false,
+				refreshTokenFail: false
+			}
+		}
+		case REFRESH_TOKEN_SUCCESS: {
+			return {
+				...state,
+				refreshTokenRequest: false,
+				refreshTokenSuccess: true,
+				refreshTokenFail: false
+			}
+		}
+		case REFRESH_TOKEN_FAILED: {
+			return {
+				...state,
+				refreshTokenRequest: false,
+				refreshTokenSuccess: false,
+				refreshTokenFail: true
+			}
+		}
     case FORGOT_PASSWORD_REQUEST: {
       return {
         ...state,
