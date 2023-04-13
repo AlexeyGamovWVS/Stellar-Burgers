@@ -1,28 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./asideNavigation.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logoutUser } from "../../services/actions/profile";
-import { useEffect } from "react";
 import { cleanTokenCookies } from "../../utils/cookie";
 
 export function AsideNavigation() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const logout = () => {
     dispatch(logoutUser());
-		cleanTokenCookies(["accessToken", "refreshToken"]);
+    cleanTokenCookies(["accessToken", "refreshToken"]);
+    navigate("/login", { replace: true });
   };
-
-  //test checking starts
-  const { userInfo, accessToken, refreshToken } =
-    useSelector((store) => store.profile);
-  useEffect(() => {
-    if (userInfo) {
-      console.log("user: " + userInfo.name + " " + userInfo.email);
-      console.log("accessToken: " + accessToken);
-      console.log("refreshToken: " + refreshToken);
-    }
-  }, [accessToken, refreshToken, userInfo]);
-  //test checking ends
 
   return (
     <aside className={styles.navbar}>
@@ -57,7 +46,6 @@ export function AsideNavigation() {
           <li className={styles.links__item}>
             <NavLink
               className={`${styles.link} text text_type_main-medium`}
-              to="/login"
               onClick={logout}
             >
               Выход

@@ -1,14 +1,18 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./userForm.module.css";
 import { useEffect, useRef, useState } from "react";
 import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  changeUserInfo,
+  getUserInfo,
+} from "../../services/actions/profile";
 
 export function UserForm() {
   const { userInfo } = useSelector((store) => store.profile);
-
+  const dispatch = useDispatch();
   const [nameValue, setNameValue] = useState("Your Name");
   const [emailValue, setEmailValue] = useState("test@mail.ru");
   const [passwordValue, setPasswordValue] = useState("Password");
@@ -30,41 +34,52 @@ export function UserForm() {
   };
 
   useEffect(() => {
+    dispatch(getUserInfo());
     // eslint-disable-next-line no-unused-expressions
     userInfo ? setData(userInfo) : null;
-  }, [userInfo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onNameEditIconClick = (e) => {
-		setProfileEditing(true);
+    setProfileEditing(true);
     setNameFieldState(false);
-		setTimeout(() => nameRef.current.focus(), 0)
-		setEmailFieldState(true);
-		setPassFieldState(true);
+    setTimeout(() => nameRef.current.focus(), 0);
+    setEmailFieldState(true);
+    setPassFieldState(true);
   };
 
   const onEmailIconClick = (e) => {
-		setProfileEditing(true);
+    setProfileEditing(true);
     setEmailFieldState(false);
-		setTimeout(() => emailRef.current.focus(), 0);
-		setNameFieldState(true);
-		setPassFieldState(true);
+    setTimeout(() => emailRef.current.focus(), 0);
+    setNameFieldState(true);
+    setPassFieldState(true);
   };
 
   const onPassIconClick = (e) => {
-		setProfileEditing(true);
+    setProfileEditing(true);
     setPassFieldState(false);
-		setTimeout(() => passRef.current.focus(), 0)
-		setNameFieldState(true);
-		setEmailFieldState(true);
+    setTimeout(() => passRef.current.focus(), 0);
+    setNameFieldState(true);
+    setEmailFieldState(true);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("form enabled");
+    dispatch(changeUserInfo(nameValue, emailValue, passwordValue));
+    stopEditoring();
   };
 
   const cancelEdit = () => {
-    console.log("edit canceled");
+    stopEditoring();
+  };
+
+  const stopEditoring = () => {
+    setData(userInfo);
+    setProfileEditing(false);
+    setPassFieldState(true);
+    setNameFieldState(true);
+    setEmailFieldState(true);
   };
 
   return (
@@ -106,20 +121,20 @@ export function UserForm() {
         disabled={passFieldState}
       />
       {isProfileEditing && (
-				<div className={styles.handlers}>
-        <Button
-          htmlType="button"
-          type="secondary"
-          size="medium"
-          onClick={cancelEdit}
-        >
-          Отмена
-        </Button>
-        <Button htmlType="submit" type="primary" size="medium">
-          Сохранить
-        </Button>
-      </div>
-			)}
+        <div className={styles.handlers}>
+          <Button
+            htmlType="button"
+            type="secondary"
+            size="medium"
+            onClick={cancelEdit}
+          >
+            Отмена
+          </Button>
+          <Button htmlType="submit" type="primary" size="medium">
+            Сохранить
+          </Button>
+        </div>
+      )}
     </form>
   );
 }

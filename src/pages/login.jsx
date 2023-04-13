@@ -6,38 +6,37 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/header/header";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../services/actions/profile";
+import { getUserInfo, loginUser } from "../services/actions/profile";
 
 export function LoginPage() {
+  const { userInfo } = useSelector((store) => store.profile);
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getUserInfo());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const isUserInfo = () => {
+    return userInfo !== null;
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (emailValue && passwordValue) {
       dispatch(loginUser(emailValue, passwordValue));
+      navigate("/", { replace: false });
     } else return;
   };
 
-  //test checking starts
-  const navigate = useNavigate();
-  const { userInfo, accessToken, refreshToken } = useSelector(
-    (store) => store.profile
-  );
-  useEffect(() => {
-    if (userInfo) {
-      console.log("user: " + userInfo.name + " " + userInfo.email);
-      console.log("accessToken: " + accessToken);
-      console.log("refreshToken: " + refreshToken);
-      navigate("/");
-    }
-  }, [accessToken, navigate, refreshToken, userInfo]);
-  //test checking ends
-
-  return (
+  return isUserInfo() ? (
+    <Navigate to={"/"} replace />
+  ) : (
     <>
       <AppHeader />
       <main className={styles.main}>

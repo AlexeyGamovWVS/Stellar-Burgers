@@ -72,7 +72,7 @@ export async function sendResetPassRequest(password, token) {
 }
 
 export async function sendLogoutRequest(token) {
-	const res = await fetch(`${URL_API}/auth/logout`, {
+  const res = await fetch(`${URL_API}/auth/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -81,77 +81,35 @@ export async function sendLogoutRequest(token) {
   });
   return checkResult(res);
 }
-// Сохранение токена в куку
 
-// const signIn = async form => {
-//   const data = await loginRequest(form)
-//     .then(res => {
-//       let authToken;
-//             // Ищем интересующий нас заголовок
-//       res.headers.forEach(header => {
-//         if (header.indexOf('Bearer') === 0) {
-//                     // Отделяем схему авторизации от "полезной нагрузки токена",
-//                     // Стараемся экономить память в куках (доступно 4кб)
-//           authToken = header.split('Bearer ')[1];
-//         }
-//       });
-//       if (authToken) {
-//                 // Сохраняем токен в куку token
-//         setCookie('token', authToken);
-//       }
-//       return res.json();
-//     })
-//     .then(data => data);
+export async function sendUserInfoRequest(token) {
+  const res = await fetch(`${URL_API}/auth/user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: token,
+    },
+  });
+  return checkResult(res);
+}
 
-//   if (data.success) {
-//         // Сохраняем пользователя в состояние приложения и нормализуем поле id (_id => id)
-//     setUser({ ...data.user, id: data.user._id });
-//   }
-// };
+export async function sendChangeUserInfoRequest(
+  token,
+  name,
+  email,
+  password
+) {
+  const res = await fetch(`${URL_API}/auth/user`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: token,
+    },
+    body: JSON.stringify({ name, email, password }),
+  });
+  return checkResult(res);
+}
 
-// отправляем запрос на роут аутентификации
-// export const getChatsRequest = async () =>
-//   await fetch('https://cosmic.nomoreparties.space/api/chat', {
-//     method: 'GET',
-//     mode: 'cors',
-//     cache: 'no-cache',
-//     credentials: 'same-origin',
-//     headers: {
-//       'Content-Type': 'application/json',
-//             // Отправляем токен и схему авторизации в заголовке при запросе данных
-//       Authorization: 'Bearer ' + getCookie('token')
-//     },
-//     redirect: 'follow',
-//     referrerPolicy: 'no-referrer'
-//   });
-
-// import { useAuth } from '../services/auth';
-// import { Route } from 'react-router-dom';
-// import { useEffect, useState } from 'react';
-
-// export function ProtectedRouteElement({ element }) {
-//     let { getUser, ...auth } = useAuth();
-//     const [isUserLoaded, setUserLoaded] = useState(false);
-
-//     const init = async () => {
-//     await getUser();
-//     setUserLoaded(true);
-//   };
-
-//   useEffect(() => {
-//     init();
-//   }, []);
-
-//     if (!isUserLoaded) {
-//     return null;
-//   }
-
-//     return auth.user ? element : <Navigate to="/login" replace/>;
-// }
 function checkResult(res) {
-  return res.ok
-    ? res.json()
-    : Promise.reject(
-        `Ошибка загрузки данных с сервера: ${res.status}`
-      );
+  return res.ok ? res.json() : Promise.reject(res.status);
 }

@@ -1,12 +1,18 @@
 import {
+  sendChangeUserInfoRequest,
   sendEmail,
   sendLoginData,
   sendLogoutRequest,
   sendRefreshToken,
   sendRegisterData,
   sendResetPassRequest,
+  sendUserInfoRequest,
 } from "../../utils/api";
 import { getCookie, setCookie } from "../../utils/cookie";
+
+const ACCESS_TOKEN = "accessToken";
+const REFRESH_TOKEN = "refreshToken";
+const ACCSESS_EXPIRED_ERROR = 403;
 
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
@@ -31,6 +37,14 @@ export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
 export const LOGOUT_USER_REQUEST = "LOGOUT_USER_REQUEST";
 export const LOGOUT_USER_SUCCESS = "LOGOUT_USER_SUCCESS";
 export const LOGOUT_USER_FAILED = "LOGOUT_USER_FAILED";
+
+export const GET_USERINFO_REQUEST = "GET_USERINFO_REQUEST";
+export const GET_USERINFO_SUCCESS = "GET_USERINFO_SUCCESS";
+export const GET_USERINFO_FAILED = "GET_USERINFO_FAILED";
+
+export const CHANGE_USERINFO_REQUEST = "CHANGE_USERINFO_REQUEST";
+export const CHANGE_USERINFO_SUCCESS = "CHANGE_USERINFO_SUCCESS";
+export const CHANGE_USERINFO_FAILED = "CHANGE_USERINFO_FAILED";
 
 export function sendEmailForgotPassword(email) {
   return function (dispatch) {
@@ -64,9 +78,9 @@ export function registerUser(email, name, password) {
       .then((res) => {
         if (res.success) {
           if (res.accessToken)
-            setCookie("accsessToken", res.accessToken);
+            setCookie(ACCESS_TOKEN, res.accessToken);
           if (res.refreshToken)
-            setCookie("refreshToken", res.refreshToken);
+            setCookie(REFRESH_TOKEN, res.refreshToken);
           dispatch({
             type: REGISTER_USER_SUCCESS,
             user: res.user,
@@ -95,9 +109,9 @@ export function loginUser(email, password) {
       .then((res) => {
         if (res.success) {
           if (res.accessToken)
-            setCookie("accsessToken", res.accessToken);
+            setCookie(ACCESS_TOKEN, res.accessToken);
           if (res.refreshToken)
-            setCookie("refreshToken", res.refreshToken);
+            setCookie(REFRESH_TOKEN, res.refreshToken);
           dispatch({
             type: LOGIN_USER_SUCCESS,
             user: res.user,
@@ -120,7 +134,7 @@ export function loginUser(email, password) {
 export function logoutUser() {
   return function (dispatch) {
     dispatch({ type: LOGOUT_USER_REQUEST });
-    sendLogoutRequest(getCookie("refreshToken"))
+    sendLogoutRequest(getCookie(REFRESH_TOKEN))
       .then((res) =>
         res.success
           ? dispatch({
@@ -138,19 +152,26 @@ export function logoutUser() {
   };
 }
 
-export function refreshToken() {
+export function refreshToken(key, data) {
   return function (dispatch) {
     dispatch({ type: REFRESH_TOKEN_REQUEST });
-    sendRefreshToken(getCookie("refreshToken"))
+    const token = getCookie(REFRESH_TOKEN);
+    sendRefreshToken(getCookie(token))
       .then((res) => {
         if (res.success) {
           if (res.accessToken)
-            setCookie("accsessToken", res.accessToken);
+            setCookie(ACCESS_TOKEN, res.accessToken);
           if (res.refreshToken)
-            setCookie("refreshToken", res.refreshToken);
+            setCookie(REFRESH_TOKEN, res.refreshToken);
           dispatch({
             type: REFRESH_TOKEN_SUCCESS,
           });
+					if (key === 'getUserInfo') {
+						dispatch(getUserInfo());
+					}
+					if (key === 'changeUserInfo') {
+						dispatch(changeUserInfo(data.name, data.email, data.password))
+					}
         } else {
           Promise.reject(
             `Не удалось обновить токен доступа: ${res.status}`
@@ -163,6 +184,66 @@ export function refreshToken() {
           err,
         })
       );
+  };
+}
+
+export function getUserInfo() {
+  return function (dispatch) {
+    dispatch({ type: GET_USERINFO_REQUEST });
+    sendUserInfoRequest(getCookie(ACCESS_TOKEN))
+      .then((res) => {
+        res.success
+          ? dispatch({
+              type: GET_USERINFO_SUCCESS,
+              userInfo: res.user,
+            })
+          : Promise.reject(res.status);
+      })
+      .catch((err) => {
+        if (err === ACCSESS_EXPIRED_ERROR) {
+          dispatch({
+            type: GET_USERINFO_FAILED,
+            err,
+          });
+          dispatch(refreshToken('getUserInfo'));
+        } else {
+          dispatch({
+            type: GET_USERINFO_FAILED,
+            err: `Ошибка обращения к серверу ${err}`,
+          });
+        }
+      });
+  };
+}
+
+export function changeUserInfo(name, email, password) {
+  return function (dispatch) {
+    dispatch({ type: CHANGE_USERINFO_REQUEST });
+    sendChangeUserInfoRequest(
+      getCookie(ACCESS_TOKEN),
+      name,
+      email,
+      password
+    )
+      .then((res) => {
+        res.success
+          ? dispatch({
+              type: CHANGE_USERINFO_SUCCESS,
+              userInfo: res.user,
+              password,
+            })
+          : Promise.reject(res.status);
+      })
+      .catch((err) => {
+        if (err === ACCSESS_EXPIRED_ERROR) {
+          dispatch(refreshToken('changeUserInfo', {name, email, password}));
+        } else {
+          dispatch({
+            type: CHANGE_USERINFO_FAILED,
+            err,
+          });
+        }
+      });
   };
 }
 
