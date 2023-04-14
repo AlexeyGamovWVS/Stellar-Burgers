@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ErrorBoundary from "../../utils/errorBoudary";
 import {
   Routes,
@@ -27,21 +27,13 @@ function App() {
   const dispatch = useDispatch();
   const { items, itemsRequest, itemsRequestMessage, itemsFailed } =
     useSelector((store) => store.allItems);
-
-  React.useEffect(() => {
-    dispatch(getIngredientsData());
-  }, [dispatch]);
   const location = useLocation();
   const back = location.state?.back;
-  console.log(back);
-  console.log(location);
   const navigate = useNavigate();
-  const { selectedIngredient } = useSelector(
-    (store) => store.currentWatchItem
-  );
+
   useEffect(() => {
-    console.log(selectedIngredient);
-  }, [selectedIngredient]);
+    dispatch(getIngredientsData());
+  }, [dispatch]);
 
   const closeIngredientPop = () => {
     navigate(-1);
@@ -72,23 +64,21 @@ function App() {
             />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
-          <Routes>
-            {back && (
+          {back && (
+            <Routes>
               <Route
                 path="/ingredients/:id"
                 element={
-                  <>
-                    <Modal
-                      header="Детали ингредиента"
-                      onClose={closeIngredientPop}
-                    >
-                      <IngredientDetails />
-                    </Modal>
-                  </>
+                  <Modal
+                    header="Детали ингредиента"
+                    onClose={closeIngredientPop}
+                  >
+                    <IngredientDetails />
+                  </Modal>
                 }
               />
-            )}
-          </Routes>
+            </Routes>
+          )}
         </>
       )}
     </ErrorBoundary>

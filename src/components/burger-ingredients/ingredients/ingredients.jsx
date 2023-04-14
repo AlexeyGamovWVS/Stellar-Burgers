@@ -2,9 +2,7 @@ import ingredStyles from "./ingredients.module.css";
 import IngredientRow from "./ingredients-row/ingredients-row";
 import { getIngredientCards, currentRow } from "./ingredients.utils";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  SET_SELECTED_INGREDIENT,
-} from "../../../services/actions/currentItem";
+import { SET_SELECTED_INGREDIENT } from "../../../services/actions/currentItem";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
@@ -20,8 +18,8 @@ export default function Ingredients({
 }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.allItems);
-	const location = useLocation();
-	const state = location.state;
+  const location = useLocation();
+  const state = location.state;
   const openIngredientPop = (e) => {
     dispatch({
       type: SET_SELECTED_INGREDIENT,
@@ -32,8 +30,8 @@ export default function Ingredients({
   const separatedData = getIngredientCards(
     items,
     openIngredientPop,
-		state,
-		location
+    state,
+    location
   );
 
   const scrollHandler = (e) => {
