@@ -13,3 +13,8 @@
 .rowsContainer::-webkit-scrollbar-thumb {
   background: #8585ad;
 }
+
+.link {
+	text-decoration: none;
+	color: inherit;
+}

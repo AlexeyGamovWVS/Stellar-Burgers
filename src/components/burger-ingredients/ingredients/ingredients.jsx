@@ -10,6 +10,7 @@ import {
 } from "../../../services/actions/currentItem";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import PropTypes from "prop-types";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const findElement = (target, items) => {
   return items.find((item) => item._id === target.id);
@@ -22,10 +23,9 @@ export default function Ingredients({
 }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.allItems);
-  const { selectedIngredient } = useSelector(
-    (store) => store.currentWatchItem
-  );
-
+  const navigate = useNavigate();
+	const location = useLocation();
+	const state = location.state;
   const openIngredientPop = (e) => {
     dispatch({
       type: SET_SELECTED_INGREDIENT,
@@ -33,13 +33,12 @@ export default function Ingredients({
     });
   };
 
-  const closeIngredientPop = () => {
-    dispatch({
-      type: REMOVE_SELECTED_INGREDIENT,
-    });
-  };
-
-  const separatedData = getIngredientCards(items, openIngredientPop);
+  const separatedData = getIngredientCards(
+    items,
+    openIngredientPop,
+		state,
+		location
+  );
 
   const scrollHandler = (e) => {
     const newRow = currentRow(e.currentTarget);
@@ -72,14 +71,6 @@ export default function Ingredients({
       >
         {separatedData.mains}
       </IngredientRow>
-      {selectedIngredient && (
-        <Modal
-          header="Детали ингредиента"
-          onClose={closeIngredientPop}
-        >
-          <IngredientDetails />
-        </Modal>
-      )}
     </div>
   );
 }

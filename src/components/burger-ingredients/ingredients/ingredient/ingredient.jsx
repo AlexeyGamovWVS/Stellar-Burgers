@@ -64,6 +64,6 @@ Ingredient.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
-  onOpen: PropTypes.func.isRequired,
+  onOpen: PropTypes.func,
   id: PropTypes.string.isRequired,
 };

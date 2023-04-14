@@ -1,7 +1,8 @@
 import Ingredient from "./ingredient/ingredient";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import { GET_RANDOM } from "../../burger-constructor/burger-components/burger-components.utils";
-
+import { Link, Outlet } from "react-router-dom";
+import styles from "./ingredients.module.css"
 export const currentRow = (box) => {
   const boxRect = box.getBoundingClientRect();
   const buns = box.querySelector(`#${COMPONENT_TYPES.buns}`);
@@ -17,23 +18,25 @@ export const currentRow = (box) => {
   return newRow ? newRow.id : null;
 };
 
-export function getIngredientCards(data, onOpen) {
+export function getIngredientCards(data, onOpen, state, location) {
   const buns = [],
     mains = [],
     sauces = [];
+  state = {...state, back: location}
 
   data.forEach((element) => {
     const ingredientCard = (
-      <Ingredient
-        type={element.type}
-        key={element._id}
-        id={element._id}
-        name={element.name}
-        image={element.image}
-        price={element.price}
-        onOpen={onOpen}
-        index={element._id + GET_RANDOM()}
-      />
+      <><Link className={styles.link} to={`/ingredients/${element._id}`} key={element._id} state={state}>
+				<Ingredient
+					type={element.type}
+					key={element._id}
+					name={element.name}
+					image={element.image}
+					price={element.price}
+					id={element._id}
+					//onOpen={onOpen}
+					index={element._id + GET_RANDOM()} />
+			</Link><Outlet /></>
     );
     switch (element.type) {
       case COMPONENT_TYPES.mains: {
