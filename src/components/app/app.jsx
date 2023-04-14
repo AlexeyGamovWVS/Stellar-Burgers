@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import ErrorBoundary from "../../utils/errorBoudary";
 import {
-  BrowserRouter,
   Routes,
   Route,
   useNavigate,
@@ -37,7 +36,6 @@ function App() {
   console.log(back);
   console.log(location);
   const navigate = useNavigate();
-  //const navigate = useNavigate();
   const { selectedIngredient } = useSelector(
     (store) => store.currentWatchItem
   );
@@ -46,7 +44,7 @@ function App() {
   }, [selectedIngredient]);
 
   const closeIngredientPop = () => {
-    navigate("/");
+    navigate(-1);
     dispatch({
       type: REMOVE_SELECTED_INGREDIENT,
     });

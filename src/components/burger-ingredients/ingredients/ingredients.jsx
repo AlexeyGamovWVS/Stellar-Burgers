@@ -1,16 +1,13 @@
 import ingredStyles from "./ingredients.module.css";
 import IngredientRow from "./ingredients-row/ingredients-row";
 import { getIngredientCards, currentRow } from "./ingredients.utils";
-import Modal from "../../modal/modal";
-import IngredientDetails from "../../ingredientDetails/ingredientDetails";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  REMOVE_SELECTED_INGREDIENT,
   SET_SELECTED_INGREDIENT,
 } from "../../../services/actions/currentItem";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import PropTypes from "prop-types";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const findElement = (target, items) => {
   return items.find((item) => item._id === target.id);
@@ -23,7 +20,6 @@ export default function Ingredients({
 }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.allItems);
-  const navigate = useNavigate();
 	const location = useLocation();
 	const state = location.state;
   const openIngredientPop = (e) => {
