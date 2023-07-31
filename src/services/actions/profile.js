@@ -12,7 +12,7 @@ import { getCookie, setCookie } from "../../utils/cookie";
 
 const ACCESS_TOKEN = "accessToken";
 const REFRESH_TOKEN = "refreshToken";
-const ACCSESS_EXPIRED_ERROR = 403;
+const ACCESSES_EXPIRED_ERROR = 403;
 
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
@@ -191,7 +191,7 @@ export function getUserInfo() {
           : Promise.reject(res.status);
       })
       .catch((err) => {
-        if (err === ACCSESS_EXPIRED_ERROR) {
+        if (err === ACCESSES_EXPIRED_ERROR) {
           dispatch({
             type: GET_USERINFO_FAILED,
             err,
@@ -221,7 +221,7 @@ export function changeUserInfo(name, email, password) {
           : Promise.reject(res.status);
       })
       .catch((err) => {
-        if (err === ACCSESS_EXPIRED_ERROR) {
+        if (err === ACCESSES_EXPIRED_ERROR) {
           dispatch(refreshToken("changeUserInfo", { name, email, password }));
         } else {
           dispatch({
