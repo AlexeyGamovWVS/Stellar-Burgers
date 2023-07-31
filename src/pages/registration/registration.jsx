@@ -6,12 +6,9 @@ import {
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getUserInfo,
-  registerUser,
-} from "../../services/actions/profile";
+import { getUserInfo, registerUser } from "../../services/actions/profile";
 
 export function RegistrationPage() {
   const { userInfo } = useSelector((store) => store.profile);
@@ -19,7 +16,6 @@ export function RegistrationPage() {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getUserInfo());
@@ -34,7 +30,6 @@ export function RegistrationPage() {
     e.preventDefault();
     if (nameValue && emailValue && passwordValue) {
       dispatch(registerUser(emailValue, nameValue, passwordValue));
-      navigate("/", { replace: false });
     } else return;
   };
 

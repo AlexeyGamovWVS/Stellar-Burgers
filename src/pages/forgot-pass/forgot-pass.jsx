@@ -1,14 +1,12 @@
 import styles from "./forgot-pass.module.css";
 import { useEffect, useState } from "react";
-import {
-  Button,
-  EmailInput,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { sendEmailForgotPassword } from "../../services/actions/profile";
+import { getUserInfo, sendEmailForgotPassword } from "../../services/actions/profile";
 
 export function ForgotPage() {
+  const { userInfo } = useSelector((store) => store.profile);
   const [emailValue, setEmailValue] = useState("");
   const dispatch = useDispatch();
 
@@ -16,10 +14,17 @@ export function ForgotPage() {
   const navigate = useNavigate();
   //для временной навигации конец
 
+  useEffect(() => {
+    dispatch(getUserInfo());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const isUserInfo = () => {
+    return userInfo !== null;
+  };
+
   //checking request starts
-  const { forgotPassMessage, forgotPassSuccess } = useSelector(
-    (store) => store.profile
-  );
+  const { forgotPassMessage, forgotPassSuccess } = useSelector((store) => store.profile);
   useEffect(() => {
     console.log(forgotPassMessage);
     if (forgotPassMessage && forgotPassSuccess) {
@@ -35,12 +40,12 @@ export function ForgotPage() {
     } else return;
   };
 
-  return (
+  return isUserInfo() ? (
+    <Navigate to={"/"} replace />
+  ) : (
     <main className={styles.main}>
       <form className={styles.form} onSubmit={handleForSubmit}>
-        <h1 className="text text_type_main-medium">
-          Восстановление пароля
-        </h1>
+        <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <EmailInput
           onChange={(e) => setEmailValue(e.target.value)}
           placeholder="Укажите e-mail "
