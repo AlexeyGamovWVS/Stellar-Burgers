@@ -58,6 +58,7 @@ function App() {
             <Route path="/reset-password" element={<ResetPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/orders" element={<OrdersPage />} />
+						{/* <Route path="/profile/orders/:id" element={<OrderInfoPage />} /> */}
             <Route
               path="/ingredients/:id"
               element={<IngredientPage />}
