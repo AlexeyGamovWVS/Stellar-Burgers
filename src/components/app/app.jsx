@@ -1,11 +1,6 @@
 import { useEffect } from "react";
 import ErrorBoundary from "../../utils/errorBoudary";
-import {
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import {
   HomePage,
   RegistrationPage,
@@ -23,11 +18,13 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
 import { REMOVE_SELECTED_INGREDIENT } from "../../services/actions/currentItem";
 import AppHeader from "../header/header";
+import { ProtectedRouteElement } from "../protectedRoute/protectdRoute";
 
 function App() {
   const dispatch = useDispatch();
-  const { items, itemsRequest, itemsRequestMessage, itemsFailed } =
-    useSelector((store) => store.allItems);
+  const { items, itemsRequest, itemsRequestMessage, itemsFailed } = useSelector(
+    (store) => store.allItems
+  );
   const location = useLocation();
   const back = location.state?.back;
   const navigate = useNavigate();
@@ -44,9 +41,7 @@ function App() {
   };
 
   return itemsRequest || itemsFailed ? (
-    <p className="text text_type_main-large mt-30 ml-30">
-      {itemsRequestMessage}
-    </p>
+    <p className="text text_type_main-large mt-30 ml-30">{itemsRequestMessage}</p>
   ) : (
     <ErrorBoundary>
       <>
@@ -55,26 +50,28 @@ function App() {
           <>
             <Routes location={back || location}>
               <Route path="/" element={<HomePage />} />
-              <Route
-                path="/register"
-                element={<RegistrationPage />}
-              />
+              <Route path="/register" element={<RegistrationPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route
-                path="/forgot-password"
-                element={<ForgotPage />}
-              />
+              <Route path="/forgot-password" element={<ForgotPage />} />
               <Route path="/reset-password" element={<ResetPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRouteElement>
+                    <ProfilePage />
+                  </ProtectedRouteElement>
+                }
+              />
               <Route
                 path="/profile/orders"
-                element={<OrdersPage />}
+                element={
+                  <ProtectedRouteElement>
+                    <OrdersPage />
+                  </ProtectedRouteElement>
+                }
               />
               {/* <Route path="/profile/orders/:id" element={<OrderInfoPage />} /> */}
-              <Route
-                path="/ingredients/:id"
-                element={<IngredientPage />}
-              />
+              <Route path="/ingredients/:id" element={<IngredientPage />} />
               <Route path="*" element={<ErrorPage />} />
             </Routes>
             {back && (
@@ -82,10 +79,7 @@ function App() {
                 <Route
                   path="/ingredients/:id"
                   element={
-                    <Modal
-                      header="Детали ингредиента"
-                      onClose={closeIngredientPop}
-                    >
+                    <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
                       <IngredientDetails />
                     </Modal>
                   }
