@@ -18,10 +18,11 @@ import {
 } from "../../pages";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredientsData } from "../../services/actions/ingredients";
-import { ResetPage } from "../../pages/reset-pass";
+import { ResetPage } from "../../pages/reset-pass/reset-pass";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
 import { REMOVE_SELECTED_INGREDIENT } from "../../services/actions/currentItem";
+import AppHeader from "../header/header";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,40 +49,52 @@ function App() {
     </p>
   ) : (
     <ErrorBoundary>
-      {items.length && (
-        <>
-          <Routes location={back || location}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/register" element={<RegistrationPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/forgot-password" element={<ForgotPage />} />
-            <Route path="/reset-password" element={<ResetPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profile/orders" element={<OrdersPage />} />
-						{/* <Route path="/profile/orders/:id" element={<OrderInfoPage />} /> */}
-            <Route
-              path="/ingredients/:id"
-              element={<IngredientPage />}
-            />
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-          {back && (
-            <Routes>
+      <>
+        <AppHeader />
+        {items.length && (
+          <>
+            <Routes location={back || location}>
+              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/register"
+                element={<RegistrationPage />}
+              />
+              <Route path="/login" element={<LoginPage />} />
+              <Route
+                path="/forgot-password"
+                element={<ForgotPage />}
+              />
+              <Route path="/reset-password" element={<ResetPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route
+                path="/profile/orders"
+                element={<OrdersPage />}
+              />
+              {/* <Route path="/profile/orders/:id" element={<OrderInfoPage />} /> */}
               <Route
                 path="/ingredients/:id"
-                element={
-                  <Modal
-                    header="Детали ингредиента"
-                    onClose={closeIngredientPop}
-                  >
-                    <IngredientDetails />
-                  </Modal>
-                }
+                element={<IngredientPage />}
               />
+              <Route path="*" element={<ErrorPage />} />
             </Routes>
-          )}
-        </>
-      )}
+            {back && (
+              <Routes>
+                <Route
+                  path="/ingredients/:id"
+                  element={
+                    <Modal
+                      header="Детали ингредиента"
+                      onClose={closeIngredientPop}
+                    >
+                      <IngredientDetails />
+                    </Modal>
+                  }
+                />
+              </Routes>
+            )}
+          </>
+        )}
+      </>
     </ErrorBoundary>
   );
 }

@@ -1,11 +1,11 @@
-import { HomePage } from "./home";
-import { LoginPage } from "./login";
-import { RegistrationPage } from "./registration";
-import { ForgotPage } from "./forgot-pass";
-import { ProfilePage } from "./profile";
-import { ErrorPage } from "./error-page";
-import { IngredientPage } from "./ingredient";
-import { OrdersPage } from "./orders";
+import { HomePage } from "./home/home";
+import { LoginPage } from "./login/login";
+import { RegistrationPage } from "./registration/registration";
+import { ForgotPage } from "./forgot-pass/forgot-pass";
+import { ProfilePage } from "./profile/profile";
+import { ErrorPage } from "./error-page/error-page";
+import { IngredientPage } from "./ingredient/ingredient";
+import { OrdersPage } from "./orders/orders";
 
 export {
   HomePage,
@@ -15,5 +15,5 @@ export {
   ProfilePage,
   ErrorPage,
   IngredientPage,
-	OrdersPage,
+  OrdersPage,
 };
