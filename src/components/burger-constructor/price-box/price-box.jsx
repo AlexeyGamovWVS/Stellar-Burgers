@@ -1,17 +1,16 @@
-import {
-  CurrencyIcon,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import priceStyles from "./price-box.module.css";
 import { useMemo } from "react";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOrderData } from "../../../services/actions/order";
+import { getUserInfo } from "../../../services/actions/profile";
+import { useNavigate } from "react-router-dom";
 export default function PriceBox() {
   const dispatch = useDispatch();
-  const { selectedItems, selectedBun } = useSelector(
-    (store) => store.selectedItems
-  );
+  const navigate = useNavigate();
+  const { selectedItems, selectedBun } = useSelector((store) => store.selectedItems);
+  const { userInfo } = useSelector((store) => store.profile);
 
   const fullOrder = useMemo(() => {
     const fullArray = [...selectedItems];
@@ -22,8 +21,9 @@ export default function PriceBox() {
   }, [selectedBun, selectedItems]);
 
   const orderBtnClick = () => {
+    dispatch(getUserInfo());
     const dataIds = fullOrder.map((item) => item._id);
-    dispatch(sendOrderData(dataIds));
+    userInfo !== null ? dispatch(sendOrderData(dataIds)) : navigate("/login", { replace: false });
   };
 
   const sum = useMemo(() => {
