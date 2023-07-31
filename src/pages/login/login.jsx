@@ -5,34 +5,29 @@ import {
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getUserInfo,
-  loginUser,
-} from "../../services/actions/profile";
+import { getUserInfo, loginUser } from "../../services/actions/profile";
 
 export function LoginPage() {
-  const { userInfo } = useSelector((store) => store.profile);
+  const { userInfo, loginFail } = useSelector((store) => store.profile);
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  const isUserInfo = () => {
+    return userInfo !== null;
+  };
 
   useEffect(() => {
     dispatch(getUserInfo());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const isUserInfo = () => {
-    return userInfo !== null;
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (emailValue && passwordValue) {
       dispatch(loginUser(emailValue, passwordValue));
-      navigate("/", { replace: false });
     } else return;
   };
 
@@ -55,6 +50,11 @@ export function LoginPage() {
           name={"password"}
           errorText={"Ошибка. Введите другой пароль"}
         />
+        {loginFail && (
+          <p className="text text_type_main-default" style={{ color: "red" }}>
+            Ошибка входа. Проверьте логин или пароль.
+          </p>
+        )}
         <Button htmlType="submit" type="primary" size="medium">
           Войти
         </Button>
@@ -68,10 +68,7 @@ export function LoginPage() {
         </p>
         <p className="text text_type_main-default text_color_inactive">
           Забыли пароль?&nbsp;
-          <Link
-            to="/forgot-password"
-            className={styles.actions__link}
-          >
+          <Link to="/forgot-password" className={styles.actions__link}>
             Восстановить пароль
           </Link>
         </p>

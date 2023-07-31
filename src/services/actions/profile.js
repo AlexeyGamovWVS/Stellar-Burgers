@@ -77,10 +77,8 @@ export function registerUser(email, name, password) {
     sendRegisterData(email, name, password)
       .then((res) => {
         if (res.success) {
-          if (res.accessToken)
-            setCookie(ACCESS_TOKEN, res.accessToken);
-          if (res.refreshToken)
-            setCookie(REFRESH_TOKEN, res.refreshToken);
+          if (res.accessToken) setCookie(ACCESS_TOKEN, res.accessToken);
+          if (res.refreshToken) setCookie(REFRESH_TOKEN, res.refreshToken);
           dispatch({
             type: REGISTER_USER_SUCCESS,
             user: res.user,
@@ -88,8 +86,7 @@ export function registerUser(email, name, password) {
             refreshToken: res.refreshToken,
             password: password,
           });
-        } else
-          Promise.reject(`Ошибка обработки данных: ${res.status}`);
+        } else Promise.reject(`Ошибка обработки данных: ${res.status}`);
       })
       .catch((err) => {
         dispatch({
@@ -108,10 +105,8 @@ export function loginUser(email, password) {
     sendLoginData(email, password)
       .then((res) => {
         if (res.success) {
-          if (res.accessToken)
-            setCookie(ACCESS_TOKEN, res.accessToken);
-          if (res.refreshToken)
-            setCookie(REFRESH_TOKEN, res.refreshToken);
+          if (res.accessToken) setCookie(ACCESS_TOKEN, res.accessToken);
+          if (res.refreshToken) setCookie(REFRESH_TOKEN, res.refreshToken);
           dispatch({
             type: LOGIN_USER_SUCCESS,
             user: res.user,
@@ -159,23 +154,19 @@ export function refreshToken(key, data) {
     sendRefreshToken(getCookie(token))
       .then((res) => {
         if (res.success) {
-          if (res.accessToken)
-            setCookie(ACCESS_TOKEN, res.accessToken);
-          if (res.refreshToken)
-            setCookie(REFRESH_TOKEN, res.refreshToken);
+          if (res.accessToken) setCookie(ACCESS_TOKEN, res.accessToken);
+          if (res.refreshToken) setCookie(REFRESH_TOKEN, res.refreshToken);
           dispatch({
             type: REFRESH_TOKEN_SUCCESS,
           });
-					if (key === 'getUserInfo') {
-						dispatch(getUserInfo());
-					}
-					if (key === 'changeUserInfo') {
-						dispatch(changeUserInfo(data.name, data.email, data.password))
-					}
+          if (key === "getUserInfo") {
+            dispatch(getUserInfo());
+          }
+          if (key === "changeUserInfo") {
+            dispatch(changeUserInfo(data.name, data.email, data.password));
+          }
         } else {
-          Promise.reject(
-            `Не удалось обновить токен доступа: ${res.status}`
-          );
+          Promise.reject(`Не удалось обновить токен доступа: ${res.status}`);
         }
       })
       .catch((err) =>
@@ -205,7 +196,7 @@ export function getUserInfo() {
             type: GET_USERINFO_FAILED,
             err,
           });
-          dispatch(refreshToken('getUserInfo'));
+          dispatch(refreshToken("getUserInfo"));
         } else {
           dispatch({
             type: GET_USERINFO_FAILED,
@@ -219,12 +210,7 @@ export function getUserInfo() {
 export function changeUserInfo(name, email, password) {
   return function (dispatch) {
     dispatch({ type: CHANGE_USERINFO_REQUEST });
-    sendChangeUserInfoRequest(
-      getCookie(ACCESS_TOKEN),
-      name,
-      email,
-      password
-    )
+    sendChangeUserInfoRequest(getCookie(ACCESS_TOKEN), name, email, password)
       .then((res) => {
         res.success
           ? dispatch({
@@ -236,7 +222,7 @@ export function changeUserInfo(name, email, password) {
       })
       .catch((err) => {
         if (err === ACCSESS_EXPIRED_ERROR) {
-          dispatch(refreshToken('changeUserInfo', {name, email, password}));
+          dispatch(refreshToken("changeUserInfo", { name, email, password }));
         } else {
           dispatch({
             type: CHANGE_USERINFO_FAILED,
@@ -261,9 +247,7 @@ export function resetPassword(password, token) {
               message: res.message,
               password: password,
             })
-          : Promise.reject(
-              `Ошибка при смене пароля или отправки данных на сервер: ${res.status}`
-            );
+          : Promise.reject(`Ошибка при смене пароля или отправки данных на сервер: ${res.status}`);
       })
       .catch((err) =>
         dispatch({
