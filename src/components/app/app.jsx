@@ -44,51 +44,77 @@ function App() {
     <p className="text text_type_main-large mt-30 ml-30">{itemsRequestMessage}</p>
   ) : (
     <ErrorBoundary>
-      <>
-        <AppHeader />
-        {items.length && (
-          <>
-            <Routes location={back || location}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/register" element={<RegistrationPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/forgot-password" element={<ForgotPage />} />
-              <Route path="/reset-password" element={<ResetPage />} />
+      <AppHeader />
+      {items.length && (
+        <>
+          <Routes location={back || location}>
+            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/register"
+              element={
+                <ProtectedRouteElement auth>
+                  <RegistrationPage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <ProtectedRouteElement auth>
+                  <LoginPage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/forgot-password"
+              element={
+                <ProtectedRouteElement auth>
+                  <ForgotPage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/reset-password"
+              element={
+                <ProtectedRouteElement auth>
+                  <ResetPage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRouteElement auth={false}>
+                  <ProfilePage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/profile/orders"
+              element={
+                <ProtectedRouteElement auth={false}>
+                  <OrdersPage />
+                </ProtectedRouteElement>
+              }
+            />
+            {/* <Route path="/profile/orders/:id" element={<OrderInfoPage />} /> */}
+            <Route path="/ingredients/:id" element={<IngredientPage />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+          {back && (
+            <Routes>
               <Route
-                path="/profile"
+                path="/ingredients/:id"
                 element={
-                  <ProtectedRouteElement>
-                    <ProfilePage />
-                  </ProtectedRouteElement>
+                  <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
+                    <IngredientDetails />
+                  </Modal>
                 }
               />
-              <Route
-                path="/profile/orders"
-                element={
-                  <ProtectedRouteElement>
-                    <OrdersPage />
-                  </ProtectedRouteElement>
-                }
-              />
-              {/* <Route path="/profile/orders/:id" element={<OrderInfoPage />} /> */}
-              <Route path="/ingredients/:id" element={<IngredientPage />} />
-              <Route path="*" element={<ErrorPage />} />
             </Routes>
-            {back && (
-              <Routes>
-                <Route
-                  path="/ingredients/:id"
-                  element={
-                    <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
-                      <IngredientDetails />
-                    </Modal>
-                  }
-                />
-              </Routes>
-            )}
-          </>
-        )}
-      </>
+          )}
+        </>
+      )}
     </ErrorBoundary>
   );
 }

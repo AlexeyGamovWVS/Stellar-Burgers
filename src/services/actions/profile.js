@@ -46,6 +46,8 @@ export const CHANGE_USERINFO_REQUEST = "CHANGE_USERINFO_REQUEST";
 export const CHANGE_USERINFO_SUCCESS = "CHANGE_USERINFO_SUCCESS";
 export const CHANGE_USERINFO_FAILED = "CHANGE_USERINFO_FAILED";
 
+export const REMOVE_FGT_PASS_MSG = "CHANGE_USERINFO_FAILED";
+
 export function sendEmailForgotPassword(email) {
   return function (dispatch) {
     dispatch({
