@@ -8,7 +8,7 @@ import {
   sendResetPassRequest,
   sendUserInfoRequest,
 } from "../../utils/api";
-import { getCookie, setCookie } from "../../utils/cookie";
+import { setCookie } from "../../utils/cookie";
 
 const ACCESS_TOKEN = "accessToken";
 const REFRESH_TOKEN = "refreshToken";
