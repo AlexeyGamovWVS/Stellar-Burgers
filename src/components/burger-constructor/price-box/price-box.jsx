@@ -22,8 +22,12 @@ export default function PriceBox() {
 
   const orderBtnClick = () => {
     dispatch(getUserInfo());
-    const dataIds = fullOrder.map((item) => item._id);
-    userInfo !== null ? dispatch(sendOrderData(dataIds)) : navigate("/login", { replace: false });
+    if (userInfo !== null) {
+      const dataIds = fullOrder.map((item) => item._id);
+      dispatch(sendOrderData(dataIds));
+    } else {
+      navigate("/login", { replace: false });
+    }
   };
 
   const sum = useMemo(() => {

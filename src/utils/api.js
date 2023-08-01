@@ -1,5 +1,10 @@
+import { getCookie, setCookie } from "./cookie";
 import { URL_API } from "./data";
 
+const ACCESS_TOKEN = "accessToken";
+const REFRESH_TOKEN = "refreshToken";
+const ACCESSES_EXPIRED_ERROR = 403;
+// const ACCTOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzdhMzA2ODJlMjc3MDAxYmZhNWM5MyIsImlhdCI6MTY5MDg5MjMzMywiZXhwIjoxNjkwODkzNTMzfQ.ttM2qpItkYPGgKEG5zvqBNorW_L6H0RjEVJR0Vgev2k"
 export async function api() {
   const res = await fetch(`${URL_API}/ingredients`);
   return checkResult(res);
@@ -49,57 +54,76 @@ export async function sendLoginData(email, password) {
   return checkResult(res);
 }
 
-export async function sendRefreshToken(token) {
-  const res = await fetch(`${URL_API}/auth/token`, {
+export function sendRefreshToken() {
+	console.log(getCookie(REFRESH_TOKEN));
+  const res = fetch(`${URL_API}/auth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ token }),
+    body: JSON.stringify({ token: getCookie(REFRESH_TOKEN) }),
   });
   return checkResult(res);
 }
 
-export async function sendResetPassRequest(password, token) {
+export const fetchWithRefresh = async (url, options) => {
+  try {
+    const res = await fetch(url, options);
+    return await checkResult(res); //err === res.status
+  } catch (err) {
+    console.log(err);
+    if (err === ACCESSES_EXPIRED_ERROR) {
+      const refreshData = await sendRefreshToken(); //обновляем токен
+      if (!refreshData.success) {
+        return Promise.reject(refreshData);
+      }
+      setCookie(ACCESS_TOKEN, refreshData.accessToken);
+      setCookie(REFRESH_TOKEN, refreshData.refreshToken);
+      options.headers.authorization = refreshData.accessToken;
+      const res = await fetch(url, options); //повторяем запрос
+      return await checkResult(res);
+    } else {
+      return Promise.reject(err);
+    }
+  }
+};
+
+export async function sendResetPassRequest(password, code) {
   const res = await fetch(`${URL_API}/password-reset/reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ password, token }),
+    body: JSON.stringify({ password, token: code }),
   });
   return checkResult(res);
 }
 
-export async function sendLogoutRequest(token) {
+export async function sendLogoutRequest() {
   const res = await fetch(`${URL_API}/auth/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ token }),
+    body: JSON.stringify({ token: getCookie(REFRESH_TOKEN) }),
   });
   return checkResult(res);
 }
 
-export async function sendUserInfoRequest(token) {
-  const res = await fetch(`${URL_API}/auth/user`, {
+export function sendUserInfoRequest() {
+  return fetchWithRefresh(`${URL_API}/auth/user`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      authorization: token,
+      authorization: getCookie(ACCESS_TOKEN),
     },
   });
-  return checkResult(res);
+  // return checkResult(res);
 }
 
-export async function sendChangeUserInfoRequest(
-  token,
-  name,
-  email,
-  password
-) {
-  const res = await fetch(`${URL_API}/auth/user`, {
+export function sendChangeUserInfoRequest(name, email, password) {
+  const token = getCookie(ACCESS_TOKEN);
+  return fetchWithRefresh(`${URL_API}/auth/user`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -107,7 +131,7 @@ export async function sendChangeUserInfoRequest(
     },
     body: JSON.stringify({ name, email, password }),
   });
-  return checkResult(res);
+  // return checkResult(res);
 }
 
 function checkResult(res) {
