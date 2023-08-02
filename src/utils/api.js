@@ -55,15 +55,13 @@ export async function sendLoginData(email, password) {
 }
 
 export function sendRefreshToken() {
-	console.log(getCookie(REFRESH_TOKEN));
-  const res = fetch(`${URL_API}/auth/token`, {
+  return fetch(`${URL_API}/auth/token`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ token: getCookie(REFRESH_TOKEN) }),
-  });
-  return checkResult(res);
+  }).then(checkResult)
 }
 
 export const fetchWithRefresh = async (url, options) => {
@@ -118,7 +116,6 @@ export function sendUserInfoRequest() {
       authorization: getCookie(ACCESS_TOKEN),
     },
   });
-  // return checkResult(res);
 }
 
 export function sendChangeUserInfoRequest(name, email, password) {
@@ -131,7 +128,6 @@ export function sendChangeUserInfoRequest(name, email, password) {
     },
     body: JSON.stringify({ name, email, password }),
   });
-  // return checkResult(res);
 }
 
 function checkResult(res) {
