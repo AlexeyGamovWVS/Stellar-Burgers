@@ -1,0 +1,25 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.item:hover {
+  opacity: 0.75;
+}
+
+.item_drag {
+  opacity: 0.5;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
