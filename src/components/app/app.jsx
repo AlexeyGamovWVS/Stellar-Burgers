@@ -10,7 +10,9 @@ import {
   ErrorPage,
   IngredientPage,
   OrdersPage,
+	FeedPage,
 } from "../../pages";
+
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredientsData } from "../../services/actions/ingredients";
 import { ResetPage } from "../../pages/reset-pass/reset-pass";
@@ -49,6 +51,7 @@ function App() {
         <>
           <Routes location={back || location}>
             <Route path="/" element={<HomePage />} />
+						<Route path="/feed" element={<FeedPage />} />
             <Route
               path="/register"
               element={

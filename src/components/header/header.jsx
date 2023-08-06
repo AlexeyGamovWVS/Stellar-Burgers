@@ -12,8 +12,7 @@ function AppHeader() {
   const location = useLocation();
   const { userInfo } = useSelector((store) => store.profile);
 
-  const setIconType = (url) =>
-    location.pathname === url ? "primary" : "secondary";
+  const setIconType = (url) => (location.pathname === url ? "primary" : "secondary");
   const setLinkStyle = (url) =>
     location.pathname === url
       ? `${styles.link} pt-4 pb-4 pr-5 pl-5 text text_type_main-default ${styles.link_active}`
@@ -26,20 +25,13 @@ function AppHeader() {
           <li className={`${styles.link} mr-2`}>
             <NavLink className={setLinkStyle("/")} to="/">
               <BurgerIcon type={setIconType("/")} />
-              <span className={`ml-2 ${styles.linkText}`}>
-                Конструктор
-              </span>
+              <span className={`ml-2 ${styles.linkText}`}>Конструктор</span>
             </NavLink>
           </li>
           <li className={`${styles.link} mr-2`}>
-            <NavLink
-              className={setLinkStyle("/profile/orders")}
-              to="/profile/orders"
-            >
-              <ListIcon type={setIconType("/profile/orders")} />
-              <span className={`ml-2 ${styles.linkText}`}>
-                Лента Заказов
-              </span>
+            <NavLink className={setLinkStyle("/feed")} to="/feed">
+              <ListIcon type={setIconType("/feed")} />
+              <span className={`ml-2 ${styles.linkText}`}>Лента Заказов</span>
             </NavLink>
           </li>
         </ul>
@@ -48,9 +40,7 @@ function AppHeader() {
         </Link>
         <NavLink className={setLinkStyle("/profile")} to="/profile">
           <ProfileIcon type={setIconType("/profile")} />
-          <span className={`ml-2 ${styles.linkText}`}>
-            {userInfo?.name || "Личный кабинет"}
-          </span>
+          <span className={`ml-2 ${styles.linkText}`}>{userInfo?.name || "Личный кабинет"}</span>
         </NavLink>
       </nav>
     </header>

@@ -6,6 +6,7 @@ import { ProfilePage } from "./profile/profile";
 import { ErrorPage } from "./error-page/error-page";
 import { IngredientPage } from "./ingredient/ingredient";
 import { OrdersPage } from "./orders/orders";
+import { FeedPage } from "./feed/feed";
 
 export {
   HomePage,
@@ -16,4 +17,5 @@ export {
   ErrorPage,
   IngredientPage,
   OrdersPage,
+  FeedPage,
 };
