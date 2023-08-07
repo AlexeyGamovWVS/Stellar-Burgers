@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+}
+
+.ordernum {
+  width: 100%;
+  text-align: center;
+}
+
+.ingredients {
+  list-style: none;
+  max-height: 312px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  margin-top: 0;
+  padding: 0;
+}
+
+.orderfooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.pricebox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 8px;
+  margin-left: auto;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 8px;
+  margin-right: 24px;
+}
+.ingrname {
+  max-width: 320px;
+}
+.iconbox {
+  width: 64px;
+  height: 64px;
+}
+
+.status_done {
+  color: #00cccc;
+}

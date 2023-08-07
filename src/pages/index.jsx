@@ -7,6 +7,7 @@ import { ErrorPage } from "./error-page/error-page";
 import { IngredientPage } from "./ingredient/ingredient";
 import { OrdersPage } from "./orders/orders";
 import { FeedPage } from "./feed/feed";
+import { FeedOrderPage } from "./order/feedOrderPage";
 
 export {
   HomePage,
@@ -18,4 +19,5 @@ export {
   IngredientPage,
   OrdersPage,
   FeedPage,
+  FeedOrderPage,
 };

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 export default function ModalHeader({ close, children }) {
   return (
     <div className={styles.header}>
-      <p className={`${styles.title} text text_type_main-large`}>{children}</p>
+      {children && <p className={`${styles.title} text text_type_main-large`}>{children}</p>}
       <div className={`${styles.closeBox}`}>
         <CloseIcon type="primary" onClick={close} />
       </div>

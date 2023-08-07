@@ -10,7 +10,8 @@ import {
   ErrorPage,
   IngredientPage,
   OrdersPage,
-	FeedPage,
+  FeedPage,
+  FeedOrderPage,
 } from "../../pages";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -21,6 +22,7 @@ import IngredientDetails from "../ingredientDetails/ingredientDetails";
 import { REMOVE_SELECTED_INGREDIENT } from "../../services/actions/currentItem";
 import AppHeader from "../header/header";
 import { ProtectedRouteElement } from "../protectedRoute/protectdRoute";
+import FeedOrderDetails from "../feedOrderDetails/feedOrderDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,7 +53,7 @@ function App() {
         <>
           <Routes location={back || location}>
             <Route path="/" element={<HomePage />} />
-						<Route path="/feed" element={<FeedPage />} />
+            <Route path="/feed" element={<FeedPage />} />
             <Route
               path="/register"
               element={
@@ -102,6 +104,7 @@ function App() {
             />
             {/* <Route path="/profile/orders/:id" element={<OrderInfoPage />} /> */}
             <Route path="/ingredients/:id" element={<IngredientPage />} />
+            <Route path="/feed/:id" element={<FeedOrderPage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
           {back && (
@@ -111,6 +114,14 @@ function App() {
                 element={
                   <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
                     <IngredientDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/feed/:id"
+                element={
+                  <Modal header="" onClose={closeIngredientPop}>
+                    <FeedOrderDetails />
                   </Modal>
                 }
               />

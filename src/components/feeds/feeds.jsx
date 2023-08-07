@@ -1,8 +1,9 @@
 import styles from "./feeds.module.css";
 import OrderCard from "../orderCard/orderCard";
+import { useLocation } from "react-router-dom";
 
 export default function Feeds() {
-  const orderNum = "#54654654";
+  const orderNum = "54654654";
   const orderDate = "2022-10-10T17:33:32.877Z";
   const orderName = "Death Star Starship Main бургер";
   const amountIngredients = 6;
@@ -17,6 +18,9 @@ export default function Feeds() {
 		key: orderNum,
   };
 
+	const location = useLocation();
+	const state = location.state;
+
   return (
     <div className={styles.feeds}>
       <h2 className="text text_type_main-large mt-10 mb-5">Лента заказов</h2>
@@ -28,6 +32,8 @@ export default function Feeds() {
           images={order.ingredientsPictures}
           price={order.price}
           key={order.number}
+					state={state}
+					location={location}
         ></OrderCard>
       </ul>
     </div>

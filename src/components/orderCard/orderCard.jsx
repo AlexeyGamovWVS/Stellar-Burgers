@@ -2,10 +2,20 @@ import { Link } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./orderCard.module.css";
 
-export default function OrderCard({ date, number, name, ingredientsPictures, price, key }) {
+export default function OrderCard({
+  date,
+  number,
+  name,
+  ingredientsPictures,
+  price,
+  key,
+  state,
+  location,
+}) {
+  state = { ...state, back: location };
   return (
     <li className={styles.feeds__card} key={key}>
-      <Link to={"/"} className={styles.card}>
+      <Link to={`/feed/${number}`} className={styles.card} state={state}>
         <div className={styles.card__header}>
           <p className={`text text_type_digits-default`}>{number}</p>
           <FormattedDate
