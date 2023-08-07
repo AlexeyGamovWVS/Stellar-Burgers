@@ -102,6 +102,14 @@ function App() {
                 </ProtectedRouteElement>
               }
             />
+            <Route
+              path="/profile/orders/:id"
+              element={
+                <ProtectedRouteElement auth={false}>
+                  <FeedOrderPage />
+                </ProtectedRouteElement>
+              }
+            />
             {/* <Route path="/profile/orders/:id" element={<OrderInfoPage />} /> */}
             <Route path="/ingredients/:id" element={<IngredientPage />} />
             <Route path="/feed/:id" element={<FeedOrderPage />} />
@@ -120,7 +128,15 @@ function App() {
               <Route
                 path="/feed/:id"
                 element={
-                  <Modal header="" onClose={closeIngredientPop}>
+                  <Modal onClose={closeIngredientPop}>
+                    <FeedOrderDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/profile/orders/:id"
+                element={
+                  <Modal onClose={closeIngredientPop}>
                     <FeedOrderDetails />
                   </Modal>
                 }

@@ -6,7 +6,6 @@
   border-radius: 40px;
   display: flex;
   flex-direction: column;
-  row-gap: 24px;
 }
 
 .card__header {
@@ -35,4 +34,12 @@
   column-gap: 8px;
   align-items: center;
   justify-content: flex-end;
+}
+
+.card__status_done {
+  color: #0cc;
+}
+
+.card__status_canselled {
+  color: red;
 }

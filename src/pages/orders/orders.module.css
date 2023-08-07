@@ -6,3 +6,7 @@
   position: relative;
   padding-top: 208px;
 }
+
+.content {
+  width: 100%;
+}
