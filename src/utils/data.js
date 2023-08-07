@@ -1,9 +1,18 @@
 import PropTypes from "prop-types";
 const URL_API = "https://norma.nomoreparties.space/api";
+const WS_LINK = "wss://norma.nomoreparties.space/orders";
+
 const COMPONENT_TYPES = {
   buns: "bun",
   sauces: "sauce",
   mains: "main",
+};
+
+const ORDER_STATUSES = {
+  created: "created",
+  pending: "pending",
+  done: "done",
+	canselled: "canselled",
 };
 
 const IngredientPropType = PropTypes.shape({
@@ -21,10 +30,4 @@ const IngredientPropType = PropTypes.shape({
   __v: PropTypes.number,
 });
 
-// Registered user
-// AlekseI
-// alex@test.ru
-// 127562
-// Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzZiNzhkMDkwNWZkMDAxYjYyOTU1YiIsImlhdCI6MTY4MTMwNzUzMywiZXhwIjoxNjgxMzA4NzMzfQ.hdcFEUqf09MUNBTANjZO515VEzGvqzAabUkkqlzeMwU
-// a408be5336c95efdf14a5852d23e458e75ba83cb824240968ca594201343983b7d85dbe52174f8ec
-export { IngredientPropType, URL_API, COMPONENT_TYPES };
+export { IngredientPropType, URL_API, COMPONENT_TYPES, WS_LINK, ORDER_STATUSES };
