@@ -27,6 +27,7 @@
   margin: 0;
   display: flex;
   align-items: center;
+	margin-left: 16px;
 }
 .card__pricebox {
   width: 100%;
@@ -42,4 +43,37 @@
 
 .card__status_canselled {
   color: red;
+}
+
+.card__iconbox {
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  background-color: #131316;
+  border-color: #4c4cff;
+  border-width: 2px;
+  box-sizing: border-box;
+  border-style: solid;
+	margin-left: -16px;
+}
+
+.card__icon {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+  transform: scale(1.5);
+}
+
+.card__icon_over {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(28, 28, 33, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
