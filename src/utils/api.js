@@ -1,9 +1,5 @@
 import { getCookie, setCookie } from "./cookie";
-import { URL_API } from "./data";
-
-const ACCESS_TOKEN = "accessToken";
-const REFRESH_TOKEN = "refreshToken";
-const ACCESSES_EXPIRED_ERROR = 403;
+import { ACCESSES_EXPIRED_ERROR, ACCESS_TOKEN, REFRESH_TOKEN, URL_API } from "./data";
 
 export async function api() {
   const res = await fetch(`${URL_API}/ingredients`);
@@ -15,6 +11,7 @@ export async function sendOrder(data) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      authorization: getCookie(ACCESS_TOKEN),
     },
     body: JSON.stringify({ ingredients: data }),
   });
@@ -22,13 +19,13 @@ export async function sendOrder(data) {
 }
 
 export async function getOrderData(number) {
-	const res = await fetch(`${URL_API}/orders/${number}`, {
-		method: "GET",
-		headers: {
+  const res = await fetch(`${URL_API}/orders/${number}`, {
+    method: "GET",
+    headers: {
       "Content-Type": "application/json",
     },
-	});
-	return checkResult(res);
+  });
+  return checkResult(res);
 }
 
 export async function sendEmail(data) {
@@ -71,7 +68,7 @@ export function sendRefreshToken() {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ token: getCookie(REFRESH_TOKEN) }),
-  }).then(checkResult)
+  }).then(checkResult);
 }
 
 export const fetchWithRefresh = async (url, options) => {

@@ -4,21 +4,28 @@ import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
   const { orderDetails } = useSelector((store) => store.order);
-  return (
+  const orderMap = orderDetails ? (
     <>
       <p className={`${styles.number} text text_type_digits-large mt-4`}>
         {orderDetails.order.number}
       </p>
       <p className={`text text_type_main-medium mt-8`}>идентификатор заказа</p>
       <img className="mt-15" src={doneIcon} alt="Галочка." />
-      <p className={`text text_type_main-default mt-15`}>
-        Ваш заказ начали готовить
-      </p>
-      <p
-        className={`text text_type_main-default text_color_inactive mt-2 mb-20`}
-      >
+      <p className={`text text_type_main-default mt-15`}>Ваш заказ начали готовить</p>
+      <p className={`text text_type_main-default text_color_inactive mt-2 mb-20`}>
         Дождитесь готовности на орбитальной станции
       </p>
     </>
+  ) : (
+    <>
+      <p className={`${styles.number} text text_type_digits-large mt-4`}>...</p>
+      <p className={`text text_type_main-medium mt-8`}>идентификатор заказа</p>
+      {/* <img className="mt-15" src={doneIcon} alt="Галочка." /> */}
+      <p className={`text text_type_main-default mt-15`}>Оформляем заказ. Пожалуйста подождите</p>
+      {/* <p className={`text text_type_main-default text_color_inactive mt-2 mb-20`}>
+          Дождитесь готовности на орбитальной станции
+        </p> */}
+    </>
   );
+  return orderMap;
 }

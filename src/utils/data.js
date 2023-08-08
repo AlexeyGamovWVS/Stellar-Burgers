@@ -2,6 +2,10 @@ import PropTypes from "prop-types";
 const URL_API = "https://norma.nomoreparties.space/api";
 const WS_LINK = "wss://norma.nomoreparties.space/orders";
 
+const ACCESS_TOKEN = "accessToken";
+const REFRESH_TOKEN = "refreshToken";
+const ACCESSES_EXPIRED_ERROR = 403;
+
 const COMPONENT_TYPES = {
   buns: "bun",
   sauces: "sauce",
@@ -30,4 +34,4 @@ const IngredientPropType = PropTypes.shape({
   __v: PropTypes.number,
 });
 
-export { IngredientPropType, URL_API, COMPONENT_TYPES, WS_LINK, ORDER_STATUSES };
+export { IngredientPropType, URL_API, COMPONENT_TYPES, WS_LINK, ORDER_STATUSES, ACCESS_TOKEN, ACCESSES_EXPIRED_ERROR, REFRESH_TOKEN };
