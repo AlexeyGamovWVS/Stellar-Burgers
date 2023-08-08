@@ -44,29 +44,6 @@ export function getUniqOrderData(number) {
       })
       .catch((err) => {
         dispatch({ type: FETCH_ORDER_ERROR, payload: err });
-        console.log(err);
       });
   };
 }
-
-// export function getUserInfo() {
-//   return function (dispatch) {
-//     dispatch({ type: GET_USERINFO_REQUEST });
-//     sendUserInfoRequest()
-//       .then((res) => {
-//         res.success
-//           ? dispatch({
-//               type: GET_USERINFO_SUCCESS,
-//               userInfo: res.user,
-//             })
-//           : Promise.reject(res.status);
-//       })
-//       .catch((err) => {
-//         dispatch({
-//           type: GET_USERINFO_FAILED,
-//           err,
-//         });
-//         console.error("TROUBLE" + err);
-//       });
-//   };
-// }

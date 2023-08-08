@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-	justify-content: center;
-	width: 100%;
-	min-height: 100vh;
-	position: relative;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
 }
 .form {
   display: flex;
@@ -15,14 +15,14 @@
   max-width: 480px;
 }
 .actions {
-	margin-top: 80px;
-	max-width: 480px;
-	display: flex;
-	flex-direction: column;
-	row-gap: 16px;
-	align-items: center;
+  margin-top: 80px;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  align-items: center;
 }
-.actions__link{
-	color: #4C4CFF;
-	text-decoration: none;
+.actions__link {
+  color: #4c4cff;
+  text-decoration: none;
 }

@@ -27,9 +27,7 @@ export default class ErrorBoundary extends React.Component {
       // если возникла ошибка, сообщаем об этом пользователю в специальном компоненте:
       return (
         <section>
-          <h1 className="text text_type_main-large m-10">
-            Что-то пошло не так :(
-          </h1>
+          <h1 className="text text_type_main-large m-10">Что-то пошло не так :(</h1>
           <p className="text text_type_main-medium text_color_inactive m-10">
             В приложении произошла ошибка. Пожалуйста, перезагрузите страницу.
           </p>

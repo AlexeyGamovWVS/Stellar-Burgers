@@ -11,11 +11,7 @@ const findElement = (target, items) => {
   return items.find((item) => item._id === target.id);
 };
 
-export default function Ingredients({
-  activeTab,
-  setActiveTab,
-  rowsRefObj,
-}) {
+export default function Ingredients({ activeTab, setActiveTab, rowsRefObj }) {
   const dispatch = useDispatch();
   const { items } = useSelector((store) => store.allItems);
   const location = useLocation();
@@ -27,12 +23,7 @@ export default function Ingredients({
     });
   };
 
-  const separatedData = getIngredientCards(
-    items,
-    openIngredientPop,
-    state,
-    location
-  );
+  const separatedData = getIngredientCards(items, openIngredientPop, state, location);
 
   const scrollHandler = (e) => {
     const newRow = currentRow(e.currentTarget);
@@ -40,29 +31,14 @@ export default function Ingredients({
   };
 
   return (
-    <div
-      onScroll={scrollHandler}
-      className={`${ingredStyles.rowsContainer} mt-10`}
-    >
-      <IngredientRow
-        rowRef={rowsRefObj.bunsRef}
-        id={COMPONENT_TYPES.buns}
-        title="Булки"
-      >
+    <div onScroll={scrollHandler} className={`${ingredStyles.rowsContainer} mt-10`}>
+      <IngredientRow rowRef={rowsRefObj.bunsRef} id={COMPONENT_TYPES.buns} title="Булки">
         {separatedData.buns}
       </IngredientRow>
-      <IngredientRow
-        rowRef={rowsRefObj.saucesRef}
-        id={COMPONENT_TYPES.sauces}
-        title="Соусы"
-      >
+      <IngredientRow rowRef={rowsRefObj.saucesRef} id={COMPONENT_TYPES.sauces} title="Соусы">
         {separatedData.sauces}
       </IngredientRow>
-      <IngredientRow
-        rowRef={rowsRefObj.mainsRef}
-        id={COMPONENT_TYPES.mains}
-        title="Начинки"
-      >
+      <IngredientRow rowRef={rowsRefObj.mainsRef} id={COMPONENT_TYPES.mains} title="Начинки">
         {separatedData.mains}
       </IngredientRow>
     </div>

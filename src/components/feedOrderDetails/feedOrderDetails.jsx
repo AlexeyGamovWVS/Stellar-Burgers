@@ -4,7 +4,8 @@ import styles from "./feedOrderDetails.module.css";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useParams } from "react-router-dom";
 import { ORDER_STATUSES } from "../../utils/data";
-import { countIngedientsInOrder, getStatusText, getUniqArrayItems } from "./feedOrderDetails.utils";
+import { countIngedientsInOrder, getUniqArrayItems } from "./feedOrderDetails.utils";
+import { getStatusText } from "../../utils/data";
 import { useEffect } from "react";
 import { getUniqOrderData } from "../../services/actions/order";
 

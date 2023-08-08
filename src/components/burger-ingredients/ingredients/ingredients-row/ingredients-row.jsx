@@ -14,5 +14,5 @@ IngredientRow.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
   id: PropTypes.string.isRequired,
-	rowRef: PropTypes.object.isRequired,
+  rowRef: PropTypes.object.isRequired,
 };

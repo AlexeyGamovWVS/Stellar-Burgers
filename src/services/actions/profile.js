@@ -202,7 +202,6 @@ export function resetPassword(password, code) {
     });
     sendResetPassRequest(password, code)
       .then((res) => {
-        console.log(res);
         res.succes
           ? dispatch({
               type: RESET_PASSWORD_SUCCESS,
@@ -219,28 +218,3 @@ export function resetPassword(password, code) {
       );
   };
 }
-
-// export function refreshToken(key, data) {
-//   return function (dispatch) {
-//     const token = getCookie(REFRESH_TOKEN);
-//     sendRefreshToken(token)
-//       .then((res) => {
-//         if (res.success) {
-//           if (res.accessToken) setCookie(ACCESS_TOKEN, res.accessToken);
-//           if (res.refreshToken) setCookie(REFRESH_TOKEN, res.refreshToken);
-//           dispatch({
-//             type: REFRESH_TOKEN_SUCCESS,
-//           });
-//           if (key === "getUserInfo") {
-//             dispatch(getUserInfo());
-//           }
-//           if (key === "changeUserInfo") {
-//             dispatch(changeUserInfo(data.name, data.email, data.password));
-//           }
-//         } else {
-//           Promise.reject(`Не удалось обновить токен доступа: ${res.status}`);
-//         }
-//       })
-//       .catch((err) => console.log(err));
-//   };
-// }

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./orderCard.module.css";
-import { ORDER_STATUSES } from "../../utils/data";
 import ingredientsImagesMap from "./orderCard.utils";
+import { getStatusText } from "../../utils/data";
 
 export default function OrderCard({
   date,
@@ -44,11 +44,7 @@ export default function OrderCard({
                 : `${styles.card__status} text text_type_main-small mt-2`
             }
           >
-            {status === ORDER_STATUSES.canselled
-              ? "Отменен"
-              : status === "done"
-              ? "Выполнен"
-              : "Готовится"}
+            {getStatusText(status)}
           </p>
         ) : (
           <></>

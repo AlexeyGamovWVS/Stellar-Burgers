@@ -254,7 +254,7 @@ export const profileReducer = (state = initialState, action) => {
         userInfoSuccess: false,
         userInfoFail: true,
         userInfoError: action.err,
-				userInfo: null,
+        userInfo: null,
       };
     }
     case CHANGE_USERINFO_REQUEST: {

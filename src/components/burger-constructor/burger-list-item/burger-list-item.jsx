@@ -1,27 +1,13 @@
 import PropTypes from "prop-types";
-import {
-  COMPONENT_TYPES,
-  IngredientPropType,
-} from "../../../utils/data";
-import {
-  ConstructorElement,
-  DragIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { COMPONENT_TYPES, IngredientPropType } from "../../../utils/data";
+import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import itemStyles from "./burger-list-item.module.css";
 import { useDispatch } from "react-redux";
 import { REMOVE_ITEM_FROM_CHOICE } from "../../../services/actions/selectedItems";
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
-export default function BurgerListItem({
-  item,
-  position,
-  iconVis,
-  index,
-  moveListItem,
-}) {
-  const visibility = iconVis
-    ? itemStyles.dragIcon_visible
-    : itemStyles.dragIcon_hidden;
+export default function BurgerListItem({ item, position, iconVis, index, moveListItem }) {
+  const visibility = iconVis ? itemStyles.dragIcon_visible : itemStyles.dragIcon_hidden;
   const dispatch = useDispatch();
 
   const hadleRemoveBtn = (e) => {
@@ -46,14 +32,10 @@ export default function BurgerListItem({
       const dragIndex = item.index;
       const hoverIndex = index;
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const hoverActualY =
-        monitor.getClientOffset().y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY)
-        return;
-      if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY)
-        return;
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
+      if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
+      if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return;
       moveListItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },

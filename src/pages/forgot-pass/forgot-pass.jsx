@@ -13,9 +13,8 @@ export function ForgotPage() {
   //checking request starts
   const { forgotPassMessage, forgotPassSuccess } = useSelector((store) => store.profile);
   useEffect(() => {
-    console.log(forgotPassMessage);
     if (forgotPassMessage && forgotPassSuccess) {
-      navigate("/reset-password", { replace: true }); // временная навигация, вероятно неверно, см следующий спринт
+      navigate("/reset-password", { replace: true });
     }
   }, [forgotPassMessage, forgotPassSuccess, navigate]);
   //checking request ends

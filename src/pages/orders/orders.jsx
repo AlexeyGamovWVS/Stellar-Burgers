@@ -9,9 +9,6 @@ import { getCookie } from "../../utils/cookie";
 
 export function OrdersPage() {
   const dispatch = useDispatch();
-  // const { status, orders, total, totalToday, connectingErrorMessage } = useSelector(
-  //   (store) => store.wsconnection
-  // );
   useEffect(() => {
     const token = getCookie(ACCESS_TOKEN).split(" ")[1];
     dispatch(connect(`${WS_LINK}?token=${token}`));

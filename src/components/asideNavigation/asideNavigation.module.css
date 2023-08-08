@@ -1,7 +1,6 @@
-
 .navbar {
   margin-right: 60px;
-	max-width: 320px;
+  max-width: 320px;
 }
 
 .links {
@@ -19,7 +18,7 @@
 .link {
   text-decoration: none;
   color: #8585ad;
-	transition: color .3s ease;
+  transition: color 0.3s ease;
 }
 
 .link:hover {
@@ -27,5 +26,5 @@
 }
 
 .link_active {
-	color: white;
+  color: white;
 }

@@ -6,8 +6,6 @@
 
 .feeds__list {
   max-height: calc(100vh - 88px - 156px - 40px - 24px);
-  /* 88 — header, 156 — margins + title, 40px - first top margin
-	24 — bottom from frame */
   overflow-y: scroll;
   padding-left: 0;
   margin-bottom: 0;

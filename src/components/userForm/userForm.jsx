@@ -1,14 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./userForm.module.css";
 import { useEffect, useRef, useState } from "react";
-import {
-  Button,
-  Input,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import {
-  changeUserInfo,
-  getUserInfo,
-} from "../../services/actions/profile";
+import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { changeUserInfo, getUserInfo } from "../../services/actions/profile";
 
 export function UserForm() {
   const { userInfo } = useSelector((store) => store.profile);
@@ -122,12 +116,7 @@ export function UserForm() {
       />
       {isProfileEditing && (
         <div className={styles.handlers}>
-          <Button
-            htmlType="button"
-            type="secondary"
-            size="medium"
-            onClick={cancelEdit}
-          >
+          <Button htmlType="button" type="secondary" size="medium" onClick={cancelEdit}>
             Отмена
           </Button>
           <Button htmlType="submit" type="primary" size="medium">

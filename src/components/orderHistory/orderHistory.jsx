@@ -38,9 +38,7 @@ export function OrderHistory() {
   return (
     <div className={styles.feeds}>
       <h2 className="text text_type_main-large mt-10 mb-5">Лента заказов</h2>
-      <ul className={`${styles.feeds__list} mt-10`}>
-        {ordersMap}
-      </ul>
+      <ul className={`${styles.feeds__list} mt-10`}>{ordersMap}</ul>
     </div>
   );
 }

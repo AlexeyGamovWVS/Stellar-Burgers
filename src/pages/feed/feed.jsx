@@ -8,9 +8,6 @@ import { WS_LINK } from "../../utils/data";
 
 export function FeedPage() {
   const dispatch = useDispatch();
-  // const { status, orders, total, totalToday, connectingErrorMessage } = useSelector(
-  //   (store) => store.wsconnection
-  // );
   useEffect(() => {
     dispatch(connect(`${WS_LINK}/all`));
   }, [dispatch]);

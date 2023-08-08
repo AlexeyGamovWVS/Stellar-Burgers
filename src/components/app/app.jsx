@@ -110,7 +110,6 @@ function App() {
                 </ProtectedRouteElement>
               }
             />
-            {/* <Route path="/profile/orders/:id" element={<OrderInfoPage />} /> */}
             <Route path="/ingredients/:id" element={<IngredientPage />} />
             <Route path="/feed/:id" element={<FeedOrderPage />} />
             <Route path="*" element={<ErrorPage />} />

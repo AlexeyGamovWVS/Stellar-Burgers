@@ -76,7 +76,6 @@ export const fetchWithRefresh = async (url, options) => {
     const res = await fetch(url, options);
     return await checkResult(res); //err === res.status
   } catch (err) {
-    console.log(err);
     if (err === ACCESSES_EXPIRED_ERROR) {
       const refreshData = await sendRefreshToken(); //обновляем токен
       if (!refreshData.success) {

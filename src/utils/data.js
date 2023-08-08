@@ -16,8 +16,23 @@ const ORDER_STATUSES = {
   created: "created",
   pending: "pending",
   done: "done",
-	canselled: "canselled",
+  canselled: "canselled",
 };
+
+function getStatusText(status) {
+  switch (status) {
+    case ORDER_STATUSES.created:
+      return "Создан";
+    case ORDER_STATUSES.pending:
+      return "Готовится";
+    case ORDER_STATUSES.done:
+      return "Выполнен";
+    case ORDER_STATUSES.canselled:
+      return "Отменён";
+    default:
+      return "";
+  }
+}
 
 const IngredientPropType = PropTypes.shape({
   _id: PropTypes.string,
@@ -34,4 +49,14 @@ const IngredientPropType = PropTypes.shape({
   __v: PropTypes.number,
 });
 
-export { IngredientPropType, URL_API, COMPONENT_TYPES, WS_LINK, ORDER_STATUSES, ACCESS_TOKEN, ACCESSES_EXPIRED_ERROR, REFRESH_TOKEN };
+export {
+  IngredientPropType,
+  URL_API,
+  COMPONENT_TYPES,
+  WS_LINK,
+  ORDER_STATUSES,
+  ACCESS_TOKEN,
+  ACCESSES_EXPIRED_ERROR,
+  REFRESH_TOKEN,
+  getStatusText,
+};
