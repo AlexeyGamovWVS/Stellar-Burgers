@@ -1,6 +1,5 @@
 import {
   WS_CLOSE,
-  WS_CONNECT,
   WS_CONNECTING,
   WS_DISCONNECT,
   WS_ERROR,
@@ -26,8 +25,6 @@ export const socketMiddlewareReduser = (state = initialState, action) => {
         status: WS_STATUS.offline,
         connectingErrorMessage: "",
       };
-    // case WS_CONNECT:
-    //   break;
     case WS_CONNECTING:
       return {
         ...state,
