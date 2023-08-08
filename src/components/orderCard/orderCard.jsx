@@ -3,6 +3,7 @@ import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burge
 import styles from "./orderCard.module.css";
 import ingredientsImagesMap from "./orderCard.utils";
 import { getStatusText } from "../../utils/data";
+import PropTypes from "prop-types";
 
 export default function OrderCard({
   date,
@@ -10,7 +11,6 @@ export default function OrderCard({
   name,
   ingredientsPictures,
   price,
-  key,
   state,
   location,
   status,
@@ -24,7 +24,7 @@ export default function OrderCard({
   const images = ingredientsImagesMap(ingredientsPictures, styles);
 
   return (
-    <li className={`${styles.feeds__card} mr-2`} key={key}>
+    <li className={`${styles.feeds__card} mr-2`}>
       <Link to={getLinkAdress()} className={styles.card} state={state}>
         <div className={styles.card__header}>
           <p className={`text text_type_digits-default`}>{number}</p>
@@ -60,3 +60,14 @@ export default function OrderCard({
     </li>
   );
 }
+
+OrderCard.propTypes = {
+  date: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  ingredientsPictures: PropTypes.arrayOf(PropTypes.string).isRequired,
+  price: PropTypes.number.isRequired,
+  state: PropTypes.object,
+  location: PropTypes.object.isRequired,
+  status: PropTypes.string,
+};

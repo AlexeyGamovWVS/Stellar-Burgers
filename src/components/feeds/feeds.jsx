@@ -27,8 +27,8 @@ export default function Feeds() {
         name={order.name}
         ingredientsPictures={ingredientsPictures}
         price={totalPrice}
-        key={order.number}
         state={state}
+				key={order.number}
         location={location}
       ></OrderCard>
     );

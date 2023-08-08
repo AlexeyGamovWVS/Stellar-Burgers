@@ -28,9 +28,9 @@ export function OrderHistory() {
         status={order.status}
         ingredientsPictures={ingredientsPictures}
         price={totalPrice}
-        key={order.number}
         state={state}
         location={location}
+        key={order.number}
       ></OrderCard>
     );
   });

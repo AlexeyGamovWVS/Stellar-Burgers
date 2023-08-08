@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../services/actions/profile";
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 
 export function ProtectedRouteElement({ auth, children }) {
   const dispatch = useDispatch();
@@ -18,3 +19,8 @@ export function ProtectedRouteElement({ auth, children }) {
     children
   );
 }
+
+ProtectedRouteElement.propTypes = {
+  auth: PropTypes.bool.isRequired,
+  children: PropTypes.element.isRequired,
+};
