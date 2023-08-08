@@ -4,7 +4,7 @@ import { URL_API } from "./data";
 const ACCESS_TOKEN = "accessToken";
 const REFRESH_TOKEN = "refreshToken";
 const ACCESSES_EXPIRED_ERROR = 403;
-// const ACCTOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzdhMzA2ODJlMjc3MDAxYmZhNWM5MyIsImlhdCI6MTY5MDg5MjMzMywiZXhwIjoxNjkwODkzNTMzfQ.ttM2qpItkYPGgKEG5zvqBNorW_L6H0RjEVJR0Vgev2k"
+
 export async function api() {
   const res = await fetch(`${URL_API}/ingredients`);
   return checkResult(res);
@@ -19,6 +19,16 @@ export async function sendOrder(data) {
     body: JSON.stringify({ ingredients: data }),
   });
   return checkResult(res);
+}
+
+export async function getOrderData(number) {
+	const res = await fetch(`${URL_API}/orders/${number}`, {
+		method: "GET",
+		headers: {
+      "Content-Type": "application/json",
+    },
+	});
+	return checkResult(res);
 }
 
 export async function sendEmail(data) {
