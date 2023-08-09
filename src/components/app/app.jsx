@@ -27,12 +27,16 @@ import { getUserInfo } from "../../services/actions/profile";
 
 function App() {
   const dispatch = useDispatch();
-  const { items, itemsRequest, itemsRequestMessage, itemsFailed } = useSelector(
+	const { items, itemsRequest, itemsRequestMessage, itemsFailed } = useSelector(
     (store) => store.allItems
   );
   const location = useLocation();
   const back = location.state?.back;
   const navigate = useNavigate();
+	
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, []);
 
   useEffect(() => {
     dispatch(getIngredientsData());
