@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../services/actions/profile";
 
 export function LoginPage() {
-  const { loginFail } = useSelector((store) => store.profile);
+  const failed = useSelector((store) => store.profile.failed);
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ export function LoginPage() {
           name={"password"}
           errorText={"Ошибка. Введите другой пароль"}
         />
-        {loginFail && (
+        {failed && (
           <p className="text text_type_main-default" style={{ color: "red" }}>
             Ошибка входа. Проверьте логин или пароль.
           </p>

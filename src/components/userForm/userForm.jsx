@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./userForm.module.css";
 import { useEffect, useRef, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { changeUserInfo, getUserInfo } from "../../services/actions/profile";
+import { changeUserInfo } from "../../services/actions/profile";
 
 export function UserForm() {
-  const { userInfo } = useSelector((store) => store.profile);
+  const userInfo = useSelector((store) => store.profile.userInfo);
   const dispatch = useDispatch();
   const [nameValue, setNameValue] = useState("Your Name");
   const [emailValue, setEmailValue] = useState("test@mail.ru");

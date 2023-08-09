@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./orderCard.module.css";
 import ingredientsImagesMap from "./orderCard.utils";
-import { getStatusText } from "../../utils/data";
+import { ORDER_STATUSES, getStatusText } from "../../utils/data";
 import PropTypes from "prop-types";
 
 export default function OrderCard({
@@ -22,6 +22,11 @@ export default function OrderCard({
   };
 
   const images = ingredientsImagesMap(ingredientsPictures, styles);
+  const statusStyles = {
+    default: `${styles.card__status} text text_type_main-small mt-2`,
+    done: `${styles.card__status} text text_type_main-small mt-2 ${styles.card__status_done}`,
+    cancelled: `${styles.card__status} text text_type_main-small mt-2 ${styles.card__status_canselled}`,
+  };
 
   return (
     <li className={`${styles.feeds__card} mr-2`}>
@@ -37,11 +42,11 @@ export default function OrderCard({
         {status ? (
           <p
             className={
-              status === "done"
-                ? `${styles.card__status} text text_type_main-small mt-2 ${styles.card__status_done}`
-                : status === "cancelled"
-                ? `${styles.card__status} text text_type_main-small mt-2 ${styles.card__status_canselled}`
-                : `${styles.card__status} text text_type_main-small mt-2`
+              status === ORDER_STATUSES.done
+                ? statusStyles.done
+                : status === ORDER_STATUSES.canselled
+                ? statusStyles.cancelled
+                : statusStyles.default
             }
           >
             {getStatusText(status)}

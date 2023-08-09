@@ -7,33 +7,35 @@ export function OrderHistory() {
   const location = useLocation();
   const state = location.state;
 
-  const { items } = useSelector((store) => store.allItems);
-  const { orders } = useSelector((store) => store.wsconnection);
+  const items = useSelector((store) => store.allItems.items);
+  const orders = useSelector((store) => store.wspersonalconnection.orders);
 
-  const ordersMap = orders?.map((order) => {
-    const ingredientsPictures = order.ingredients.map(
-      (ingredient) => items.filter((storeItem) => storeItem._id === ingredient)[0].image
-    );
-    const totalPrice = order.ingredients
-      .map((ingredient) => items.filter((storeItem) => storeItem._id === ingredient)[0].price)
-      .reduce((acc, current) => {
-        return acc + current;
-      }, 0);
+  const ordersMap = orders
+    ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .map((order) => {
+      const ingredientsPictures = order.ingredients.map(
+        (ingredient) => items.filter((storeItem) => storeItem._id === ingredient)[0].image
+      );
+      const totalPrice = order.ingredients
+        .map((ingredient) => items.filter((storeItem) => storeItem._id === ingredient)[0].price)
+        .reduce((acc, current) => {
+          return acc + current;
+        }, 0);
 
-    return (
-      <OrderCard
-        date={order.createdAt}
-        number={order.number}
-        name={order.name}
-        status={order.status}
-        ingredientsPictures={ingredientsPictures}
-        price={totalPrice}
-        state={state}
-        location={location}
-        key={order.number}
-      ></OrderCard>
-    );
-  });
+      return (
+        <OrderCard
+          date={order.createdAt}
+          number={order.number}
+          name={order.name}
+          status={order.status}
+          ingredientsPictures={ingredientsPictures}
+          price={totalPrice}
+          state={state}
+          location={location}
+          key={order.number}
+        ></OrderCard>
+      );
+    });
 
   return (
     <div className={styles.feeds}>

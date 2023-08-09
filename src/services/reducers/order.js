@@ -13,6 +13,11 @@ const initialState = {
   orderRequest: false,
   orderFailed: false,
   orderErrMsg: "",
+
+  currentOrderDetails: null,
+  currentOrderRequest: false,
+  currentOrderFailed: false,
+  currentOrderErrMsg: "",
 };
 
 export const orderReducer = (state = initialState, action) => {
@@ -51,23 +56,23 @@ export const orderReducer = (state = initialState, action) => {
     case FETCH_ORDER_REQUEST:
       return {
         ...state,
-        orderRequest: true,
-        orderErrMsg: "",
+        currentOrderRequest: true,
+        currentOrderErrMsg: "",
       };
     case FETCH_ORDER_SUCCESS:
       return {
         ...state,
-        orderRequest: false,
-        orderFailed: false,
-        orderDetails: action.payload,
-        orderErrMsg: "",
+        currentOrderRequest: false,
+        currentOrderFailed: false,
+        currentOrderDetails: action.payload,
+        currentOrderErrMsg: "",
       };
     case FETCH_ORDER_ERROR:
       return {
         ...state,
-        orderRequest: false,
-        orderFailed: true,
-        orderErrMsg: `Shit happens ${action.err}`,
+        currentOrderRequest: false,
+        currentOrderFailed: true,
+        currentOrderErrMsg: `Shit happens ${action.err}`,
       };
     default: {
       return state;

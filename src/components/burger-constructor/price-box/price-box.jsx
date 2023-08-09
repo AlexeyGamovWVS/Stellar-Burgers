@@ -4,13 +4,12 @@ import { useMemo } from "react";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOrderData } from "../../../services/actions/order";
-import { getUserInfo } from "../../../services/actions/profile";
 import { useNavigate } from "react-router-dom";
 export default function PriceBox() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { selectedItems, selectedBun } = useSelector((store) => store.selectedItems);
-  const { userInfo } = useSelector((store) => store.profile);
+  const userInfo = useSelector((store) => store.profile.userInfo);
 
   const fullOrder = useMemo(() => {
     const fullArray = [...selectedItems];
@@ -21,7 +20,6 @@ export default function PriceBox() {
   }, [selectedBun, selectedItems]);
 
   const orderBtnClick = () => {
-    dispatch(getUserInfo());
     if (userInfo !== null) {
       const dataIds = fullOrder.map((item) => item._id);
       dispatch(sendOrderData(dataIds));

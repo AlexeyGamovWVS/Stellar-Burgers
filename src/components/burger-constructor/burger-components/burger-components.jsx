@@ -14,7 +14,7 @@ import {
 
 export default function BurgerComponents() {
   const dispatch = useDispatch();
-  const { items } = useSelector((store) => store.allItems);
+  const items = useSelector((store) => store.allItems.items);
   const { selectedItems, selectedBun } = useSelector((store) => store.selectedItems);
 
   const [{ isHover }, drop] = useDrop({

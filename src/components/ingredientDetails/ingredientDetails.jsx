@@ -4,8 +4,8 @@ import Substance from "./substance/substance";
 import { useSelector } from "react-redux";
 export default function IngredientDetails() {
   const { id } = useParams();
-  let { selectedIngredient } = useSelector((store) => store.currentWatchItem);
-  const { items } = useSelector((store) => store.allItems);
+  let selectedIngredient = useSelector((store) => store.currentWatchItem.selectedIngredient);
+  const items = useSelector((store) => store.allItems.items);
   selectedIngredient = id ? items.find((item) => item._id === id) : selectedIngredient;
   return selectedIngredient ? (
     <>

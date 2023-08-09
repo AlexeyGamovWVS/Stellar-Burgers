@@ -13,7 +13,7 @@ const findElement = (target, items) => {
 
 export default function Ingredients({ activeTab, setActiveTab, rowsRefObj }) {
   const dispatch = useDispatch();
-  const { items } = useSelector((store) => store.allItems);
+  const items = useSelector((store) => store.allItems.items);
   const location = useLocation();
   const state = location.state;
   const openIngredientPop = (e) => {

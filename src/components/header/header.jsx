@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 function AppHeader() {
   const location = useLocation();
-  const { userInfo } = useSelector((store) => store.profile);
+  const userInfo = useSelector((store) => store.profile.userInfo);
 
   const setIconType = (url) => (location.pathname === url ? "primary" : "secondary");
   const setLinkStyle = (url) =>

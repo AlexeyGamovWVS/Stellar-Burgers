@@ -3,7 +3,7 @@ import doneIcon from "../../../assets/images/done.gif";
 import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
-  const { orderDetails } = useSelector((store) => store.order);
+  const orderDetails = useSelector((store) => store.order.orderDetails);
   const orderMap = orderDetails ? (
     <>
       <p className={`${styles.number} text text_type_digits-large mt-4`}>

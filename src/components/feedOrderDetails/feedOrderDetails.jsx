@@ -12,9 +12,9 @@ import { getUniqOrderData } from "../../services/actions/order";
 export default function FeedOrderDetails() {
   const dispatch = useDispatch();
   const orderNum = useParams().id;
-  const { items } = useSelector((store) => store.allItems);
-  const { orders } = useSelector((store) => store.wsconnection);
-  const { orderDetails } = useSelector((store) => store.order);
+  const items = useSelector((store) => store.allItems.items);
+  const orders = useSelector((store) => store.wsconnection.orders);
+  const currentOrderDetails = useSelector((store) => store.order.currentOrderDetails);
 
   useEffect(() => {
     if (!orders.length) {
@@ -24,13 +24,19 @@ export default function FeedOrderDetails() {
 
   const openedOrderData = orders.length
     ? orders.find((order) => `${order.number}` === `${orderNum}`)
-    : orderDetails;
+    : currentOrderDetails;
 
   const orderIngredients = openedOrderData?.ingredients.map((ingredient) =>
     items.find((storeItem) => storeItem._id === ingredient)
   );
   const totalOrderPrice = orderIngredients?.reduce((acc, current) => acc + current.price, 0);
   const statusText = getStatusText(openedOrderData?.status);
+
+  const statusStyles = {
+    default: `${styles.status} text text_type_main-small mb-15`,
+    done: `${styles.status} text text_type_main-small mb-15 ${styles.status_done}`,
+    cancelled: `${styles.status} text text_type_main-small mb-15 ${styles.status_cancelled}`,
+  };
 
   return (
     openedOrderData && (
@@ -42,10 +48,10 @@ export default function FeedOrderDetails() {
         <p
           className={
             openedOrderData.status === ORDER_STATUSES.done
-              ? `${styles.status} ${styles.status_done} text text_type_main-small mb-15`
+              ? statusStyles.done
               : openedOrderData.status === ORDER_STATUSES.canselled
-              ? `${styles.status} ${styles.status_cancelled} text text_type_main-small mb-15`
-              : `${styles.status} text text_type_main-small mb-15`
+              ? statusStyles.cancelled
+              : statusStyles.default
           }
         >
           {statusText}
