@@ -2,14 +2,12 @@ import { NavLink, useLocation } from "react-router-dom";
 import styles from "./asideNavigation.module.css";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../services/actions/profile";
-import { cleanTokenCookies } from "../../utils/cookie";
 
 export function AsideNavigation() {
   const dispatch = useDispatch();
   const location = useLocation();
   const logout = () => {
     dispatch(logoutUser());
-    cleanTokenCookies(["accessToken", "refreshToken"]);
   };
 
   const setLinkStyle = (url) =>

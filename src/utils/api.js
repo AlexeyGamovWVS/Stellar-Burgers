@@ -39,24 +39,13 @@ export async function sendEmail(data) {
   return checkResult(res);
 }
 
-export async function sendRegisterData(email, name, password) {
-  const res = await fetch(`${URL_API}/auth/register`, {
+export async function sendUserData({ endpoint, ...rest }) {
+  const res = await fetch(`${URL_API}/auth/${endpoint}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, name, password }),
-  });
-  return checkResult(res);
-}
-
-export async function sendLoginData(email, password) {
-  const res = await fetch(`${URL_API}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify(rest),
   });
   return checkResult(res);
 }

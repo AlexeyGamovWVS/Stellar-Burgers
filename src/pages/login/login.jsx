@@ -18,7 +18,7 @@ export function LoginPage() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (emailValue && passwordValue) {
-      dispatch(loginUser(emailValue, passwordValue));
+      dispatch(loginUser({ email: emailValue, password: passwordValue, endpoint: "login" }));
     } else return;
   };
 
