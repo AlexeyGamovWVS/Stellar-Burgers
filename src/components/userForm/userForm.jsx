@@ -28,7 +28,7 @@ export function UserForm() {
   };
 
   useEffect(() => {
-    dispatch(getUserInfo());
+    //dispatch(getUserInfo());
     // eslint-disable-next-line no-unused-expressions
     userInfo ? setData(userInfo) : null;
     // eslint-disable-next-line react-hooks/exhaustive-deps

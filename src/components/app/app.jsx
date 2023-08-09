@@ -23,7 +23,7 @@ import { REMOVE_SELECTED_INGREDIENT } from "../../services/actions/currentItem";
 import AppHeader from "../header/header";
 import { OnlyAuth, OnlyUnAuth } from "../protectedRoute/protectdRoute";
 import FeedOrderDetails from "../feedOrderDetails/feedOrderDetails";
-import { getUserInfo } from "../../services/actions/profile";
+import {checkUserAuth, getUserInfo} from "../../services/actions/profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function App() {
   const navigate = useNavigate();
 	
   useEffect(() => {
-    dispatch(getUserInfo());
+    dispatch(checkUserAuth());
   }, []);
 
   useEffect(() => {

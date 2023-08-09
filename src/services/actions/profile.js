@@ -6,7 +6,7 @@ import {
   sendUserData,
   sendUserInfoRequest,
 } from "../../utils/api";
-import { cleanTokenCookies, setCookie } from "../../utils/cookie";
+import {cleanTokenCookies, getCookie, setCookie} from "../../utils/cookie";
 
 const ACCESS_TOKEN = "accessToken";
 const REFRESH_TOKEN = "refreshToken";
@@ -239,6 +239,24 @@ export function getUserInfo() {
       })
       .finally(() => dispatch(setAuthChecked(true)));
   };
+}
+
+export function checkUserAuth() {
+  return function (dispatch) {
+    if (getCookie(ACCESS_TOKEN)) {
+      sendUserInfoRequest()
+          .then((res) => {
+            res.success ? dispatch(setUser(res.user)) : promiseReject(res.status);
+          })
+          .catch((err) => {
+            cleanTokenCookies([ACCESS_TOKEN, REFRESH_TOKEN]);
+            dispatch(setUserFail(err));
+          })
+          .finally(() => dispatch(setAuthChecked(true)));
+    } else {
+      dispatch(setAuthChecked(true));
+    }
+  }
 }
 
 export function changeUserInfo(name, email, password) {

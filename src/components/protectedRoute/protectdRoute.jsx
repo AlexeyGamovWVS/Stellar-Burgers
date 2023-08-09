@@ -10,6 +10,7 @@ const ProtectedRouteElement = ({ onlyUnAuth, component }) => {
 
   console.log(location);
   console.log(user);
+
   if (!isAuthChecked) {
     return <Preloader />;
   }
