@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../../services/actions/profile";
 
 export function ResetPage() {
-  const { forgotPassSuccess } = useSelector((store) => store.profile);
+  const success = useSelector((store) => store.profile.success);
   const [codeValue, setCodeValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export function ResetPage() {
     }
   };
 
-  return !forgotPassSuccess ? (
+  return !success ? (
     <Navigate to={"/forgot-password"} replace />
   ) : (
     <main className={styles.main}>

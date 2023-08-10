@@ -9,7 +9,7 @@ import { CLEAN_BURGER } from "../../services/actions/selectedItems";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
-  const { orderDetails } = useSelector((store) => store.order);
+  const { orderDetails, orderRequest } = useSelector((store) => store.order);
 
   const resetOrder = () => {
     dispatch({
@@ -24,7 +24,7 @@ export default function BurgerConstructor() {
     <div className={`pt-25 ${constructurStyles.constructor}`}>
       <BurgerComponents />
       <PriceBox />
-      {orderDetails !== null && (
+      {(orderDetails !== null || orderRequest) && (
         <Modal onClose={resetOrder}>
           <OrderDetails />
         </Modal>

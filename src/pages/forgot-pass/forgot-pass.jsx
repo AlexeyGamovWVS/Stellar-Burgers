@@ -11,13 +11,12 @@ export function ForgotPage() {
   const navigate = useNavigate();
 
   //checking request starts
-  const { forgotPassMessage, forgotPassSuccess } = useSelector((store) => store.profile);
+  const { message, success } = useSelector((store) => store.profile);
   useEffect(() => {
-    console.log(forgotPassMessage);
-    if (forgotPassMessage && forgotPassSuccess) {
-      navigate("/reset-password", { replace: true }); // временная навигация, вероятно неверно, см следующий спринт
+    if (message && success) {
+      navigate("/reset-password", { replace: true });
     }
-  }, [forgotPassMessage, forgotPassSuccess, navigate]);
+  }, [message, success, navigate]);
   //checking request ends
 
   const handleForSubmit = (e) => {

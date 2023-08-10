@@ -11,9 +11,7 @@ export const currentRow = (box) => {
   const rows = [buns, sauces, mains];
   const newRow = rows.find((row) => {
     const rowRect = row.getBoundingClientRect();
-    return (
-      (rowRect.y - boxRect.y >= -30) & (rowRect.y - boxRect.y < 100)
-    );
+    return (rowRect.y - boxRect.y >= -30) & (rowRect.y - boxRect.y < 100);
   });
   return newRow ? newRow.id : null;
 };
@@ -27,11 +25,7 @@ export function getIngredientCards(data, onOpen, state, location) {
   data.forEach((element) => {
     const ingredientCard = (
       <div key={`ingrediet_${element._id}`}>
-        <Link
-          className={styles.link}
-          to={`/ingredients/${element._id}`}
-          state={state}
-        >
+        <Link className={styles.link} to={`/ingredients/${element._id}`} state={state}>
           <Ingredient
             type={element.type}
             key={element._id}

@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../services/actions/profile";
+import { loginUser } from "../../services/actions/profile";
 
 export function RegistrationPage() {
   const [nameValue, setNameValue] = useState("");
@@ -19,7 +19,14 @@ export function RegistrationPage() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (nameValue && emailValue && passwordValue) {
-      dispatch(registerUser(emailValue, nameValue, passwordValue));
+      dispatch(
+        loginUser({
+          email: emailValue,
+          name: nameValue,
+          password: passwordValue,
+          endpoint: "register",
+        })
+      );
     } else return;
   };
 

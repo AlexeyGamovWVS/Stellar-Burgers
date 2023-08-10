@@ -3,11 +3,7 @@ import burgCompStyles from "./burger-components.module.css";
 import { useCallback } from "react";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  GET_RANDOM,
-  EMPTY_BUN,
-  findElement,
-} from "./burger-components.utils";
+import { GET_RANDOM, EMPTY_BUN, findElement } from "./burger-components.utils";
 import { useDrop } from "react-dnd";
 import {
   ADD_ITEM_TO_CHOICE,
@@ -18,10 +14,8 @@ import {
 
 export default function BurgerComponents() {
   const dispatch = useDispatch();
-  const { items } = useSelector((store) => store.allItems);
-  const { selectedItems, selectedBun } = useSelector(
-    (store) => store.selectedItems
-  );
+  const items = useSelector((store) => store.allItems.items);
+  const { selectedItems, selectedBun } = useSelector((store) => store.selectedItems);
 
   const [{ isHover }, drop] = useDrop({
     accept: "ingredient",
@@ -63,9 +57,7 @@ export default function BurgerComponents() {
 
   const moveListItem = useCallback(
     (dragIndex, hoverIndex) => {
-      dispatch(
-        sortComponents([...selectedItems], dragIndex, hoverIndex)
-      );
+      dispatch(sortComponents([...selectedItems], dragIndex, hoverIndex));
     },
     [dispatch, selectedItems]
   );
@@ -108,9 +100,7 @@ export default function BurgerComponents() {
         item={selectedBun ? selectedBun : EMPTY_BUN}
         position="bottom"
         iconVis={false}
-        key={
-          selectedBun ? selectedBun._id + GET_RANDOM() : GET_RANDOM()
-        }
+        key={selectedBun ? selectedBun._id + GET_RANDOM() : GET_RANDOM()}
       />
     </ul>
   );

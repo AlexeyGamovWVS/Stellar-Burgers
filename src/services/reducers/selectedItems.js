@@ -18,7 +18,7 @@ export const selectedItemsReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedItems: [],
-				selectedBun: null,
+        selectedBun: null,
       };
     }
     case ADD_ITEM_TO_CHOICE:
@@ -40,9 +40,7 @@ export const selectedItemsReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedItems: [
-          ...state.selectedItems.filter(
-            (item) => item.index !== action.chosenItem.index
-          ),
+          ...state.selectedItems.filter((item) => item.index !== action.chosenItem.index),
         ],
       };
     case SORT_ITEMS:

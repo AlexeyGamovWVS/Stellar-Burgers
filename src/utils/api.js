@@ -1,10 +1,6 @@
 import { getCookie, setCookie } from "./cookie";
-import { URL_API } from "./data";
+import { ACCESSES_EXPIRED_ERROR, ACCESS_TOKEN, REFRESH_TOKEN, URL_API } from "./data";
 
-const ACCESS_TOKEN = "accessToken";
-const REFRESH_TOKEN = "refreshToken";
-const ACCESSES_EXPIRED_ERROR = 403;
-// const ACCTOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzdhMzA2ODJlMjc3MDAxYmZhNWM5MyIsImlhdCI6MTY5MDg5MjMzMywiZXhwIjoxNjkwODkzNTMzfQ.ttM2qpItkYPGgKEG5zvqBNorW_L6H0RjEVJR0Vgev2k"
 export async function api() {
   const res = await fetch(`${URL_API}/ingredients`);
   return checkResult(res);
@@ -15,8 +11,19 @@ export async function sendOrder(data) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      authorization: getCookie(ACCESS_TOKEN),
     },
     body: JSON.stringify({ ingredients: data }),
+  });
+  return checkResult(res);
+}
+
+export async function getOrderData(number) {
+  const res = await fetch(`${URL_API}/orders/${number}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
   return checkResult(res);
 }
@@ -32,24 +39,13 @@ export async function sendEmail(data) {
   return checkResult(res);
 }
 
-export async function sendRegisterData(email, name, password) {
-  const res = await fetch(`${URL_API}/auth/register`, {
+export async function sendUserData({ endpoint, ...rest }) {
+  const res = await fetch(`${URL_API}/auth/${endpoint}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, name, password }),
-  });
-  return checkResult(res);
-}
-
-export async function sendLoginData(email, password) {
-  const res = await fetch(`${URL_API}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify(rest),
   });
   return checkResult(res);
 }
@@ -61,7 +57,7 @@ export function sendRefreshToken() {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ token: getCookie(REFRESH_TOKEN) }),
-  }).then(checkResult)
+  }).then(checkResult);
 }
 
 export const fetchWithRefresh = async (url, options) => {
@@ -69,7 +65,6 @@ export const fetchWithRefresh = async (url, options) => {
     const res = await fetch(url, options);
     return await checkResult(res); //err === res.status
   } catch (err) {
-    console.log(err);
     if (err === ACCESSES_EXPIRED_ERROR) {
       const refreshData = await sendRefreshToken(); //обновляем токен
       if (!refreshData.success) {

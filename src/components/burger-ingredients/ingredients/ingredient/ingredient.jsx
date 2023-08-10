@@ -1,33 +1,18 @@
 import itemStyles from "./ingredient.module.css";
 import PropTypes from "prop-types";
-import {
-  Counter,
-  CurrencyIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
 import { COMPONENT_TYPES } from "../../../../utils/data";
-export default function Ingredient({
-  name,
-  price,
-  image,
-  onOpen,
-  id,
-  type,
-}) {
-  const { selectedItems, selectedBun } = useSelector(
-    (store) => store.selectedItems
-  );
+export default function Ingredient({ name, price, image, onOpen, id, type }) {
+  const { selectedItems, selectedBun } = useSelector((store) => store.selectedItems);
   const count = useMemo(() => {
-    return selectedItems.reduce(
-      (acc, item) => (item._id === id ? ++acc : acc),
-      0
-    );
+    return selectedItems.reduce((acc, item) => (item._id === id ? ++acc : acc), 0);
   }, [id, selectedItems]);
 
-  const bunCount = useMemo(() => { 
-    return selectedBun !== null ? selectedBun._id === id ? 2 : 0 : 0
+  const bunCount = useMemo(() => {
+    return selectedBun !== null ? (selectedBun._id === id ? 2 : 0) : 0;
   }, [id, selectedBun]);
 
   const [{ isDrag }, drag] = useDrag({
@@ -41,11 +26,7 @@ export default function Ingredient({
   return (
     <li
       ref={drag}
-      className={
-        isDrag
-          ? `${itemStyles.item} ${itemStyles.item_drag}`
-          : `${itemStyles.item}`
-      }
+      className={isDrag ? `${itemStyles.item} ${itemStyles.item_drag}` : `${itemStyles.item}`}
       onClick={onOpen}
       id={id}
     >

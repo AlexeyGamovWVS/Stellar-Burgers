@@ -1,7 +1,4 @@
-import {
-  SET_SELECTED_INGREDIENT,
-  REMOVE_SELECTED_INGREDIENT,
-} from "../actions/currentItem";
+import { SET_SELECTED_INGREDIENT, REMOVE_SELECTED_INGREDIENT } from "../actions/currentItem";
 
 const initialState = {
   selectedIngredient: null,

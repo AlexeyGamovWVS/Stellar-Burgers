@@ -10,7 +10,10 @@ import {
   ErrorPage,
   IngredientPage,
   OrdersPage,
+  FeedPage,
+  FeedOrderPage,
 } from "../../pages";
+
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredientsData } from "../../services/actions/ingredients";
 import { ResetPage } from "../../pages/reset-pass/reset-pass";
@@ -18,7 +21,9 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
 import { REMOVE_SELECTED_INGREDIENT } from "../../services/actions/currentItem";
 import AppHeader from "../header/header";
-import { ProtectedRouteElement } from "../protectedRoute/protectdRoute";
+import { OnlyAuth, OnlyUnAuth } from "../protectedRoute/protectdRoute";
+import FeedOrderDetails from "../feedOrderDetails/feedOrderDetails";
+import { checkUserAuth } from "../../services/actions/profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +33,11 @@ function App() {
   const location = useLocation();
   const back = location.state?.back;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     dispatch(getIngredientsData());
@@ -49,56 +59,19 @@ function App() {
         <>
           <Routes location={back || location}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/feed" element={<FeedPage />} />
+            <Route path="/register" element={<OnlyUnAuth component={<RegistrationPage />} />} />
+            <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
+            <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPage />} />} />
+            <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPage />} />} />
+            <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />} />
+            <Route path="/profile/orders" element={<OnlyAuth component={<OrdersPage />} />} />
             <Route
-              path="/register"
-              element={
-                <ProtectedRouteElement auth>
-                  <RegistrationPage />
-                </ProtectedRouteElement>
-              }
+              path="/profile/orders/:id"
+              element={<OnlyAuth component={<FeedOrderPage />} />}
             />
-            <Route
-              path="/login"
-              element={
-                <ProtectedRouteElement auth>
-                  <LoginPage />
-                </ProtectedRouteElement>
-              }
-            />
-            <Route
-              path="/forgot-password"
-              element={
-                <ProtectedRouteElement auth>
-                  <ForgotPage />
-                </ProtectedRouteElement>
-              }
-            />
-            <Route
-              path="/reset-password"
-              element={
-                <ProtectedRouteElement auth>
-                  <ResetPage />
-                </ProtectedRouteElement>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRouteElement auth={false}>
-                  <ProfilePage />
-                </ProtectedRouteElement>
-              }
-            />
-            <Route
-              path="/profile/orders"
-              element={
-                <ProtectedRouteElement auth={false}>
-                  <OrdersPage />
-                </ProtectedRouteElement>
-              }
-            />
-            {/* <Route path="/profile/orders/:id" element={<OrderInfoPage />} /> */}
             <Route path="/ingredients/:id" element={<IngredientPage />} />
+            <Route path="/feed/:id" element={<FeedOrderPage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
           {back && (
@@ -108,6 +81,22 @@ function App() {
                 element={
                   <Modal header="Детали ингредиента" onClose={closeIngredientPop}>
                     <IngredientDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/feed/:id"
+                element={
+                  <Modal onClose={closeIngredientPop}>
+                    <FeedOrderDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/profile/orders/:id"
+                element={
+                  <Modal onClose={closeIngredientPop}>
+                    <FeedOrderDetails />
                   </Modal>
                 }
               />

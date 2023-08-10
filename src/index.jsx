@@ -5,13 +5,19 @@ import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { rootReducer } from "./services/reducers/rootReducer.js";
 import { BrowserRouter } from "react-router-dom";
+import { socketMiddleware } from "./services/middleware/socketMiddleware.js";
+import { wsActions, wsPersonalActions } from "./services/actions/wsActionTypes.js";
+import { socketPersonalMiddleware } from "./services/middleware/socketPersonalMiddleware.js";
 
 const composeEnhancers =
-  typeof window === "object" &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+  applyMiddleware(socketMiddleware(wsActions)),
+  applyMiddleware(socketPersonalMiddleware(wsPersonalActions))
+);
 const store = createStore(rootReducer, enhancer);
 const container = document.getElementById("root");
 const root = createRoot(container);
