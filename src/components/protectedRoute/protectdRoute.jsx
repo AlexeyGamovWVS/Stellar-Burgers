@@ -27,23 +27,3 @@ export const OnlyAuth = ProtectedRouteElement;
 export const OnlyUnAuth = ({ component }) => (
   <ProtectedRouteElement onlyUnAuth={true} component={component} />
 );
-
-// const dispatch = useDispatch();
-// useEffect(() => {
-//   dispatch(getUserInfo());
-//   // eslint-disable-next-line react-hooks/exhaustive-deps
-// }, []);
-
-//   return auth && user ? (
-//     <Navigate to={"/"} replace />
-//   ) : !auth && !user ? (
-//     <Navigate to={"/login"} replace />
-//   ) : (
-//     children
-//   );
-// }
-
-// ProtectedRouteElement.propTypes = {
-//   onlyUnAuth: PropTypes.bool.isRequired,
-//   children: PropTypes.element.isRequired,
-// };
