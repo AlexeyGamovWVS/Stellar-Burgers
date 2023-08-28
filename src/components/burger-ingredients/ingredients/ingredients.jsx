@@ -2,7 +2,7 @@ import ingredStyles from "./ingredients.module.css";
 import IngredientRow from "./ingredients-row/ingredients-row";
 import { getIngredientCards, currentRow } from "./ingredients.utils";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_SELECTED_INGREDIENT } from "../../../services/actions/currentItem";
+import { setIngredient } from "../../../services/actions/currentItem";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
@@ -17,10 +17,7 @@ export default function Ingredients({ activeTab, setActiveTab, rowsRefObj }) {
   const location = useLocation();
   const state = location.state;
   const openIngredientPop = (e) => {
-    dispatch({
-      type: SET_SELECTED_INGREDIENT,
-      ingredientData: findElement(e.currentTarget, items),
-    });
+    dispatch(setIngredient(findElement(e.currentTarget, items)));
   };
 
   const separatedData = getIngredientCards(items, openIngredientPop, state, location);

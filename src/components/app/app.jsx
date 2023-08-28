@@ -19,7 +19,7 @@ import { getIngredientsData } from "../../services/actions/ingredients";
 import { ResetPage } from "../../pages/reset-pass/reset-pass";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
-import { REMOVE_SELECTED_INGREDIENT } from "../../services/actions/currentItem";
+import { unsetIngredient } from "../../services/actions/currentItem";
 import AppHeader from "../header/header";
 import { OnlyAuth, OnlyUnAuth } from "../protectedRoute/protectdRoute";
 import FeedOrderDetails from "../feedOrderDetails/feedOrderDetails";
@@ -36,7 +36,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkUserAuth());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -45,9 +45,7 @@ function App() {
 
   const closeIngredientPop = () => {
     navigate(-1);
-    dispatch({
-      type: REMOVE_SELECTED_INGREDIENT,
-    });
+    dispatch(unsetIngredient());
   };
 
   return itemsRequest || itemsFailed ? (

@@ -4,20 +4,16 @@ import PriceBox from "./price-box/price-box";
 import OrderDetails from "../modal/orderDetails/orderDetails";
 import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
-import { ORDER_ITEMS_RESET } from "../../services/actions/order";
-import { CLEAN_BURGER } from "../../services/actions/selectedItems";
+import { orderItemsResetAction } from "../../services/actions/order";
+import { cleanBurgerAction } from "../../services/actions/selectedItems";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const { orderDetails, orderRequest } = useSelector((store) => store.order);
 
   const resetOrder = () => {
-    dispatch({
-      type: CLEAN_BURGER,
-    });
-    dispatch({
-      type: ORDER_ITEMS_RESET,
-    });
+    dispatch(cleanBurgerAction());
+    dispatch(orderItemsResetAction());
   };
 
   return (
