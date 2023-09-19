@@ -11,9 +11,11 @@ export function OrdersPage() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     const token = getCookie(ACCESS_TOKEN)!.split(" ")[1];
+		//@ts-ignore
     dispatch(connectPersonal(`${WS_LINK}?token=${token}`));
 
     return () => {
+			//@ts-ignore
       dispatch(disconnectPersonal());
     };
   }, [dispatch]);

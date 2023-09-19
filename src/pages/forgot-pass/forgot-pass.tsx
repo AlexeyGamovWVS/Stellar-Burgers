@@ -22,6 +22,7 @@ export function ForgotPage() {
   const handleForSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (emailValue) {
+			//@ts-ignore
       dispatch(sendEmailForgotPassword(emailValue));
     } else return;
   };

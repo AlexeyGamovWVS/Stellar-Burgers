@@ -15,6 +15,7 @@ export function ResetPage() {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (passwordValue && codeValue) {
+			//@ts-ignore
       dispatch(resetPassword(passwordValue, codeValue));
     }
   };

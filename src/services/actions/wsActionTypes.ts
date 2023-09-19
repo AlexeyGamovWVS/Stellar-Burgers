@@ -81,7 +81,7 @@ export interface IWs_PersonalCloseAction {
 
 export interface IWs_PersonalMessageAction {
   readonly type: typeof WS_PERSONAL_MESSAGE;
-	payload: Pick<IOrders, "orders">
+  payload: Pick<IOrders, "orders">;
 }
 
 export interface IWs_PersonalErrorAction {
@@ -119,35 +119,27 @@ export const wsPersonalActions = {
 };
 
 export function connect(url: string) {
-  return function (dispatch: any): void {
-    dispatch({
-      type: WS_CONNECT,
-      payload: url,
-    });
+  return {
+    type: WS_CONNECT,
+    payload: url,
   };
 }
 
 export function disconnect() {
-  return function (dispatch: (arg0: { type: "WS_DISCONNECT" }) => void) {
-    dispatch({
-      type: WS_DISCONNECT,
-    });
+  return {
+    type: WS_DISCONNECT,
   };
 }
 
 export function connectPersonal(url: string) {
-  return function (dispatch: (arg0: { type: "WS_PERSONAL_CONNECT"; payload: any }) => void) {
-    dispatch({
-      type: WS_PERSONAL_CONNECT,
-      payload: url,
-    });
+  return {
+    type: WS_PERSONAL_CONNECT,
+    payload: url,
   };
 }
 
 export function disconnectPersonal() {
-  return function (dispatch: (arg0: { type: "WS_PERSONAL_DISCONNECT" }) => void) {
-    dispatch({
-      type: WS_PERSONAL_DISCONNECT,
-    });
+  return {
+    type: WS_PERSONAL_DISCONNECT,
   };
 }

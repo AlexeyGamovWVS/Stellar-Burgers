@@ -7,10 +7,11 @@ import { getStatusText } from "../../utils/data";
 import { useEffect } from "react";
 import { getUniqOrderData } from "../../services/actions/order";
 import { useAppDispatch, useAppSelector } from "../..";
+import { IIngredient } from "../../services/utils/types";
 
 export default function FeedOrderDetails() {
   const dispatch = useAppDispatch();
-  const orderNum = useParams().id;
+  const orderNum = useParams().id || "";
   const items = useAppSelector((store) => store.allItems.items);
   const orders = useAppSelector((store) => store.wsconnection.orders);
   const currentOrderDetails = useAppSelector((store) => store.order.currentOrderDetails);
@@ -24,11 +25,10 @@ export default function FeedOrderDetails() {
   const openedOrderData = orders.length
     ? orders.find((order) => `${order.number}` === `${orderNum}`)
     : currentOrderDetails;
-
-  const orderIngredients = openedOrderData?.ingredients.map((ingredient) =>
+  const orderIngredients = openedOrderData?.ingredients.map((ingredient: string) =>
     items.find((storeItem) => storeItem._id === ingredient)
   );
-  const totalOrderPrice = orderIngredients?.reduce((acc, current) => acc + current.price, 0);
+  const totalOrderPrice = orderIngredients?.reduce((acc: number, current: IIngredient) => acc + current.price, 0);
   const statusText = getStatusText(openedOrderData?.status);
 
   const statusStyles = {
@@ -36,23 +36,6 @@ export default function FeedOrderDetails() {
     done: `${styles.status} text text_type_main-small mb-15 ${styles.status_done}`,
     cancelled: `${styles.status} text text_type_main-small mb-15 ${styles.status_cancelled}`,
   };
-
-	const orderdatafromserv = {
-			"_id": "65047c836d2997001caa8f15",
-			"ingredients": [
-					"643d69a5c3f7b9001cfa093c",
-					"643d69a5c3f7b9001cfa0945",
-					"643d69a5c3f7b9001cfa0941",
-					"643d69a5c3f7b9001cfa0944"
-			],
-			"owner": "64c7a30682e277001bfa5c93",
-			"status": "done",
-			"name": "Антарианский био-марсианский традиционный-галактический краторный бургер",
-			"createdAt": "2023-09-15T15:47:15.773Z",
-			"updatedAt": "2023-09-15T15:47:15.993Z",
-			"number": 20743,
-			"__v": 0
-	}
 
   return (
     openedOrderData && (
@@ -85,7 +68,7 @@ export default function FeedOrderDetails() {
                   <p className={`${styles.price} text text_type_digits-default`}>
                     {countIngedientsInOrder(item._id, orderIngredients)} x {item.price}
                   </p>
-                  <CurrencyIcon />
+                  <CurrencyIcon type="primary" />
                 </div>
               </li>
             ))}
@@ -97,7 +80,7 @@ export default function FeedOrderDetails() {
           />
           <div className={styles.pricebox}>
             <p className={`${styles.price} text text_type_digits-default`}>{totalOrderPrice}</p>
-            <CurrencyIcon />
+            <CurrencyIcon type="primary" />
           </div>
         </div>
       </div>

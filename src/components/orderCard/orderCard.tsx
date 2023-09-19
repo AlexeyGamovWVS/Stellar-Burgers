@@ -8,11 +8,11 @@ interface IOrderCard {
   date: string;
   number: string;
   ingredientsPictures: string[];
-  name: string;
+  name?: string;
   price: number;
   state: any;
   location: any;
-  status: string;
+  status?: string;
 }
 
 export default function OrderCard({

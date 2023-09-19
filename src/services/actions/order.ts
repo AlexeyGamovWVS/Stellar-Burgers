@@ -81,8 +81,8 @@ export const orderFetchReqFailed = (payload: string): IOrderFetchReqFailed => ({
   type: FETCH_ORDER_ERROR,
   payload,
 });
-
-export const sendOrderData: AppThunk = (data: string[]) => (dispatch: AppDispatch) => {
+//@ts-ignore
+export const sendOrderData = (data: string[]): AppThunk => (dispatch: AppDispatch) => {
   dispatch(orderItemsReqAction());
   sendOrder(data)
     .then((res) => {
@@ -95,7 +95,7 @@ export const sendOrderData: AppThunk = (data: string[]) => (dispatch: AppDispatc
     });
 };
 
-export function getUniqOrderData(number: string) {
+export const getUniqOrderData = (number: string): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch(orderFetchReqAction());
     getOrderData(number)

@@ -7,11 +7,12 @@ import {
   WS_MESSAGE,
   WS_OPEN,
 } from "../actions/wsActionTypes";
+import { IOrder } from "../utils/types";
 import { WS_STATUS } from "../utils/wsStatus";
 
 export interface IOrders {
   status: string;
-  orders: any[];
+  orders: IOrder[];
   total: number;
   totalToday: number;
   connectingErrorMessage: string;

@@ -142,20 +142,22 @@ const changePassFail = (value: any): IResetPasswFailedAction => ({
   payload: value,
 });
 
-export const sendEmailForgotPassword: AppThunk = (email: string) => (dispatch: AppDispatch) => {
-  dispatch(getEmailReq());
-  sendEmail(email)
-    .then((res) => {
-      res.success ? dispatch(getEmail(res)) : promiseReject(res.status);
-    })
-    .catch((err) => {
-      dispatch(getEmailError(err));
-      console.error(err);
-    });
-};
+export const sendEmailForgotPassword =
+  (email: string): AppThunk =>
+  (dispatch: AppDispatch) => {
+    dispatch(getEmailReq());
+    sendEmail(email)
+      .then((res) => {
+        res.success ? dispatch(getEmail(res)) : promiseReject(res.status);
+      })
+      .catch((err) => {
+        dispatch(getEmailError(err));
+        console.error(err);
+      });
+  };
 
-export const loginUser: AppThunk =
-  ({ email, name, password, endpoint }: IUserFull) =>
+export const loginUser =
+  ({ email, name, password, endpoint }: IUserFull): AppThunk =>
   (dispatch: AppDispatch) => {
     dispatch(setUserReq());
     sendUserData({ email, name, password, endpoint })
@@ -174,7 +176,7 @@ export const loginUser: AppThunk =
       });
   };
 
-export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
+export const logoutUser = (): AppThunk => (dispatch: AppDispatch) => {
   dispatch(setUserReq());
   sendLogoutRequest()
     .then((res) => {
@@ -189,7 +191,7 @@ export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const checkUserAuth: AppThunk = () => (dispatch: AppDispatch) => {
+export const checkUserAuth = (): AppThunk => (dispatch: AppDispatch) => {
   if (getCookie(ACCESS_TOKEN)) {
     sendUserInfoRequest()
       .then((res) => {
@@ -204,9 +206,10 @@ export const checkUserAuth: AppThunk = () => (dispatch: AppDispatch) => {
     dispatch(setAuthChecked(true));
   }
 };
-
-export const changeUserInfo: AppThunk =
-  (name: string, email: string, password: string) => (dispatch: AppDispatch) => {
+//@ts-ignore
+export const changeUserInfo =
+  (name: string, email: string, password: string): AppThunk =>
+  (dispatch: AppDispatch) => {
     dispatch(setUserReq());
     sendChangeUserInfoRequest(name, email, password)
       .then((res) => {
@@ -217,9 +220,10 @@ export const changeUserInfo: AppThunk =
         console.error(err);
       });
   };
-
-export const resetPassword: AppThunk =
-  (password: string, code: string) => (dispatch: AppDispatch) => {
+//@ts-ignore
+export const resetPassword =
+  (password: string, code: string): AppThunk =>
+  (dispatch: AppDispatch) => {
     dispatch(changePassReq());
     sendResetPassRequest(password, code)
       .then((res) => {

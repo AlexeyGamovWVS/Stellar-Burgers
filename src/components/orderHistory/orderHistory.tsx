@@ -9,16 +9,19 @@ export function OrderHistory() {
 
   const items = useAppSelector((store) => store.allItems.items);
   const orders = useAppSelector((store) => store.wspersonalconnection.orders);
-
+	console.log(orders);
+	
   const ordersMap = orders
-    ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    ?.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
     .map((order) => {
       const ingredientsPictures = order.ingredients.map(
-        (ingredient) => items.filter((storeItem) => storeItem._id === ingredient)[0].image
+        (ingredient: string) => items.filter((storeItem) => storeItem._id === ingredient)[0].image
       );
       const totalPrice = order.ingredients
-        .map((ingredient) => items.filter((storeItem) => storeItem._id === ingredient)[0].price)
-        .reduce((acc, current) => {
+        .map(
+          (ingredient: string) => items.filter((storeItem) => storeItem._id === ingredient)[0].price
+        )
+        .reduce((acc: number, current: number) => {
           return acc + current;
         }, 0);
 
@@ -26,7 +29,7 @@ export function OrderHistory() {
         <OrderCard
           date={order.createdAt}
           number={order.number}
-          name={order.name}
+          // name={order.name}
           status={order.status}
           ingredientsPictures={ingredientsPictures}
           price={totalPrice}

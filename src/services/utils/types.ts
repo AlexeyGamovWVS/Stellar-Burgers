@@ -1,3 +1,4 @@
+//burger-constructor
 export interface IMainIngedientData {
   image: string;
   name: string;
@@ -44,6 +45,32 @@ interface IOrderInstance {
   updatedAt: string;
   number: number;
   price: number;
+}
+  // const orderdatafromserv = {
+  //   _id: "65047c836d2997001caa8f15",
+  //   ingredients: [
+  //     "643d69a5c3f7b9001cfa093c",
+  //     "643d69a5c3f7b9001cfa0945",
+  //     "643d69a5c3f7b9001cfa0941",
+  //     "643d69a5c3f7b9001cfa0944",
+  //   ],
+  //   owner: "64c7a30682e277001bfa5c93",
+  //   status: "done",
+  //   name: "Антарианский био-марсианский традиционный-галактический краторный бургер",
+  //   createdAt: "2023-09-15T15:47:15.773Z",
+  //   updatedAt: "2023-09-15T15:47:15.993Z",
+  //   number: 20743,
+  //   __v: 0,
+  // };
+
+// wsSocket
+export interface IOrder {
+	ingredients: string[];
+	_id: string;
+	status: string;
+	number: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
 export interface IFullOrderDetails {

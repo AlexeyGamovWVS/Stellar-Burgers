@@ -7,7 +7,9 @@ import { socketPersonalMiddleware } from "./middleware/socketPersonalMiddleware"
 
 export const store = configureStore({
   reducer: rootReducer,
+	// middleware: [thunk],
   middleware: [thunk, socketMiddleware(wsActions), socketPersonalMiddleware(wsPersonalActions)],
+
 	// middleware: (getDafaultMiddleware) => {
 // 	return getDafaultMiddleware().concat(название)
 // } - чтобы подключить ещё какие-то дефолтные мидлвары

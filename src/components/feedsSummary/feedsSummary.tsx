@@ -3,9 +3,9 @@ import styles from "./feedsSummary.module.css";
 import { ORDER_STATUSES } from "../../utils/data";
 
 export default function FeedsSummary() {
-  const { total, totalToday, orders } = useSelector((store) => store.wsconnection);
+  const { total, totalToday, orders } = useSelector((store: any) => store.wsconnection);
   const readyOrders = orders?.map(
-    (order) =>
+    (order: any) =>
       order.status === ORDER_STATUSES.done && (
         <li
           className={`${styles.orderscol__num} ${styles.orderscol__num_ready} text_type_digits-default`}
@@ -16,7 +16,7 @@ export default function FeedsSummary() {
       )
   );
   const pendingOrders = orders?.map(
-    (order) =>
+    (order: any) =>
       (order.status === ORDER_STATUSES.pending || order.status === ORDER_STATUSES.created) && (
         <li className={`${styles.orderscol__num} text_type_digits-default`} key={order.number}>
           {order.number}

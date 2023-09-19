@@ -16,7 +16,10 @@ interface State {
 }
 
 export default class ErrorBoundary extends React.Component<Props, State> {
-  state: State = { hasError: false };
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
   // с помощью этого метода меняем стейт компонента при возникновении ошибки:
   static getDerivedStateFromError(_: Error): State {
     return { hasError: true };

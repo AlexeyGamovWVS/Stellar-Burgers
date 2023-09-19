@@ -36,7 +36,7 @@ export const itemsFailedAction = (err: string): IItemsFailedAction => ({
   err,
 });
 
-export const getIngredientsData: AppThunk = () => (dispatch: AppDispatch) => {
+export const getIngredientsData = (): AppThunk => (dispatch: AppDispatch) => {
   dispatch(itemsReqAction());
   api()
     .then((res) => {

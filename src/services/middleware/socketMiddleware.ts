@@ -34,6 +34,8 @@ export const socketMiddleware = (
       } = wsActions;
 
       if (wsConnect.match(action)) {
+				console.log(action.payload);
+				
         socket = new WebSocket(action.payload);
         dispatch({ type: wsConnecting });
       }

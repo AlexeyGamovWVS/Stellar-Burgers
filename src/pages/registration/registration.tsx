@@ -20,6 +20,7 @@ export function RegistrationPage() {
     e.preventDefault();
     if (nameValue && emailValue && passwordValue) {
       dispatch(
+				//@ts-ignore
         loginUser({
           email: emailValue,
           name: nameValue,
