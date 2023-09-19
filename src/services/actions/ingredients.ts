@@ -1,6 +1,6 @@
 import { AppThunk } from "../..";
 import { api } from "../../utils/api";
-import { IIngredient } from "../utils/types";
+import { IIngredient } from "../utils/ingredients-types";
 
 export const GET_ITEMS_REQUEST: "GET_ITEMS_REQUEST" = "GET_ITEMS_REQUEST";
 export const GET_ITEMS_SUCCESS: "GET_ITEMS_SUCCESS" = "GET_ITEMS_SUCCESS";

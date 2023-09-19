@@ -1,9 +1,7 @@
-import {
-  IIngrPromise,
-  IResponse,
-  IUserResponse,
-  TTokenRefreshResponse,
-} from "../services/utils/types";
+import { IIngrPromise } from "../services/utils/ingredients-types";
+import { IFetchOrderResponse, IMyOrder } from "../services/utils/order-types";
+import { IResponse } from "../services/utils/types";
+import { IUserResponse, IUserWithPass, TTokenResponse } from "../services/utils/user-types";
 import { getCookie, setCookie } from "./cookie";
 import { ACCESSES_EXPIRED_ERROR, ACCESS_TOKEN, REFRESH_TOKEN, URL_API } from "./data";
 
@@ -21,7 +19,7 @@ export async function api(): Promise<IIngrPromise> {
   return checkResult(res);
 }
 
-export async function sendOrder(data: string[]): Promise<any> {
+export async function sendOrder(data: string[]): Promise<IMyOrder> {
   const res = await fetch(`${URL_API}/orders`, {
     method: "POST",
     headers: {
@@ -33,7 +31,7 @@ export async function sendOrder(data: string[]): Promise<any> {
   return checkResult(res);
 }
 
-export async function getOrderData(number: string): Promise<any> {
+export async function getOrderData(number: string): Promise<IFetchOrderResponse> {
   const res = await fetch(`${URL_API}/orders/${number}`, {
     method: "GET",
     headers: {
@@ -57,12 +55,7 @@ export async function sendEmail(email: string): Promise<IResponse> {
 export async function sendUserData({
   endpoint,
   ...rest
-}: {
-  endpoint: string;
-  name?: string;
-  email: string;
-  password: string;
-}): Promise<IUserResponse> {
+}: IUserWithPass & { endpoint: string }): Promise<IUserResponse> {
   const res = await fetch(`${URL_API}/auth/${endpoint}`, {
     method: "POST",
     headers: {
@@ -73,14 +66,14 @@ export async function sendUserData({
   return checkResult(res);
 }
 
-export function sendRefreshToken(): Promise<TTokenRefreshResponse> {
+export function sendRefreshToken(): Promise<TTokenResponse> {
   return fetch(`${URL_API}/auth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ token: getCookie(REFRESH_TOKEN) }),
-  }).then(checkResult) as Promise<TTokenRefreshResponse>;
+  }).then(checkResult) as Promise<TTokenResponse>;
 }
 
 export const fetchWithRefresh = async (url: string, options: IOptions): Promise<IUserResponse> => {

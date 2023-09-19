@@ -5,14 +5,13 @@ import {
   WS_PERSONAL_MESSAGE,
   WS_PERSONAL_OPEN,
 } from "../actions/wsActionTypes";
-import { IOrders } from "../utils/types";
+import { IOrders } from "../utils/order-types";
 
 type TPersonalSocketState = Omit<IOrders, "total" | "totalToday"> & {
   connectingErrorMessage: string | null;
 };
 
 const initialState: TPersonalSocketState = {
-  //success === true
   orders: [],
   connectingErrorMessage: "",
 };

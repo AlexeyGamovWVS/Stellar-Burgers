@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { changeUserInfo } from "../../services/actions/profile";
 import { useAppDispatch, useAppSelector } from "../..";
-import { IUserFull } from "../../services/utils/types";
+import { IUserWithPass } from "../../services/utils/user-types";
 
 export function UserForm() {
   const userInfo = useAppSelector((store) => store.profile.userInfo);
@@ -22,10 +22,12 @@ export function UserForm() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
 
-  const setData = (userInfo: Omit<IUserFull, "endpoint">) => {
-    setNameValue(userInfo.name);
-    setEmailValue(userInfo.email);
-    setPasswordValue(userInfo.password);
+  const setData = (userInfo: IUserWithPass | null) => {
+    if (userInfo) {
+      setNameValue(userInfo.name!);
+      setEmailValue(userInfo.email!);
+      setPasswordValue(userInfo.password!);
+    }
   };
 
   useEffect(() => {

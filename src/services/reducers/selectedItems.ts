@@ -7,7 +7,8 @@ import {
   REMOVE_BUN_FROM_CHOICE,
 } from "../actions/selectedItems";
 import type { TSelectedItemsActions } from "../actions/selectedItems";
-import { IMainIngedientData } from "../utils/types";
+import { IMainIngedientData } from "../utils/ingredients-types";
+
 type TSelectedIngredientsInitialState = {
   selectedItems: IMainIngedientData[];
   selectedBun: IMainIngedientData | null;

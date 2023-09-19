@@ -12,10 +12,11 @@ import {
   SET_USER_SUCCESS,
 } from "../actions/profile";
 import type { TUserActions } from "../actions/profile";
-import type { IUser } from "../utils/types";
+import type { IUserWithPass } from "../utils/user-types";
 
 type TProfileInitialState = {
-  userInfo: IUser | null;
+  userInfo: IUserWithPass | null;
+	password: string | null;
   isAuthChecked: boolean;
   isLoading: boolean;
   success: boolean;
@@ -25,6 +26,7 @@ type TProfileInitialState = {
 
 const initialState: TProfileInitialState = {
   userInfo: null,
+	password: null,
   isAuthChecked: false,
   isLoading: false,
   success: false,

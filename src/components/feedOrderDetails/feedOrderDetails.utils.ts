@@ -1,4 +1,4 @@
-import { IIngredient } from "../../services/utils/types";
+import { IIngredient } from "../../services/utils/ingredients-types";
 
 export function countIngedientsInOrder(id: string, array: (IIngredient | undefined)[]) {
   return array.filter((item) => item?._id === id).length;

@@ -3,8 +3,8 @@ import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-c
 import { useDrag } from "react-dnd";
 import { useMemo } from "react";
 import { COMPONENT_TYPES } from "../../../../utils/data";
-import { IMainIngedientData } from "../../../../services/utils/types";
 import { useAppSelector } from "../../../..";
+import { IMainIngedientData } from "../../../../services/utils/ingredients-types";
 
 export default function Ingredient({ name, price, image, _id, type }: IMainIngedientData) {
   const { selectedItems, selectedBun } = useAppSelector((store) => store.selectedItems);

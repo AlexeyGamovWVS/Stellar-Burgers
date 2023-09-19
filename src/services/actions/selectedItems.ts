@@ -1,4 +1,4 @@
-import { IMainIngedientData } from "../utils/types";
+import { IMainIngedientData } from "../utils/ingredients-types";
 
 export const ADD_ITEM_TO_CHOICE: "ADD_ITEM_TO_CHOICE" = "ADD_ITEM_TO_CHOICE";
 export const ADD_BUN_TO_CHOICE: "ADD_BUN_TO_CHOICE" = "ADD_BUN_TO_CHOICE";

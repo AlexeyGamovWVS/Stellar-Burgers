@@ -1,4 +1,4 @@
-import { IOrders } from "../utils/types";
+import { IOrders } from "../utils/order-types";
 
 export const WS_CONNECT: "WS_CONNECT" = "WS_CONNECT";
 export const WS_DISCONNECT: "WS_DISCONNECT" = "WS_DISCONNECT";

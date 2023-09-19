@@ -1,107 +1,22 @@
-export interface IMainIngedientData {
-  image: string;
-  name: string;
-  price: number;
-  type: string;
-  _id: string;
-}
-export interface IIngredient extends IMainIngedientData {
-  calories: number;
-  carbohydrates: number;
-  fat: number;
-  image_large: string;
-  image_mobile: string;
-  proteins: number;
-  __v: number;
-}
+import { IMainIngedientData } from "./ingredients-types";
 
-export interface IIngrPromise {
-  status: any;
+export interface IResponse {
   success: boolean;
-  data: IIngredient[];
+  message: string;
 }
-export interface IMainIngedientData {
-  image: string;
+
+/////////// COMPONENTS ///////////
+
+export interface IOrderCard {
+  date: string;
+  number: number | string;
+  ingredientsPictures: string[];
   name: string;
   price: number;
-  type: string;
-  _id: string;
+  status?: string;
+  state: any;
+  location: any;
 }
-export interface IIngredient extends IMainIngedientData {
-  calories: number;
-  carbohydrates: number;
-  fat: number;
-  image_large: string;
-  image_mobile: string;
-  proteins: number;
-  __v: number;
-}
-
-export interface IOrderDetails {
-  _id: string;
-  ingredients: string[];
-  owner: string;
-  status: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  number: number;
-  __v: number;
-}
-
-interface IOwnerInstance {
-  name: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface IOrderInstance {
-  ingredients: IIngredient[];
-  _id: string;
-  owner: IOwnerInstance;
-  status: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  number: number;
-  price: number;
-}
-
-export interface IFullOrderDetails {
-  success: boolean;
-  name: string;
-  order: IOrderInstance;
-}
-
-export interface IUser {
-  email: string;
-}
-
-export interface IUserWithPass extends IUser {
-  password: string;
-}
-
-export interface IUserFull extends IUserWithPass {
-  name: string;
-  endpoint: string;
-}
-
-export type TOrderInfo = {
-  _id: string;
-  ingredients: Array<string>;
-  status: string;
-  name: string;
-  number: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export interface IOrders  {
-  orders: Array<TOrderInfo>;
-  total: number;
-  totalToday: number;
-};
 
 export interface IIngredientRow {
   title: string;
@@ -127,30 +42,3 @@ export interface IIngredientsList {
     mainsRef: React.RefObject<HTMLDivElement>;
   };
 }
-
-export interface IOrderCard {
-  date: string;
-  number: number | string;
-  ingredientsPictures: string[];
-  name: string;
-  price: number;
-  status?: string;
-  state: any;
-  location: any;
-}
-
-export interface IUserResponse {
-  status: string;
-  success: boolean;
-  user: IUser;
-  accessToken: string;
-  refreshToken: string;
-}
-
-export interface IResponse {
-  status: any;
-  success: boolean;
-  message: string | undefined;
-}
-
-export type TTokenRefreshResponse = Omit<IUserResponse, "user">;

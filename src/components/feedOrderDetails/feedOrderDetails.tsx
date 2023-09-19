@@ -7,6 +7,7 @@ import { getStatusText } from "../../utils/data";
 import { useEffect } from "react";
 import { getUniqOrderData } from "../../services/actions/order";
 import { useAppDispatch, useAppSelector } from "../..";
+import { GET_RANDOM } from "../burger-constructor/burger-components/burger-components.utils";
 
 export default function FeedOrderDetails() {
   const dispatch = useAppDispatch();
@@ -64,7 +65,7 @@ export default function FeedOrderDetails() {
             return (
               <>
                 {item && (
-                  <li key={item._id} className={styles.item}>
+                  <li key={item._id + GET_RANDOM()} className={styles.item}>
                     <div className={styles.iconbox}>
                       <img className={styles.ingricon} src={item.image} alt={item.name} />
                     </div>

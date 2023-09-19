@@ -11,7 +11,7 @@ import {
   addItemAction,
 } from "../../../services/actions/selectedItems";
 import { useAppDispatch, useAppSelector } from "../../..";
-import { IMainIngedientData } from "../../../services/utils/types";
+import { IMainIngedientData } from "../../../services/utils/ingredients-types";
 
 export default function BurgerComponents() {
   const dispatch = useAppDispatch();

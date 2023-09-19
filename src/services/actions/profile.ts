@@ -8,7 +8,8 @@ import {
   sendUserInfoRequest,
 } from "../../utils/api";
 import { cleanTokenCookies, getCookie, setCookie } from "../../utils/cookie";
-import type { IUserFull } from "../utils/types";
+import { IUserWithPass } from "../utils/user-types";
+
 const ACCESS_TOKEN = "accessToken";
 const REFRESH_TOKEN = "refreshToken";
 
@@ -31,11 +32,11 @@ export interface ISetUserReqAction {
 }
 export interface ISetUserSuccessAction {
   type: typeof SET_USER_SUCCESS;
-  payload: any;
+  payload: IUserWithPass | null;
 }
 export interface ISetUserFailedAction {
   type: typeof SET_USER_FAIL;
-  payload: any;
+  payload: string;
 }
 
 export interface IResetPasswReqAction {
@@ -84,12 +85,6 @@ export type TUserActions =
   | ISetAuthCheckedAction
   | ISetLogoutFailedAction;
 
-interface PromiseReject {
-  (err: string): Promise<string>;
-}
-
-const promiseReject: PromiseReject = (err) => Promise.reject(`Ошибка обработки данных: ${err}`);
-
 const getEmailReq = (): IForgotPasswReqAction => ({
   type: FORGOT_PASSWORD_REQUEST,
 });
@@ -113,12 +108,12 @@ const setUserReq = (): ISetUserReqAction => ({
   type: SET_USER_REQUEST,
 });
 
-const setUser = (value: any): ISetUserSuccessAction => ({
+const setUser = (value: IUserWithPass | null): ISetUserSuccessAction => ({
   type: SET_USER_SUCCESS,
   payload: value,
 });
 
-const setUserFail = (value: any): ISetUserFailedAction => ({
+const setUserFail = (value: string): ISetUserFailedAction => ({
   type: SET_USER_FAIL,
   payload: value,
 });
@@ -148,7 +143,7 @@ export const sendEmailForgotPassword =
     dispatch(getEmailReq());
     sendEmail(email)
       .then((res) => {
-        res.success ? dispatch(getEmail(res)) : promiseReject(res.status);
+        res.success && dispatch(getEmail(res.message));
       })
       .catch((err) => {
         dispatch(getEmailError(err));
@@ -157,7 +152,7 @@ export const sendEmailForgotPassword =
   };
 
 export const loginUser =
-  ({ email, name, password, endpoint }: IUserFull): AppThunk =>
+  ({ email, name, password, endpoint }: IUserWithPass & { endpoint: string }): AppThunk =>
   (dispatch) => {
     dispatch(setUserReq());
     sendUserData({ email, name, password, endpoint })
@@ -167,7 +162,7 @@ export const loginUser =
           setCookie(REFRESH_TOKEN, res.refreshToken);
           dispatch(setUser(res.user));
           dispatch(setAuthChecked(true));
-        } else promiseReject(res.status);
+        }
       })
       .catch((err) => {
         cleanTokenCookies([ACCESS_TOKEN, REFRESH_TOKEN]);
@@ -183,7 +178,7 @@ export const logoutUser = (): AppThunk => (dispatch) => {
       if (res.success) {
         cleanTokenCookies([ACCESS_TOKEN, REFRESH_TOKEN]);
         dispatch(setUser(null));
-      } else promiseReject(res.status);
+      }
     })
     .catch((err) => {
       dispatch(logoutError(err));
@@ -195,7 +190,7 @@ export const checkUserAuth = (): AppThunk => (dispatch: AppDispatch) => {
   if (getCookie(ACCESS_TOKEN)) {
     sendUserInfoRequest()
       .then((res) => {
-        res.success ? dispatch(setUser(res.user)) : promiseReject(res.status);
+        res.success && dispatch(setUser(res.user));
       })
       .catch((err) => {
         cleanTokenCookies([ACCESS_TOKEN, REFRESH_TOKEN]);
@@ -213,7 +208,7 @@ export const changeUserInfo =
     dispatch(setUserReq());
     sendChangeUserInfoRequest(name, email, password)
       .then((res) => {
-        res.success ? dispatch(setUser(res.user)) : promiseReject(res.status);
+        res.success && dispatch(setUser(res.user));
       })
       .catch((err) => {
         dispatch(setUserFail(err));
@@ -227,21 +222,10 @@ export const resetPassword =
     dispatch(changePassReq());
     sendResetPassRequest(password, code)
       .then((res) => {
-        res.success ? dispatch(changePass(res.message)) : promiseReject(res.status);
+        res.success && dispatch(changePass(res.message));
       })
       .catch((err) => {
         dispatch(changePassFail(err));
         console.error(err);
       });
   };
-
-// export const getCountriesThunk: AppThunk = () => (dispatch: AppDispatch) => {
-//   dispatch(getCountriesAction());
-//   getCountriesRequest().then(res => {
-//     if (res && res.success) {
-//       dispatch(getCountriesSuccessAction(res.countries));
-//     } else {
-//       dispatch(getCountriesFailedAction());
-//     }
-//   });
-// };

@@ -2,7 +2,7 @@ import Ingredient from "./ingredient/ingredient";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import { Link, Outlet } from "react-router-dom";
 import styles from "./ingredients.module.css";
-import { IIngredient } from "../../../services/utils/types";
+import { IIngredient } from "../../../services/utils/ingredients-types";
 
 export const currentRow = (box: HTMLDivElement) => {
   const boxRect = box.getBoundingClientRect();

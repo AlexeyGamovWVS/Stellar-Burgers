@@ -8,15 +8,15 @@ import {
   FETCH_ORDER_ERROR,
 } from "../actions/order";
 import type { TOrderActions } from "../actions/order";
-import { IFullOrderDetails, TOrderInfo } from "../utils/types";
+import { IFetchedOrderData, IMyOrder } from "../utils/order-types";
 
 type TOrderInitialState = {
-  orderDetails: IFullOrderDetails | null;
+  orderDetails: IMyOrder | null;
   orderRequest: boolean;
   orderFailed: boolean;
   orderErrMsg: string;
 
-  currentOrderDetails: TOrderInfo | null;
+  currentOrderDetails: IFetchedOrderData | null;
   currentOrderRequest: boolean;
   currentOrderFailed: boolean;
   currentOrderErrMsg: string;
@@ -44,8 +44,6 @@ export const orderReducer = (state = initialState, action: TOrderActions): TOrde
       };
     }
     case ORDER_ITEMS_SUCCESS: {
-      console.log(action.orderDetails);
-
       return {
         ...state,
         orderRequest: false,
@@ -76,8 +74,6 @@ export const orderReducer = (state = initialState, action: TOrderActions): TOrde
         currentOrderErrMsg: "",
       };
     case FETCH_ORDER_SUCCESS:
-      console.log(action.payload);
-
       return {
         ...state,
         currentOrderRequest: false,

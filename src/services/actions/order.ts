@@ -1,6 +1,7 @@
 import { AppThunk } from "../..";
 import { getOrderData, sendOrder } from "../../utils/api";
-import { TOrderInfo } from "../utils/types";
+import { IFetchedOrderData, IMyOrder } from "../utils/order-types";
+
 export const ORDER_ITEMS_REQUEST: "ORDER_ITEMS_REQUEST" = "ORDER_ITEMS_REQUEST";
 export const ORDER_ITEMS_SUCCESS: "ORDER_ITEMS_SUCCESS" = "ORDER_ITEMS_SUCCESS";
 export const ORDER_ITEMS_FAILED: "ORDER_ITEMS_FAILED" = "ORDER_ITEMS_FAILED";
@@ -16,7 +17,7 @@ export interface IOrderItemsReqAction {
 
 export interface IOrderItemsSuccessAction {
   readonly type: typeof ORDER_ITEMS_SUCCESS;
-  readonly orderDetails: any;
+  readonly orderDetails: IMyOrder;
 }
 
 export interface IOrderItemsFailedAction {
@@ -32,7 +33,7 @@ export const orderItemsReqAction = (): IOrderItemsReqAction => ({
   type: ORDER_ITEMS_REQUEST,
 });
 
-export const orderItemsSuccessAction = (data: any): IOrderItemsSuccessAction => ({
+export const orderItemsSuccessAction = (data: IMyOrder): IOrderItemsSuccessAction => ({
   type: ORDER_ITEMS_SUCCESS,
   orderDetails: data,
 });
@@ -52,12 +53,12 @@ export interface IOrderFetchReqAction {
 
 export interface IOrderFetchReqSuccess {
   readonly type: typeof FETCH_ORDER_SUCCESS;
-  readonly payload: any;
+  readonly payload: IFetchedOrderData;
 }
 
 export interface IOrderFetchReqFailed {
   readonly type: typeof FETCH_ORDER_ERROR;
-  readonly payload: any;
+  readonly payload: string;
 }
 
 export type TOrderActions =
@@ -73,7 +74,7 @@ export const orderFetchReqAction = (): IOrderFetchReqAction => ({
   type: FETCH_ORDER_REQUEST,
 });
 
-export const orderFetchReqSuccess = (payload: TOrderInfo): IOrderFetchReqSuccess => ({
+export const orderFetchReqSuccess = (payload: IFetchedOrderData): IOrderFetchReqSuccess => ({
   type: FETCH_ORDER_SUCCESS,
   payload,
 });
@@ -89,9 +90,7 @@ export const sendOrderData =
     dispatch(orderItemsReqAction());
     sendOrder(data)
       .then((res) => {
-        res.success
-          ? dispatch(orderItemsSuccessAction(res))
-          : Promise.reject(`Ошибка загрузки данных с сервера: ${res.status}`);
+        res.success && dispatch(orderItemsSuccessAction(res));
       })
       .catch((err) => {
         dispatch(orderItemsFailedAction(err));
@@ -102,10 +101,8 @@ export function getUniqOrderData(number: string): AppThunk {
   return function (dispatch) {
     dispatch(orderFetchReqAction());
     getOrderData(number)
-      .then((res) => {
-        res.success
-          ? dispatch(orderFetchReqSuccess(res.orders[0]))
-          : Promise.reject(`Ошибка подключения к серверу: ${res.status}`);
+      .then((res) => {		
+        res.success && dispatch(orderFetchReqSuccess(res.orders[0]));
       })
       .catch((err) => {
         dispatch(orderFetchReqFailed(err));

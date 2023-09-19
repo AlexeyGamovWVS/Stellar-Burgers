@@ -1,6 +1,6 @@
 import { GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, GET_ITEMS_FAILED } from "../actions/ingredients";
 import type { TItemsActions } from "../actions/ingredients";
-import { IIngredient } from "../utils/types";
+import { IIngredient } from "../utils/ingredients-types";
 
 type TIngredientsInitialState = {
   items: IIngredient[];

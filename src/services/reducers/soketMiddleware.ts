@@ -1,14 +1,12 @@
 import {
   TWsActions,
   WS_CLOSE,
-  // WS_CONNECTING,
-  // WS_DISCONNECT,
   WS_ERROR,
   WS_MESSAGE,
   WS_OPEN,
 } from "../actions/wsActionTypes";
-// import { WS_STATUS } from "../utils/wsStatus";
-import { IOrders } from "../utils/types";
+
+import { IOrders } from "../utils/order-types";
 
 export interface ISocketState extends IOrders {
   connectingErrorMessage: string | null;
