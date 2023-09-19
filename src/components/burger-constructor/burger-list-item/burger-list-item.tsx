@@ -4,16 +4,9 @@ import itemStyles from "./burger-list-item.module.css";
 import { removeItemAction } from "../../../services/actions/selectedItems";
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
-import { IMainIngedientData } from "../../../services/utils/types";
+import { IListItemInterface } from "../../../services/utils/types";
 import { useAppDispatch } from "../../..";
 
-interface IListItemInterface {
-  item: IMainIngedientData;
-  position?: "top" | "bottom" | undefined;
-  iconVis: boolean;
-  index?: number;
-  moveListItem?: (dragIndex: number, hoverIndex: number) => void;
-}
 export default function BurgerListItem({
   item,
   position,

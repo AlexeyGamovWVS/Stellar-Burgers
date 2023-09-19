@@ -3,17 +3,7 @@ import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burge
 import styles from "./orderCard.module.css";
 import ingredientsImagesMap from "./orderCard.utils";
 import { ORDER_STATUSES, getStatusText } from "../../utils/data";
-
-interface IOrderCard {
-  date: string;
-  number: string;
-  ingredientsPictures: string[];
-  name?: string;
-  price: number;
-  state: any;
-  location: any;
-  status?: string;
-}
+import { IOrderCard } from "../../services/utils/types";
 
 export default function OrderCard({
   date,

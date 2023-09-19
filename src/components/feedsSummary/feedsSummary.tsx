@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
 import styles from "./feedsSummary.module.css";
 import { ORDER_STATUSES } from "../../utils/data";
+import { useAppSelector } from "../..";
 
 export default function FeedsSummary() {
-  const { total, totalToday, orders } = useSelector((store: any) => store.wsconnection);
+  const { total, totalToday, orders } = useAppSelector((store) => store.wsconnection);
   const readyOrders = orders?.map(
-    (order: any) =>
+    (order) =>
       order.status === ORDER_STATUSES.done && (
         <li
           className={`${styles.orderscol__num} ${styles.orderscol__num_ready} text_type_digits-default`}
@@ -16,7 +16,7 @@ export default function FeedsSummary() {
       )
   );
   const pendingOrders = orders?.map(
-    (order: any) =>
+    (order) =>
       (order.status === ORDER_STATUSES.pending || order.status === ORDER_STATUSES.created) && (
         <li className={`${styles.orderscol__num} text_type_digits-default`} key={order.number}>
           {order.number}
@@ -25,7 +25,6 @@ export default function FeedsSummary() {
   );
   return (
     <div className={`${styles.summary} mt-10`}>
-      {/* Заказы */}
       <div className={styles.summary__orders}>
         <div className={styles.orderscol}>
           <p className={`${styles.orderscol__title} text text_type_main-medium`}>Готовы:</p>
@@ -36,7 +35,6 @@ export default function FeedsSummary() {
           <ul className={styles.orderscol__list}>{pendingOrders}</ul>
         </div>
       </div>
-      {/* Статистика */}
       <div className={styles.summary__statwidget}>
         <p className={`text text_type_main-medium`}>Выполнено за все время:</p>
         <p className={`${styles.statdigits} text text_type_digits-large`}>{total}</p>

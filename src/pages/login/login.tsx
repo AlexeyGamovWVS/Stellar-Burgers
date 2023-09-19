@@ -18,7 +18,6 @@ export function LoginPage() {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (emailValue && passwordValue) {
-			//@ts-ignore
       dispatch(loginUser({ email: emailValue, password: passwordValue, endpoint: "login" }));
     } else return;
   };

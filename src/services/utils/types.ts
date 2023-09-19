@@ -1,4 +1,25 @@
-//burger-constructor
+export interface IMainIngedientData {
+  image: string;
+  name: string;
+  price: number;
+  type: string;
+  _id: string;
+}
+export interface IIngredient extends IMainIngedientData {
+  calories: number;
+  carbohydrates: number;
+  fat: number;
+  image_large: string;
+  image_mobile: string;
+  proteins: number;
+  __v: number;
+}
+
+export interface IIngrPromise {
+  status: any;
+  success: boolean;
+  data: IIngredient[];
+}
 export interface IMainIngedientData {
   image: string;
   name: string;
@@ -46,32 +67,6 @@ interface IOrderInstance {
   number: number;
   price: number;
 }
-  // const orderdatafromserv = {
-  //   _id: "65047c836d2997001caa8f15",
-  //   ingredients: [
-  //     "643d69a5c3f7b9001cfa093c",
-  //     "643d69a5c3f7b9001cfa0945",
-  //     "643d69a5c3f7b9001cfa0941",
-  //     "643d69a5c3f7b9001cfa0944",
-  //   ],
-  //   owner: "64c7a30682e277001bfa5c93",
-  //   status: "done",
-  //   name: "Антарианский био-марсианский традиционный-галактический краторный бургер",
-  //   createdAt: "2023-09-15T15:47:15.773Z",
-  //   updatedAt: "2023-09-15T15:47:15.993Z",
-  //   number: 20743,
-  //   __v: 0,
-  // };
-
-// wsSocket
-export interface IOrder {
-	ingredients: string[];
-	_id: string;
-	status: string;
-	number: string;
-	createdAt: string;
-	updatedAt: string;
-}
 
 export interface IFullOrderDetails {
   success: boolean;
@@ -91,3 +86,71 @@ export interface IUserFull extends IUserWithPass {
   name: string;
   endpoint: string;
 }
+
+export type TOrderInfo = {
+  _id: string;
+  ingredients: Array<string>;
+  status: string;
+  name: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export interface IOrders  {
+  orders: Array<TOrderInfo>;
+  total: number;
+  totalToday: number;
+};
+
+export interface IIngredientRow {
+  title: string;
+  children: JSX.Element[];
+  id: string;
+  rowRef: React.RefObject<HTMLDivElement>;
+}
+
+export interface IListItemInterface {
+  item: IMainIngedientData;
+  position?: "top" | "bottom" | undefined;
+  iconVis: boolean;
+  index?: number;
+  moveListItem?: (dragIndex: number, hoverIndex: number) => void;
+}
+
+export interface IIngredientsList {
+  activeTab: string;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+  rowsRefObj: {
+    bunsRef: React.RefObject<HTMLDivElement>;
+    saucesRef: React.RefObject<HTMLDivElement>;
+    mainsRef: React.RefObject<HTMLDivElement>;
+  };
+}
+
+export interface IOrderCard {
+  date: string;
+  number: number | string;
+  ingredientsPictures: string[];
+  name: string;
+  price: number;
+  status?: string;
+  state: any;
+  location: any;
+}
+
+export interface IUserResponse {
+  status: string;
+  success: boolean;
+  user: IUser;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface IResponse {
+  status: any;
+  success: boolean;
+  message: string | undefined;
+}
+
+export type TTokenRefreshResponse = Omit<IUserResponse, "user">;

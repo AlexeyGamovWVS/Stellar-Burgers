@@ -1,10 +1,3 @@
-/* Подключать модуль в app.js как оборачивающий компонент для всего приложения
-    <ErrorBoundary>
-      <AppHeader />
-      <AppMain data={ingredientsData}/>
-    </ErrorBoundary>
-*/
-
 import React, { ErrorInfo, ReactNode } from "react";
 
 interface Props {
@@ -16,10 +9,7 @@ interface State {
 }
 
 export default class ErrorBoundary extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { hasError: false };
-  }
+  state: State = { hasError: false };
   // с помощью этого метода меняем стейт компонента при возникновении ошибки:
   static getDerivedStateFromError(_: Error): State {
     return { hasError: true };
@@ -45,31 +35,3 @@ export default class ErrorBoundary extends React.Component<Props, State> {
     return this.props.children;
   }
 }
-
-/*
-Для отлова ошибок в обработчиках использовать
-try catch согласно примеру: 
-
-function ComponentWithError() {
-  const [error, setError] = useState(null);
-
-  const handleClick = () => {
-    try {
-      // В этом случае в хэндлере точно возникнет ошибка
-      throw new Error("Simple error");
-    } catch (err) {
-      // Обычно ошибки логируются или обрабатываются дополнительной логикой,
-      // но для наглядности мы просто кладём ошибку в стейт
-      setError(err.message);
-    }
-  };
-
-  return (
-    <div className="App">
-      <h1>{error}</h1>
-      <button onClick={handleClick}>Make a mistake</button>
-    </div>
-  );
-}
-
-*/

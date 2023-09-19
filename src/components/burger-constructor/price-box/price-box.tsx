@@ -22,7 +22,6 @@ export default function PriceBox() {
   const orderBtnClick = () => {
     if (userInfo !== null) {
       const dataIds = fullOrder.map((item) => item._id);
-			// @ts-ignore
       dispatch(sendOrderData(dataIds));
     } else {
       navigate("/login", { replace: false });

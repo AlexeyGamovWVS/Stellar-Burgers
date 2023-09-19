@@ -1,4 +1,4 @@
-import { IOrders } from "../reducers/soketMiddleware";
+import { IOrders } from "../utils/types";
 
 export const WS_CONNECT: "WS_CONNECT" = "WS_CONNECT";
 export const WS_DISCONNECT: "WS_DISCONNECT" = "WS_DISCONNECT";
@@ -39,7 +39,7 @@ export interface IWs_CloseAction {
 
 export interface IWs_MessageAction {
   readonly type: typeof WS_MESSAGE;
-  payload: Omit<IOrders, "status" | "connectingErrorMessage">;
+  payload: IOrders;
 }
 
 export interface IWs_ErrorAction {
@@ -81,7 +81,7 @@ export interface IWs_PersonalCloseAction {
 
 export interface IWs_PersonalMessageAction {
   readonly type: typeof WS_PERSONAL_MESSAGE;
-  payload: Pick<IOrders, "orders">;
+  payload: IOrders;
 }
 
 export interface IWs_PersonalErrorAction {

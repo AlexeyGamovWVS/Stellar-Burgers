@@ -18,7 +18,7 @@ const ORDER_STATUSES = {
   canselled: "canselled",
 };
 
-function getStatusText(status: string) {
+function getStatusText(status?: string | null) {
   switch (status) {
     case ORDER_STATUSES.created:
       return "Создан";

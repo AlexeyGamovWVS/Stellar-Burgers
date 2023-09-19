@@ -1,11 +1,6 @@
+import { IIngredientRow } from "../../../../services/utils/types";
 import rowStyles from "./ingredients-row.module.css";
 
-interface IIngredientRow {
-  title: string;
-  children: JSX.Element[];
-  id: string;
-  rowRef: React.RefObject<HTMLDivElement>;
-}
 export default function IngredientRow({ title, children, id, rowRef }: IIngredientRow) {
   return (
     <div ref={rowRef} className={`${rowStyles.row} row mt-10`} id={id}>

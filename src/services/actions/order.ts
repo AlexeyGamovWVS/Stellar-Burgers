@@ -1,5 +1,6 @@
-import { AppDispatch, AppThunk } from "../..";
+import { AppThunk } from "../..";
 import { getOrderData, sendOrder } from "../../utils/api";
+import { TOrderInfo } from "../utils/types";
 export const ORDER_ITEMS_REQUEST: "ORDER_ITEMS_REQUEST" = "ORDER_ITEMS_REQUEST";
 export const ORDER_ITEMS_SUCCESS: "ORDER_ITEMS_SUCCESS" = "ORDER_ITEMS_SUCCESS";
 export const ORDER_ITEMS_FAILED: "ORDER_ITEMS_FAILED" = "ORDER_ITEMS_FAILED";
@@ -72,7 +73,7 @@ export const orderFetchReqAction = (): IOrderFetchReqAction => ({
   type: FETCH_ORDER_REQUEST,
 });
 
-export const orderFetchReqSuccess = (payload: any): IOrderFetchReqSuccess => ({
+export const orderFetchReqSuccess = (payload: TOrderInfo): IOrderFetchReqSuccess => ({
   type: FETCH_ORDER_SUCCESS,
   payload,
 });
@@ -81,22 +82,24 @@ export const orderFetchReqFailed = (payload: string): IOrderFetchReqFailed => ({
   type: FETCH_ORDER_ERROR,
   payload,
 });
-//@ts-ignore
-export const sendOrderData = (data: string[]): AppThunk => (dispatch: AppDispatch) => {
-  dispatch(orderItemsReqAction());
-  sendOrder(data)
-    .then((res) => {
-      res.success
-        ? dispatch(orderItemsSuccessAction(res))
-        : Promise.reject(`Ошибка загрузки данных с сервера: ${res.status}`);
-    })
-    .catch((err) => {
-      dispatch(orderItemsFailedAction(err));
-    });
-};
 
-export const getUniqOrderData = (number: string): AppThunk => {
-  return function (dispatch: AppDispatch) {
+export const sendOrderData =
+  (data: string[]): AppThunk =>
+  (dispatch) => {
+    dispatch(orderItemsReqAction());
+    sendOrder(data)
+      .then((res) => {
+        res.success
+          ? dispatch(orderItemsSuccessAction(res))
+          : Promise.reject(`Ошибка загрузки данных с сервера: ${res.status}`);
+      })
+      .catch((err) => {
+        dispatch(orderItemsFailedAction(err));
+      });
+  };
+
+export function getUniqOrderData(number: string): AppThunk {
+  return function (dispatch) {
     dispatch(orderFetchReqAction());
     getOrderData(number)
       .then((res) => {

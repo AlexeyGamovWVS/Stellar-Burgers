@@ -1,6 +1,4 @@
-import {
-  Middleware,
-} from "@reduxjs/toolkit";
+import { Middleware } from "@reduxjs/toolkit";
 import { RootState } from "../..";
 
 export type TWsActionTypes = {
@@ -14,9 +12,7 @@ export type TWsActionTypes = {
   onMessage: string;
 };
 
-export const socketMiddleware = (
-  wsActions: TWsActionTypes
-): Middleware<{}, RootState> => {
+export const socketMiddleware = (wsActions: TWsActionTypes): Middleware<{}, RootState> => {
   return (store) => {
     let socket: WebSocket | null = null;
 
@@ -33,9 +29,7 @@ export const socketMiddleware = (
         wsDisconnect,
       } = wsActions;
 
-      if (wsConnect.match(action)) {
-				console.log(action.payload);
-				
+      if (wsConnect === action.type) {
         socket = new WebSocket(action.payload);
         dispatch({ type: wsConnecting });
       }
@@ -52,18 +46,19 @@ export const socketMiddleware = (
         socket.onmessage = (event) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          dispatch({ type: onMessage, payload: parsedData });
+          const { success, ...orders } = parsedData;
+          dispatch({ type: onMessage, payload: orders });
         };
 
         socket.onclose = (event) => {
           dispatch({ type: onClose });
         };
 
-        if (wsSendMessage?.match(action)) {
+        if (wsSendMessage && wsSendMessage === action.type) {
           socket.send(JSON.stringify(action.payload));
         }
 
-        if (wsDisconnect.match(action)) {
+        if (wsDisconnect === action.type) {
           socket.close();
           socket = null;
         }

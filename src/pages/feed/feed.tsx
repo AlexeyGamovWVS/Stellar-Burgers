@@ -9,18 +9,16 @@ import { WS_LINK } from "../../utils/data";
 export function FeedPage() {
   const dispatch = useDispatch();
   useEffect(() => {
-		//@ts-ignore
     dispatch(connect(`${WS_LINK}/all`));
 
     return () => {
-			//@ts-ignore
       dispatch(disconnect());
     };
   }, [dispatch]);
 
   return (
     <main>
-      <section className={styles.main}>hello
+      <section className={styles.main}>
         <Feeds />
         <FeedsSummary />
       </section>

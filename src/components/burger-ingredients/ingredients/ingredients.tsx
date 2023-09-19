@@ -4,16 +4,7 @@ import { getIngredientCards, currentRow } from "./ingredients.utils";
 import { COMPONENT_TYPES } from "../../../utils/data";
 import { useLocation } from "react-router-dom";
 import { useAppSelector } from "../../..";
-
-interface IIngredientsList {
-  activeTab: string;
-  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
-  rowsRefObj: {
-    bunsRef: React.RefObject<HTMLDivElement>;
-    saucesRef: React.RefObject<HTMLDivElement>;
-    mainsRef: React.RefObject<HTMLDivElement>;
-  };
-}
+import { IIngredientsList } from "../../../services/utils/types";
 
 export default function Ingredients({ activeTab, setActiveTab, rowsRefObj }: IIngredientsList) {
   const items = useAppSelector((store) => store.allItems.items);

@@ -1,12 +1,27 @@
+import {
+  IIngrPromise,
+  IResponse,
+  IUserResponse,
+  TTokenRefreshResponse,
+} from "../services/utils/types";
 import { getCookie, setCookie } from "./cookie";
 import { ACCESSES_EXPIRED_ERROR, ACCESS_TOKEN, REFRESH_TOKEN, URL_API } from "./data";
 
-export async function api() {
+interface IOptions {
+  method: "GET" | "POST" | "PATCH" | "DELETE";
+  headers: {
+    "Content-Type": string;
+    authorization: string;
+  };
+  body?: string;
+}
+
+export async function api(): Promise<IIngrPromise> {
   const res = await fetch(`${URL_API}/ingredients`);
   return checkResult(res);
 }
 
-export async function sendOrder(data: string[]) {
+export async function sendOrder(data: string[]): Promise<any> {
   const res = await fetch(`${URL_API}/orders`, {
     method: "POST",
     headers: {
@@ -18,7 +33,7 @@ export async function sendOrder(data: string[]) {
   return checkResult(res);
 }
 
-export async function getOrderData(number: string) {
+export async function getOrderData(number: string): Promise<any> {
   const res = await fetch(`${URL_API}/orders/${number}`, {
     method: "GET",
     headers: {
@@ -28,12 +43,13 @@ export async function getOrderData(number: string) {
   return checkResult(res);
 }
 
-export async function sendEmail(data: string) {
+export async function sendEmail(email: string): Promise<IResponse> {
   const res = await fetch(`${URL_API}/password-reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ email }),
   });
   return checkResult(res);
 }
@@ -43,10 +59,10 @@ export async function sendUserData({
   ...rest
 }: {
   endpoint: string;
-  name: string;
+  name?: string;
   email: string;
   password: string;
-}) {
+}): Promise<IUserResponse> {
   const res = await fetch(`${URL_API}/auth/${endpoint}`, {
     method: "POST",
     headers: {
@@ -57,26 +73,17 @@ export async function sendUserData({
   return checkResult(res);
 }
 
-export function sendRefreshToken() {
+export function sendRefreshToken(): Promise<TTokenRefreshResponse> {
   return fetch(`${URL_API}/auth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ token: getCookie(REFRESH_TOKEN) }),
-  }).then(checkResult);
+  }).then(checkResult) as Promise<TTokenRefreshResponse>;
 }
 
-interface IOptions {
-  method: "GET" | "POST" | "PATCH" | "DELETE";
-  headers: {
-    "Content-Type": string;
-    authorization: string;
-  };
-  body?: string;
-}
-
-export const fetchWithRefresh = async (url: string, options: IOptions) => {
+export const fetchWithRefresh = async (url: string, options: IOptions): Promise<IUserResponse> => {
   try {
     const res = await fetch(url, options);
     return await checkResult(res); //err === res.status
@@ -97,7 +104,7 @@ export const fetchWithRefresh = async (url: string, options: IOptions) => {
   }
 };
 
-export async function sendResetPassRequest(password: string, code: string) {
+export async function sendResetPassRequest(password: string, code: string): Promise<IResponse> {
   const res = await fetch(`${URL_API}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -108,7 +115,7 @@ export async function sendResetPassRequest(password: string, code: string) {
   return checkResult(res);
 }
 
-export async function sendLogoutRequest() {
+export async function sendLogoutRequest(): Promise<IResponse> {
   const res = await fetch(`${URL_API}/auth/logout`, {
     method: "POST",
     headers: {
@@ -119,7 +126,7 @@ export async function sendLogoutRequest() {
   return checkResult(res);
 }
 
-export function sendUserInfoRequest() {
+export function sendUserInfoRequest(): Promise<IUserResponse> {
   return fetchWithRefresh(`${URL_API}/auth/user`, {
     method: "GET",
     headers: {
@@ -129,7 +136,11 @@ export function sendUserInfoRequest() {
   });
 }
 
-export function sendChangeUserInfoRequest(name: string, email: string, password: string) {
+export function sendChangeUserInfoRequest(
+  name: string,
+  email: string,
+  password: string
+): Promise<IUserResponse> {
   const token = getCookie(ACCESS_TOKEN);
   return fetchWithRefresh(`${URL_API}/auth/user`, {
     method: "PATCH",
@@ -141,6 +152,6 @@ export function sendChangeUserInfoRequest(name: string, email: string, password:
   });
 }
 
-function checkResult(res: Response) {
-  return res.ok ? res.json() : Promise.reject(res.status);
-}
+const checkResult = <T>(res: Response): Promise<T> => {
+  return res.ok ? res.json() : Promise.reject(`Ошибка загрузки данных с сервера: ${res.status}`);
+};

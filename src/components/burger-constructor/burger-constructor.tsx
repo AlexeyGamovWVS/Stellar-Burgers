@@ -5,10 +5,9 @@ import OrderDetails from "../modal/orderDetails/orderDetails";
 import Modal from "../modal/modal";
 import { orderItemsResetAction } from "../../services/actions/order";
 import { cleanBurgerAction } from "../../services/actions/selectedItems";
-import { FC } from "react";
 import { useAppDispatch, useAppSelector } from "../..";
 
-const BurgerConstructor: FC = () => {
+const BurgerConstructor = () => {
   const dispatch = useAppDispatch();
   const { orderDetails, orderRequest } = useAppSelector((store) => store.order);
 

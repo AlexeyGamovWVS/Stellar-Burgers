@@ -8,7 +8,7 @@ import { IUserFull } from "../../services/utils/types";
 export function UserForm() {
   const userInfo = useAppSelector((store) => store.profile.userInfo);
   const dispatch = useAppDispatch();
-  const [nameValue, setNameValue] = useState("Your Name");
+  const [nameValue, setNameValue] = useState("Yourname");
   const [emailValue, setEmailValue] = useState("test@mail.ru");
   const [passwordValue, setPasswordValue] = useState("");
 
@@ -59,7 +59,6 @@ export function UserForm() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-		// @ts-ignore
     dispatch(changeUserInfo(nameValue, emailValue, passwordValue));
     stopEditoring();
   };

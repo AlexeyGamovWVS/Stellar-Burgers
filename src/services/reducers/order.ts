@@ -8,7 +8,7 @@ import {
   FETCH_ORDER_ERROR,
 } from "../actions/order";
 import type { TOrderActions } from "../actions/order";
-import { IFullOrderDetails, IOrderDetails } from "../utils/types";
+import { IFullOrderDetails, TOrderInfo } from "../utils/types";
 
 type TOrderInitialState = {
   orderDetails: IFullOrderDetails | null;
@@ -16,7 +16,7 @@ type TOrderInitialState = {
   orderFailed: boolean;
   orderErrMsg: string;
 
-  currentOrderDetails: IOrderDetails | null;
+  currentOrderDetails: TOrderInfo | null;
   currentOrderRequest: boolean;
   currentOrderFailed: boolean;
   currentOrderErrMsg: string;
@@ -34,7 +34,7 @@ const initialState: TOrderInitialState = {
   currentOrderErrMsg: "",
 };
 
-export const orderReducer = (state = initialState, action: TOrderActions) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderInitialState => {
   switch (action.type) {
     case ORDER_ITEMS_REQUEST: {
       return {
@@ -92,8 +92,7 @@ export const orderReducer = (state = initialState, action: TOrderActions) => {
         currentOrderFailed: true,
         currentOrderErrMsg: `Shit happens ${action.payload}`,
       };
-    default: {
+    default:
       return state;
-    }
   }
 };
