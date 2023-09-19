@@ -1,3 +1,5 @@
+import { IOrders } from "../reducers/soketMiddleware";
+
 export const WS_CONNECT: "WS_CONNECT" = "WS_CONNECT";
 export const WS_DISCONNECT: "WS_DISCONNECT" = "WS_DISCONNECT";
 export const WS_CONNECTING: "WS_CONNECTING" = "WS_CONNECTING";
@@ -13,6 +15,88 @@ export const WS_PERSONAL_OPEN: "WS_PERSONAL_OPEN" = "WS_PERSONAL_OPEN";
 export const WS_PERSONAL_CLOSE: "WS_PERSONAL_CLOSE" = "WS_PERSONAL_CLOSE";
 export const WS_PERSONAL_MESSAGE: "WS_PERSONAL_MESSAGE" = "WS_PERSONAL_MESSAGE";
 export const WS_PERSONAL_ERROR: "WS_PERSONAL_ERROR" = "WS_PERSONAL_ERROR";
+
+export interface IWs_ConnectAction {
+  readonly type: typeof WS_CONNECT;
+  payload: string;
+}
+
+export interface IWs_DisconnectAction {
+  readonly type: typeof WS_DISCONNECT;
+}
+
+export interface IWs_ConnectingAction {
+  readonly type: typeof WS_CONNECTING;
+}
+
+export interface IWs_OpenAction {
+  readonly type: typeof WS_OPEN;
+}
+
+export interface IWs_CloseAction {
+  readonly type: typeof WS_CLOSE;
+}
+
+export interface IWs_MessageAction {
+  readonly type: typeof WS_MESSAGE;
+  payload: Omit<IOrders, "status" | "connectingErrorMessage">;
+}
+
+export interface IWs_ErrorAction {
+  readonly type: typeof WS_ERROR;
+  payload: string;
+}
+
+export type TWsActions =
+  | IWs_ConnectAction
+  | IWs_DisconnectAction
+  | IWs_ConnectingAction
+  | IWs_OpenAction
+  | IWs_CloseAction
+  | IWs_MessageAction
+  | IWs_ErrorAction;
+
+/// PERSONAL
+
+export interface IWs_PersonalConnectAction {
+  readonly type: typeof WS_PERSONAL_CONNECT;
+  payload: string;
+}
+
+export interface IWs_PersonalDisconnectAction {
+  readonly type: typeof WS_PERSONAL_DISCONNECT;
+}
+
+export interface IWs_PersonalConnectingAction {
+  readonly type: typeof WS_PERSONAL_CONNECTING;
+}
+
+export interface IWs_PersonalOpenAction {
+  readonly type: typeof WS_PERSONAL_OPEN;
+}
+
+export interface IWs_PersonalCloseAction {
+  readonly type: typeof WS_PERSONAL_CLOSE;
+}
+
+export interface IWs_PersonalMessageAction {
+  readonly type: typeof WS_PERSONAL_MESSAGE;
+	payload: Pick<IOrders, "orders">
+}
+
+export interface IWs_PersonalErrorAction {
+  readonly type: typeof WS_PERSONAL_ERROR;
+  payload: string;
+}
+
+export type TWsPersonalActions =
+  | IWs_PersonalConnectAction
+  | IWs_PersonalDisconnectAction
+  | IWs_PersonalConnectingAction
+  | IWs_PersonalOpenAction
+  | IWs_PersonalCloseAction
+  | IWs_PersonalMessageAction
+  | IWs_PersonalErrorAction;
 
 export const wsActions = {
   wsConnect: WS_CONNECT,
@@ -35,7 +119,7 @@ export const wsPersonalActions = {
 };
 
 export function connect(url: string) {
-  return function (dispatch: (arg0: { type: "WS_CONNECT"; payload: any; }) => void) {
+  return function (dispatch: any): void {
     dispatch({
       type: WS_CONNECT,
       payload: url,
@@ -44,7 +128,7 @@ export function connect(url: string) {
 }
 
 export function disconnect() {
-  return function (dispatch: (arg0: { type: "WS_DISCONNECT"; }) => void) {
+  return function (dispatch: (arg0: { type: "WS_DISCONNECT" }) => void) {
     dispatch({
       type: WS_DISCONNECT,
     });
@@ -52,7 +136,7 @@ export function disconnect() {
 }
 
 export function connectPersonal(url: string) {
-  return function (dispatch: (arg0: { type: "WS_PERSONAL_CONNECT"; payload: any; }) => void) {
+  return function (dispatch: (arg0: { type: "WS_PERSONAL_CONNECT"; payload: any }) => void) {
     dispatch({
       type: WS_PERSONAL_CONNECT,
       payload: url,
@@ -61,7 +145,7 @@ export function connectPersonal(url: string) {
 }
 
 export function disconnectPersonal() {
-  return function (dispatch: (arg0: { type: "WS_PERSONAL_DISCONNECT"; }) => void) {
+  return function (dispatch: (arg0: { type: "WS_PERSONAL_DISCONNECT" }) => void) {
     dispatch({
       type: WS_PERSONAL_DISCONNECT,
     });

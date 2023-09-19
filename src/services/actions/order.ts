@@ -1,3 +1,4 @@
+import { AppDispatch, AppThunk } from "../..";
 import { getOrderData, sendOrder } from "../../utils/api";
 export const ORDER_ITEMS_REQUEST: "ORDER_ITEMS_REQUEST" = "ORDER_ITEMS_REQUEST";
 export const ORDER_ITEMS_SUCCESS: "ORDER_ITEMS_SUCCESS" = "ORDER_ITEMS_SUCCESS";
@@ -25,12 +26,6 @@ export interface IOrderItemsFailedAction {
 export interface IOrderItemsResetAction {
   readonly type: typeof ORDER_ITEMS_RESET;
 }
-
-export type TOrderActions =
-  | IOrderItemsReqAction
-  | IOrderItemsSuccessAction
-  | IOrderItemsFailedAction
-  | IOrderItemsResetAction;
 
 export const orderItemsReqAction = (): IOrderItemsReqAction => ({
   type: ORDER_ITEMS_REQUEST,
@@ -64,7 +59,11 @@ export interface IOrderFetchReqFailed {
   readonly payload: any;
 }
 
-export type TOrderFetchActions =
+export type TOrderActions =
+  | IOrderItemsReqAction
+  | IOrderItemsSuccessAction
+  | IOrderItemsFailedAction
+  | IOrderItemsResetAction
   | IOrderFetchReqAction
   | IOrderFetchReqSuccess
   | IOrderFetchReqFailed;
@@ -78,32 +77,26 @@ export const orderFetchReqSuccess = (payload: any): IOrderFetchReqSuccess => ({
   payload,
 });
 
-export const orderFetchReqFailed = (payload: string) => ({
+export const orderFetchReqFailed = (payload: string): IOrderFetchReqFailed => ({
   type: FETCH_ORDER_ERROR,
   payload,
 });
 
-export function sendOrderData(data: any) {
-  console.log(data);
+export const sendOrderData: AppThunk = (data: string[]) => (dispatch: AppDispatch) => {
+  dispatch(orderItemsReqAction());
+  sendOrder(data)
+    .then((res) => {
+      res.success
+        ? dispatch(orderItemsSuccessAction(res))
+        : Promise.reject(`Ошибка загрузки данных с сервера: ${res.status}`);
+    })
+    .catch((err) => {
+      dispatch(orderItemsFailedAction(err));
+    });
+};
 
-  return function (dispatch: any) {
-    dispatch(orderItemsReqAction());
-    sendOrder(data)
-      .then((res) => {
-        res.success
-          ? dispatch(orderItemsSuccessAction(res))
-          : Promise.reject(`Ошибка загрузки данных с сервера: ${res.status}`);
-      })
-      .catch((err) => {
-        dispatch(orderItemsFailedAction(err));
-      });
-  };
-}
-
-export function getUniqOrderData(number: any) {
-  console.log(typeof number);
-
-  return function (dispatch: any) {
+export function getUniqOrderData(number: string) {
+  return function (dispatch: AppDispatch) {
     dispatch(orderFetchReqAction());
     getOrderData(number)
       .then((res) => {
