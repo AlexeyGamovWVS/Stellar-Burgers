@@ -7,7 +7,6 @@ import { getStatusText } from "../../utils/data";
 import { useEffect } from "react";
 import { getUniqOrderData } from "../../services/actions/order";
 import { useAppDispatch, useAppSelector } from "../..";
-import { GET_RANDOM } from "../burger-constructor/burger-components/burger-components.utils";
 
 export default function FeedOrderDetails() {
   const dispatch = useAppDispatch();
@@ -63,22 +62,20 @@ export default function FeedOrderDetails() {
         {orderIngredients &&
           getUniqArrayItems(orderIngredients).map((item) => {
             return (
-              <>
-                {item && (
-                  <li key={item._id + GET_RANDOM()} className={styles.item}>
-                    <div className={styles.iconbox}>
-                      <img className={styles.ingricon} src={item.image} alt={item.name} />
-                    </div>
-                    <p className={`${styles.ingrname} text text_type_main-default`}>{item.name}</p>
-                    <div className={styles.pricebox}>
-                      <p className={`${styles.price} text text_type_digits-default`}>
-                        {countIngedientsInOrder(item._id, orderIngredients)} x {item.price}
-                      </p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                  </li>
-                )}
-              </>
+              item && (
+                <li key={item._id} className={styles.item}>
+                  <div className={styles.iconbox}>
+                    <img className={styles.ingricon} src={item.image} alt={item.name} />
+                  </div>
+                  <p className={`${styles.ingrname} text text_type_main-default`}>{item.name}</p>
+                  <div className={styles.pricebox}>
+                    <p className={`${styles.price} text text_type_digits-default`}>
+                      {countIngedientsInOrder(item._id, orderIngredients)} x {item.price}
+                    </p>
+                    <CurrencyIcon type="primary" />
+                  </div>
+                </li>
+              )
             );
           })}
       </ul>

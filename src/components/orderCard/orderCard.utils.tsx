@@ -3,7 +3,8 @@ import { GET_RANDOM } from "../burger-constructor/burger-components/burger-compo
 
 export default function ingredientsImagesMap(ingredientsPictures: string[]) {
   let imagesMap = [];
-  if (ingredientsPictures.length < 6) {
+
+  if (ingredientsPictures.length < 6 && ingredientsPictures) {
     imagesMap = ingredientsPictures.map((image, index) => {
       return (
         <li key={GET_RANDOM()} className={styles.card__iconbox} style={{ zIndex: 6 - index }}>

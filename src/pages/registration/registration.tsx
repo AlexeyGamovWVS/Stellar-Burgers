@@ -1,5 +1,4 @@
 import styles from "./registration.module.css";
-import { useState } from "react";
 import {
   Input,
   EmailInput,
@@ -9,21 +8,20 @@ import {
 import { Link } from "react-router-dom";
 import { loginUser } from "../../services/actions/profile";
 import { useAppDispatch } from "../..";
+import { useForm } from "../../utils/userForm";
 
 export function RegistrationPage() {
-  const [nameValue, setNameValue] = useState("");
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const { values, handleChange } = useForm({ email: "", name: "", password: "" });
   const dispatch = useAppDispatch();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (nameValue && emailValue && passwordValue) {
+    if (values) {
       dispatch(
         loginUser({
-          email: emailValue,
-          name: nameValue,
-          password: passwordValue,
+          email: values.email,
+          name: values.name,
+          password: values.password,
           endpoint: "register",
         })
       );
@@ -37,21 +35,21 @@ export function RegistrationPage() {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          onChange={(e) => setNameValue(e.target.value)}
-          value={nameValue}
+          onChange={handleChange}
+          value={values.name!}
           name={"name"}
           errorText={"Ошибка. Введите корректное имя пользователя"}
         />
         <EmailInput
-          onChange={(e) => setEmailValue(e.target.value)}
-          value={emailValue}
+          onChange={handleChange}
+          value={values.email!}
           name={"email"}
           isIcon={false}
           // errorText={"Ошибка. проверьте правильность почты"}
         />
         <PasswordInput
-          onChange={(e) => setPasswordValue(e.target.value)}
-          value={passwordValue}
+          onChange={handleChange}
+          value={values.password!}
           name={"password"}
           // errorText={"Ошибка. Введите другой пароль"}
         />

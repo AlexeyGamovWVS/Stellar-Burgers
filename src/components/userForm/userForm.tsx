@@ -3,14 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { changeUserInfo } from "../../services/actions/profile";
 import { useAppDispatch, useAppSelector } from "../..";
-import { IUserWithPass } from "../../services/utils/user-types";
+import { useForm } from "../../utils/userForm";
 
 export function UserForm() {
   const userInfo = useAppSelector((store) => store.profile.userInfo);
+  const { values, handleChange, setValues } = useForm({ name: "", email: "", password: "" });
   const dispatch = useAppDispatch();
-  const [nameValue, setNameValue] = useState("Yourname");
-  const [emailValue, setEmailValue] = useState("test@mail.ru");
-  const [passwordValue, setPasswordValue] = useState("");
 
   const [nameFieldState, setNameFieldState] = useState(true);
   const [emailFieldState, setEmailFieldState] = useState(true);
@@ -22,18 +20,9 @@ export function UserForm() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
 
-  const setData = (userInfo: IUserWithPass | null) => {
-    if (userInfo) {
-      setNameValue(userInfo.name!);
-      setEmailValue(userInfo.email!);
-      setPasswordValue(userInfo.password!);
-    }
-  };
-
   useEffect(() => {
-    userInfo && setData(userInfo);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    userInfo && setValues(userInfo);
+  }, [userInfo, setValues]);
 
   const onNameEditIconClick = (e: React.MouseEvent) => {
     setProfileEditing(true);
@@ -61,7 +50,7 @@ export function UserForm() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(changeUserInfo(nameValue, emailValue, passwordValue));
+    values && dispatch(changeUserInfo(values.name!, values.email!, values.password!));
     stopEditoring();
   };
 
@@ -70,7 +59,7 @@ export function UserForm() {
   };
 
   const stopEditoring = () => {
-    setData(userInfo);
+    setValues(userInfo!);
     setProfileEditing(false);
     setPassFieldState(true);
     setNameFieldState(true);
@@ -82,8 +71,8 @@ export function UserForm() {
       <Input
         type={"text"}
         placeholder={"Имя"}
-        onChange={(e) => setNameValue(e.target.value)}
-        value={nameValue}
+        onChange={handleChange}
+        value={values.name || ''}
         error={false}
         name={"name"}
         errorText={"Ошибка. Проверьте корректность ввода имени"}
@@ -93,8 +82,8 @@ export function UserForm() {
         disabled={nameFieldState}
       />
       <Input
-        onChange={(e) => setEmailValue(e.target.value)}
-        value={emailValue}
+        onChange={handleChange}
+        value={values.email || ''}
         name={"email"}
         errorText={"Ошибка. проверьте правильность почты"}
         placeholder={"Логин"}
@@ -105,8 +94,8 @@ export function UserForm() {
       />
       <Input
         type="password"
-        onChange={(e) => setPasswordValue(e.target.value)}
-        value={passwordValue}
+        onChange={handleChange}
+        value={values.password || ''}
         name={"password"}
         errorText={"Ошибка. Введите другой пароль"}
         icon={"EditIcon"}

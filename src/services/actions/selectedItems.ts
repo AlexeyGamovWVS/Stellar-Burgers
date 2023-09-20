@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { IMainIngedientData } from "../utils/ingredients-types";
 
 export const ADD_ITEM_TO_CHOICE: "ADD_ITEM_TO_CHOICE" = "ADD_ITEM_TO_CHOICE";
@@ -41,11 +42,17 @@ export type TSelectedItemsActions =
 
 export const addItemAction = (payload: IMainIngedientData): IAddItemAction => ({
   type: ADD_ITEM_TO_CHOICE,
-  payload,
+  payload: {
+    ...payload, //item
+    uniqId: uuidv4(),
+  },
 });
 export const addBunAction = (payload: IMainIngedientData): IAddBunAction => ({
   type: ADD_BUN_TO_CHOICE,
-  payload,
+  payload: {
+    ...payload, //item
+    uniqId: uuidv4(),
+  },
 });
 export const removeItemAction = (payload: IMainIngedientData): IRemoveItemAction => ({
   type: REMOVE_ITEM_FROM_CHOICE,

@@ -9,7 +9,7 @@ interface IOptions {
   method: "GET" | "POST" | "PATCH" | "DELETE";
   headers: {
     "Content-Type": string;
-    authorization: string;
+    authorization?: string;
   };
   body?: string;
 }

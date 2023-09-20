@@ -10,12 +10,15 @@ export default function Feeds() {
   const items = useAppSelector((store) => store.allItems.items);
   const orders = useAppSelector((store) => store.wsconnection.orders);
 
-  const ordersMap = orders
-    ?.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
+  const ordersMap = orders?.sort(
+      (a, b) => new Date(b.createdAt).getMilliseconds() - new Date(a.createdAt).getMilliseconds()
+    )
     .map((order) => {
       const ingredientsPictures = order.ingredients.map(
         (ingredient) => items.filter((storeItem) => storeItem._id === ingredient)[0].image
       );
+      console.log(ingredientsPictures);
+
       const totalPrice = order.ingredients
         .map((ingredient) => items.filter((storeItem) => storeItem._id === ingredient)[0].price)
         .reduce((acc, current) => {

@@ -61,7 +61,7 @@ export default function BurgerComponents() {
         item={selectedBun ? selectedBun : EMPTY_BUN}
         position="top"
         iconVis={false}
-        key={selectedBun ? selectedBun._id : GET_RANDOM()}
+        key={selectedBun ? selectedBun.uniqId : GET_RANDOM()}
       />
 
       <ul className={burgCompStyles.secondaryList}>
@@ -70,7 +70,7 @@ export default function BurgerComponents() {
             <BurgerListItem
               item={item}
               iconVis={true}
-              key={item._id + index}
+              key={item.uniqId}
               index={index}
               moveListItem={moveListItem}
             />
@@ -81,7 +81,7 @@ export default function BurgerComponents() {
         item={selectedBun ? selectedBun : EMPTY_BUN}
         position="bottom"
         iconVis={false}
-        key={selectedBun ? selectedBun._id + GET_RANDOM() : GET_RANDOM()}
+        key={selectedBun ? `${selectedBun.uniqId}-second` : GET_RANDOM()}
       />
     </ul>
   );

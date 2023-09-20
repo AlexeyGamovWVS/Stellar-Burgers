@@ -1,12 +1,13 @@
 import styles from "./forgot-pass.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
 import { sendEmailForgotPassword } from "../../services/actions/profile";
 import { useAppSelector, useAppDispatch } from "../..";
+import { useForm } from "../../utils/userForm";
 
 export function ForgotPage() {
-  const [emailValue, setEmailValue] = useState("");
+  const { values, handleChange } = useForm({ email: "" });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -21,8 +22,8 @@ export function ForgotPage() {
 
   const handleForSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailValue) {
-      dispatch(sendEmailForgotPassword(emailValue));
+    if (values.email) {
+      dispatch(sendEmailForgotPassword(values.email));
     } else return;
   };
 
@@ -31,9 +32,9 @@ export function ForgotPage() {
       <form className={styles.form} onSubmit={handleForSubmit}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <EmailInput
-          onChange={(e) => setEmailValue(e.target.value)}
+          onChange={handleChange}
           placeholder="Укажите e-mail "
-          value={emailValue}
+          value={values.email!}
           name={"email"}
           isIcon={false}
           // errorText={"Ошибка. Проверьте правильность почты"}

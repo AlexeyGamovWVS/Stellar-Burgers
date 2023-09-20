@@ -1,5 +1,4 @@
 import styles from "./login.module.css";
-import { useState } from "react";
 import {
   EmailInput,
   Button,
@@ -8,20 +7,20 @@ import {
 import { Link } from "react-router-dom";
 import { loginUser } from "../../services/actions/profile";
 import { useAppDispatch, useAppSelector } from "../..";
+import { useForm } from "../../utils/userForm";
 
 export function LoginPage() {
   const failed = useAppSelector((store) => store.profile.failed);
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const { values, handleChange } = useForm({ email: "", password: "" });
   const dispatch = useAppDispatch();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailValue && passwordValue) {
+    if (values) {
       dispatch(
         loginUser({
-          email: emailValue,
-          password: passwordValue,
+          email: values.email,
+          password: values.password,
           endpoint: "login",
           name: undefined,
         })
@@ -34,15 +33,15 @@ export function LoginPage() {
       <form onSubmit={onSubmit} className={styles.form}>
         <h1 className="text text_type_main-medium">Вход</h1>
         <EmailInput
-          onChange={(e) => setEmailValue(e.target.value)}
-          value={emailValue}
+          onChange={handleChange}
+          value={values.email!}
           name={"email"}
           isIcon={false}
           // errorText={"Ошибка. Проверьте правильность почты"}
         />
         <PasswordInput
-          onChange={(e) => setPasswordValue(e.target.value)}
-          value={passwordValue}
+          onChange={handleChange}
+          value={values.password!}
           name={"password"}
           // errorText={"Ошибка. Введите другой пароль"}
         />

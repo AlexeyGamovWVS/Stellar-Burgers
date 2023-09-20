@@ -4,6 +4,7 @@ export interface IMainIngedientData {
   price: number;
   type: string;
   _id: string;
+	uniqId: string;
 }
 export interface IIngredient extends IMainIngedientData {
   calories: number;

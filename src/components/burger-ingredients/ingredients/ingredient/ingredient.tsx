@@ -6,7 +6,13 @@ import { COMPONENT_TYPES } from "../../../../utils/data";
 import { useAppSelector } from "../../../..";
 import { IMainIngedientData } from "../../../../services/utils/ingredients-types";
 
-export default function Ingredient({ name, price, image, _id, type }: IMainIngedientData) {
+export default function Ingredient({
+  name,
+  price,
+  image,
+  _id,
+  type,
+}: Omit<IMainIngedientData, "uniqId">) {
   const { selectedItems, selectedBun } = useAppSelector((store) => store.selectedItems);
   const count = useMemo(() => {
     return selectedItems.reduce((acc, item) => (item._id === _id ? ++acc : acc), 0);
