@@ -9,6 +9,7 @@ export function OrderHistory() {
 
   const items = useAppSelector((store) => store.allItems.items);
   const orders = useAppSelector((store) => store.wspersonalconnection.orders);
+  console.log(orders);
 
   const ordersMap = orders
     ?.sort(

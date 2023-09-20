@@ -8,7 +8,7 @@ import {
 
 import { IOrders } from "../utils/order-types";
 
-export interface ISocketState extends IOrders {
+interface ISocketState extends IOrders {
   connectingErrorMessage: string | null;
 }
 
@@ -16,7 +16,7 @@ const initialState: ISocketState = {
   orders: [],
   total: 0,
   totalToday: 0,
-  connectingErrorMessage: null,
+  connectingErrorMessage: "",
 };
 
 export const socketMiddlewareReduser = (state = initialState, action: TWsActions) => {
